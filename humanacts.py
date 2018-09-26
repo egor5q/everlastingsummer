@@ -8,7 +8,7 @@ citytime=db.citytime
 
 def actfind(human, year, month, day, hour, minute):
   if human['age']<=22:
-    if hour>=22:
+    if hour>=22 or hour<=5:
       if human['athome']==0:
        if len(human['variables']['friends'])>0:
          if human['variables']['mood']>=500:
@@ -28,12 +28,8 @@ def actfind(human, year, month, day, hour, minute):
         gohome(human)          
       else:
         homework(human)
-    elif hour<=5:
-      if human['athome']==0:
-        gohome(human)
-      else:
-        homework(human)
-    
+    if hour>=6 and hour<=8:
+      pass
   elif human['age']<=35:
     pass
   elif human['age']<=60:
