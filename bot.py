@@ -40,7 +40,68 @@ def start(m):
     else:
         bot.send_message(m.chat.id, 'Бот работает!')
   
+@bot.message_handler(commands=['myhuman'])
+def myhuman(m):
+  if m.from_user.id==m.chat.id:
+    x=users.find_one({'id':m.from_user.id})
+    if x!=None:
+      if x['currenthuman']!=None:
+        y=humans.find_one({'id':x['currenthuman']})
+        if y!=None:
+          bot.send_message(m.chat.id, 'Информация о человеке с именем "*'+y['name']+'*":\n\n'+
+                           'Наличные: '+str(y['currentmoney'])+'\n'+
+                           'Дом: '+housetotext(y['house'])+'\n'+
+                           'Социальность: '+str(y['sociality'])+'\n'+
+                           'Удача: '+str(y['luck'])+'\n'+
+                           'Счастье: '+str(y['happy'])+'\n'+
+                           'Возраст: '+str(y['age'])+'\n'+
+                           'Здоровье: '+str(y['health'])+'\n'+
+                           'Трудолюбивость: '+str(y['diligence'])+'\n'+
+                           'Скилл в компьютерных играх: '+str(y['gameskill'])+'\n'+
+                           'Любовь к спорту: '+str(y['sportsman'])+'\n'+
+                           'Внимательность: '+str(y['attentiveness'])+'\n'+
+                           'Креативность: '+str(y['creativity'])+'\n'+
+                           'Внешняя привлекательность: '+str(y['beautiful'])+'\n'+
+                           'Пол: '+gendertotext(y['gender'])+'\n'+
+                           'Ориентация: '+gaytotext(y['gay'])+'\n'+
+                           'Личный идентефикатор: '+str(y['id'])+'\n'+
+                           'Кто в данный момент следит за человеком: '+idtoname(y['innervoice'])+'\n'+
+                           'Кто создал человека: '+creatortotext(y['creator'])
+                          )
+     
+def gendertotext(gender):
+  if gender=='male':
+    return 'Мужчина'
+  elif gender=='female':
+    return 'Женщина'
   
+def gaytotext(gay):
+  if gay==1:
+    return 'Нетрадиционная'
+  elif gay==0:
+    return 'Традиционная'
+  
+
+  
+  
+@bot.message_handler(commands=['humansinfo'])
+def humansinfo(m):
+  if m.from_user.id==441399484:
+    x=humans.find({})
+    
+    bot.send_message(m.chat.id, 'Количество человек, проживающих в городе: '+str(len(x))+'!')
+
+@bot.message_handler(commands=['createhumans'])
+def createhumans(m):
+  if m.from_user.id==441399484:
+    x=0
+    while x<100:
+      humans.insert_one(createhuman('world'))
+      x+=1
+    bot.send_message(m.chat.id, '100 человек успешно созданы и в данный момент проживают в городе!')
+
+
+
 def createuser(id, name):
     return{'id':id,
            'name':name,
@@ -53,9 +114,9 @@ femalenames=['Алиса','Мария','Александра','Лена','Уль
              'Полина','Софья','Татьяна','Юлия','Марта','Марина','Светлана']
 genders=['male', 'female']
   
-  
-  
-def createhuman():
+houses=['self',  'rental'] 
+                 # Съемная
+def createhuman(creator):
   gender=random.choice(genders)
   if gender=='male':
     genderlist=malenames
@@ -66,19 +127,22 @@ def createhuman():
     gay=1
   else:
     gay=0
-  id=random.randint(1,100000)
+  id=random.randint(1,1000000)
   humanlist=humans.find({})
   humanids=[]
   for ids in humanlist:
     humanids.append(ids['id'])
   while id in humanids:
-    id=random.randint(1,100000)
+    id=random.randint(1,1000000)
   return{'name':random.choice(genderlist),
+         'currentmoney':random.randint(0,1000000),
+         'house':random.choice(houses)
          'sociality':random.randint(1,1000),
          'luck':random.randint(1,1000),
          'happy':random.randint(1,1000),
          'age':random.randint(18,100),
          'old':random.randint(1,1000),
+         'health':random.randint(1,1000),
          'diligence':random.randint(1,1000),     # Трудолюбивость
          'gameskill':random.randint(1,1000),
          'sportsman':random.randint(1,1000),
@@ -87,8 +151,9 @@ def createhuman():
          'beautiful':random.randint(1,1000),     # Красота
          'gender':gender,
          'gay':gay,
-         'id':id,
-         'innervoice':None                       # Внутренний голос: айди наблюдающего за человеком
+         'id':id,                                # Уникальный индекс человека
+         'innervoice':None,                      # Внутренний голос: айди наблюдающего за человеком
+         'creator':creator                       # Айди бога, создавшего этого человека
         }
          
 
