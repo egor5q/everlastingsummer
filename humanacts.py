@@ -1,5 +1,11 @@
-def actfind(human, currenttime):
+def actfind(human, year, month, day, hour, minute):
   if human['age']<=22:
+    if hour>=22:
+      if human['athome']==0:
+        gohome(human)
+    elif hour<=5:
+      if human['athome']==0:
+        gohome(human)
     
   elif human['age']<=35:
     pass
