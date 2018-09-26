@@ -105,7 +105,8 @@ def createhumans(m):
 def createuser(id, name):
     return{'id':id,
            'name':name,
-           'currenthuman':None
+           'currenthuman':None,
+           'godpower':0
           }
   
 malenames=['Пётр','Александр','Василий','Иван','Борис','Вячеслав','Леонид','Георгий','Юрий','Николай','Илья','Даниил','Максим','Виктор',
