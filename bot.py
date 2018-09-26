@@ -17,6 +17,22 @@ from requests.exceptions import ReadTimeout
 from requests.exceptions import ConnectionError
 
 
+@bot.message_handler(commands=['start'])
+def start(m):
+  if m.from_user.id==m.chat.id:
+    if users.find_one({'id':m.from_user.id})==None:
+        users.insert_one(createuser(m.from_user.id, m.from_user.first_name))
+        bot.send_message(m.chat.id, 'Вы создали аккаунт! Добро пожаловать в бота!') 
+    else:
+        bot.send_message(m.chat.id, 'Бот работает!')
+  
+  
+def createuser(id, name):
+    return{'id':id,
+           'name':name
+          }
+
+    
   
 if True:
  try:
