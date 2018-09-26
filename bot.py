@@ -68,6 +68,8 @@ def myhuman(m):
                            'Кто в данный момент следит за человеком: '+idtoname(y['innervoice'])+'\n'+
                            'Кто создал человека: '+creatortotext(y['creator'])
                           )
+          
+          
      
 def gendertotext(gender):
   if gender=='male':
@@ -88,7 +90,6 @@ def gaytotext(gay):
 def humansinfo(m):
   if m.from_user.id==441399484:
     x=humans.find({})
-    
     bot.send_message(m.chat.id, 'Количество человек, проживающих в городе: '+str(len(x))+'!')
 
 @bot.message_handler(commands=['createhumans'])
@@ -136,6 +137,7 @@ def createhuman(creator):
   while id in humanids:
     id=random.randint(1,1000000)
   return{'name':random.choice(genderlist),
+         'acting':0,
          'currentmoney':random.randint(0,1000000),
          'house':random.choice(houses)
          'sociality':random.randint(1,1000),
@@ -143,6 +145,8 @@ def createhuman(creator):
          'happy':random.randint(1,1000),
          'age':random.randint(18,100),
          'old':random.randint(1,1000),
+         'friends':[],
+         'love':None,
          'health':random.randint(1,1000),
          'diligence':random.randint(1,1000),     # Трудолюбивость
          'gameskill':random.randint(1,1000),
@@ -158,6 +162,20 @@ def createhuman(creator):
         }
          
 
+def life():
+  t=threading.Timer(1, life)     # 1 секунда реальной жизни равна одной минуте в городе
+  t.start()
+  
+  x=humans.find({})
+  for ids in x:
+    if ids['acting']==0:
+      human.actfind(ids)
+    
+  
+   
+if True:
+  life()
+    
     
   
 if True:
