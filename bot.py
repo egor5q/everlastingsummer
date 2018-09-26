@@ -20,6 +20,16 @@ client=MongoClient(client1)
 db=client.worldseer
 humans=db.humans
 users=db.users
+citytime=db.citytime
+
+timee=citytime.find_one({})
+year=timee['year']
+month=timee['month']
+day=timee['day']
+hour=timee['hour']
+minute=timee['minute']
+
+
 
 @bot.message_handler(commands=['start'])
 def start(m):
@@ -50,12 +60,12 @@ def myhuman(m):
         y=humans.find_one({'id':x['currenthuman']})
         if y!=None:
           bot.send_message(m.chat.id, 'Информация о человеке с именем "*'+y['name']+'*":\n\n'+
-                           'Наличные: '+str(y['currentmoney'])+'\n'+
-                           'Дом: '+housetotext(y['house'])+'\n'+
+                           'Наличные: '+str(y['variables']['currentmoney'])+'\n'+
+                           'Дом: '+housetotext(y['variables']['house'])+'\n'+
                            'Социальность: '+str(y['sociality'])+'\n'+
                            'Удача: '+str(y['luck'])+'\n'+
                            'Счастье: '+str(y['happy'])+'\n'+
-                           'Возраст: '+str(y['age'])+'\n'+
+                           'Возраст: '+str(y['variables']['age'])+'\n'+
                            'Здоровье: '+str(y['health'])+'\n'+
                            'Трудолюбивость: '+str(y['diligence'])+'\n'+
                            'Скилл в компьютерных играх: '+str(y['gameskill'])+'\n'+
@@ -66,7 +76,7 @@ def myhuman(m):
                            'Пол: '+gendertotext(y['gender'])+'\n'+
                            'Ориентация: '+gaytotext(y['gay'])+'\n'+
                            'Личный идентефикатор: '+str(y['id'])+'\n'+
-                           'Кто в данный момент следит за человеком: '+idtoname(y['innervoice'])+'\n'+
+                           'Кто в данный момент следит за человеком: '+idtoname(y['variables']['innervoice'])+'\n'+
                            'Кто создал человека: '+creatortotext(y['creator'])
                           )
           
@@ -85,8 +95,50 @@ def gaytotext(gay):
     return 'Традиционная'
   
 
+
+@bot.message_handler(commands=['currentdate'])
+def currentdate:
+  global year
+  global month
+  global day
+  global hour
+  global minute
+  bot.send_message(m.chat.id, 'Текущая дата в городе:\n'+
+                   'Год: '+str(year)+'\n'+
+                   'Месяц: '+monthtotext(month)+'\n'+
+                   'День: '+str(day)+'\n'+
+                   'Час: '+str(hour)+'\n'+
+                   'Минута: '+str(minute)+'\n')
   
-  
+def monthtotext(month):
+  if month==1:
+    return 'Январь'
+  elif month==2:
+    return 'Февраль'
+  elif month==3:
+    return 'Март'
+  elif month==4:
+    return 'Апрель'
+  elif month==5:
+    return 'Май'
+  elif month==6:
+    return 'Июнь'
+  elif month==7:
+    return 'Июль'
+  elif month==8:
+    return 'Август'
+  elif month==9:
+    return 'Сентябрь'
+  elif month==10:
+    return 'Октябрь'
+  elif month==11:
+    return 'Ноябрь'
+  elif month==12:
+    return 'Декабрь'
+                   
+                   
+                   
+                   
 @bot.message_handler(commands=['humansinfo'])
 def humansinfo(m):
   if m.from_user.id==441399484:
@@ -138,16 +190,9 @@ def createhuman(creator):
   while id in humanids:
     id=random.randint(1,1000000)
   return{'name':random.choice(genderlist),
-         'acting':0,
-         'currentmoney':random.randint(0,1000000),
-         'house':random.choice(houses)
          'sociality':random.randint(1,1000),
          'luck':random.randint(1,1000),
          'happy':random.randint(1,1000),
-         'age':random.randint(18,100),
-         'old':random.randint(1,1000),
-         'friends':[],
-         'love':None,
          'health':random.randint(1,1000),
          'diligence':random.randint(1,1000),     # Трудолюбивость
          'gameskill':random.randint(1,1000),
@@ -157,23 +202,92 @@ def createhuman(creator):
          'beautiful':random.randint(1,1000),     # Красота
          'gender':gender,
          'gay':gay,
-         'id':id,                                # Уникальный индекс человека
-         'innervoice':None,                      # Внутренний голос: айди наблюдающего за человеком
+         'id':id,                                # Уникальный индекс человека                      
          'creator':creator                       # Айди бога, создавшего этого человека
+         'variables':{'currentmoney':random.randint(0,1000000),
+                      'acting':0,
+                      'house':random.choice(houses),
+                      'age':random.randint(18,100),
+                      'love':None,
+                      'friends':[],
+                      'innervoice':None          # Внутренний голос: айди наблюдающего за человеком
+                     }
         }
          
 
+def monthtodays(month):
+  if month==1:
+    return 31
+  elif month==2:
+    return 28
+  elif month==3:
+    return 31
+  elif month==4:
+    return 30
+  elif month==5:
+    return 31
+  elif month==6:
+    return 30
+  elif month==7:
+    return 31
+  elif month==8:
+    return 31
+  elif month==9:
+    return 30
+  elif month==10:
+    return 31
+  elif month==11:
+    return 30
+  elif month==12:
+    return 31
+  
+  
 def life():
   t=threading.Timer(1, life)     # 1 секунда реальной жизни равна одной минуте в городе
   t.start()
-  
+  global year
+  global month
+  global day
+  global hour
+  global minute
+  minute+=1
+  if minute==60:
+    minute=0
+    hour+=1
+  if hour==24:
+    hour=0
+    day+=1
+  if day>monthtodays(month):
+    day=1
+    month+=1
+  if month==13:
+    month=1
+    year+=1
   x=humans.find({})
   for ids in x:
     if ids['acting']==0:
       humanacts.actfind(ids)
-    
   
-   
+def timewrite():
+  global year
+  global month
+  global day
+  global hour
+  global minute
+  t=threading.Timer(120, timewrite)
+  t.start()
+  citytime.update_one({}, {'set':{'year':year}})
+  citytime.update_one({}, {'set':{'month':month}})
+  citytime.update_one({}, {'set':{'day':day}})
+  citytime.update_one({}, {'set':{'hour':hour}})
+  citytime.update_one({}, {'set':{'minute':minute}})
+
+
+
+if True:
+  timewrite()
+
+
 if True:
   life()
     
