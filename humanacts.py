@@ -29,7 +29,14 @@ def actfind(human, year, month, day, hour, minute):
       else:
         homework(human)
     if hour>=6 and hour<=8:
-      pass
+      if human['variable']['student']==1:
+        if human['variables']['mood']>=200 and human['diligence']>=350:
+          preparetostudy(human)
+        else:
+          if random.randint(1,100)<=50:
+            relax(human)
+          else:
+            preparetostudy(human)
   elif human['age']<=35:
     pass
   elif human['age']<=60:
