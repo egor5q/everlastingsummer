@@ -5,6 +5,7 @@ import time
 import telebot
 import random
 import info
+import humanacts
 import threading
 from emoji import emojize
 from telebot import types
@@ -169,7 +170,7 @@ def life():
   x=humans.find({})
   for ids in x:
     if ids['acting']==0:
-      human.actfind(ids)
+      humanacts.actfind(ids)
     
   
    
