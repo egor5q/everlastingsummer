@@ -1,3 +1,11 @@
+client1=os.environ['database']
+client=MongoClient(client1)
+db=client.worldseer
+humans=db.humans
+users=db.users
+citytime=db.citytime
+
+
 def actfind(human, year, month, day, hour, minute):
   if human['age']<=22:
     if hour>=22:
