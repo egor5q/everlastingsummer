@@ -54,6 +54,7 @@ femalenames=['Алиса','Мария','Александра','Лена','Уль
 genders=['male', 'female']
   
   
+  
 def createhuman():
   gender=random.choice(genders)
   if gender=='male':
@@ -86,7 +87,8 @@ def createhuman():
          'beautiful':random.randint(1,1000),     # Красота
          'gender':gender,
          'gay':gay,
-         'id':id
+         'id':id,
+         'innervoice':None                       # Внутренний голос: айди наблюдающего за человеком
         }
          
 
