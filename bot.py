@@ -227,6 +227,8 @@ def createhuman(creator):
                       'house':random.choice(houses),
                       'age':random.randint(18,100),
                       'atwork':0,
+                      'student':random.randint(0,1),
+                      'worker':random.randint(0,1),
                       'love':None,
                       'friends':[],
                       'seer':None          # Внутренний голос: айди наблюдающего за человеком
