@@ -80,7 +80,11 @@ def myhuman(m):
                            'Кто создал человека: '+creatortotext(y['creator'])
                           )
           
-          
+  
+@bot.message_handler(commands=['clear'])
+def clearr(m):
+  humans.update_many({},{'$unset'})
+  
      
 def gendertotext(gender):
   if gender=='male':
