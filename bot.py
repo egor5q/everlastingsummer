@@ -97,7 +97,7 @@ def gaytotext(gay):
 
 
 @bot.message_handler(commands=['currentdate'])
-def currentdate:
+def currentdate(m):
   global year
   global month
   global day
