@@ -211,9 +211,13 @@ def createhuman(creator):
                       'love':None,
                       'friends':[],
                       'innervoice':None          # Внутренний голос: айди наблюдающего за человеком
-                     }
+                     },
+         'func':{'preparetowork':0,
+                 'tryfindwork':0,
+                 'relax':0,
+                 'gohome':0
+                }
         }
-         
 
 def monthtodays(month):
   if month==1:
