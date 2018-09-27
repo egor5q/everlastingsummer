@@ -39,7 +39,27 @@ def actfind(human, year, month, day, hour, minute):
             preparetowork(human)
       else:
         tryfindwork(human)
-        
+    elif hour>=9 and hour<=16:
+      if human['variables']['atwork']==0:
+        if human['variable']['student']==1 or human['variable']['worker']==1:
+          if human['variables']['mood']>=330 and human['diligence']>=340:
+            gotowork(human)
+          else:
+            if random.randint(1,100)<=50:
+              askgod(human, 'gotowork')
+            else:
+              if random.randint(1,100)<=50:
+                gotowork(human)
+              else:
+                relax(human)
+        else:
+          x=random.randint(1,2)
+          if x==1:
+            tryfindwork(human)
+          elif x==2:
+            relax(human)
+      else:
+        dowork(human)
         
   elif human['age']<=35:
     pass
@@ -50,8 +70,14 @@ def actfind(human, year, month, day, hour, minute):
   elif human['age']<=110:
     pass
 
+def dowork(human):
+  if human['variables']['student']==1:
+    t=threading.Timer(360, 
+  
+  
 def preparetowork(human):
   humans.update_one({'id':human['id']},{'$set':{'func.preparetowork':1}})
+  humans.update_one({'id':human['id']},{'$set':{'variables.acting':1}})
   t=threading.Timer(50, actend, args=[human])
   t.start()
   
