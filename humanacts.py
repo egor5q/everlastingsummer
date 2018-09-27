@@ -1,3 +1,6 @@
+token = os.environ['TELEGRAM_TOKEN']
+bot = telebot.TeleBot(token)
+
 client1=os.environ['database']
 client=MongoClient(client1)
 db=client.worldseer
