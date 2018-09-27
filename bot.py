@@ -298,11 +298,11 @@ def timewrite():
   global minute
   t=threading.Timer(120, timewrite)
   t.start()
-  citytime.update_one({}, {'set':{'year':year}})
-  citytime.update_one({}, {'set':{'month':month}})
-  citytime.update_one({}, {'set':{'day':day}})
-  citytime.update_one({}, {'set':{'hour':hour}})
-  citytime.update_one({}, {'set':{'minute':minute}})
+  citytime.update_one({}, {'$set':{'year':year}})
+  citytime.update_one({}, {'$set':{'month':month}})
+  citytime.update_one({}, {'$set':{'day':day}})
+  citytime.update_one({}, {'$set':{'hour':hour}})
+  citytime.update_one({}, {'$set':{'minute':minute}})
 
 
 
