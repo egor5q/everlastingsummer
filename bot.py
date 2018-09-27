@@ -149,7 +149,7 @@ def humansinfo(m):
 def createhumans(m):
   if m.from_user.id==441399484:
     x=0
-    while x<100:
+    while x<50:
       humans.insert_one(createhuman('world'))
       x+=1
     bot.send_message(m.chat.id, '100 человек успешно созданы и в данный момент проживают в городе!')
@@ -226,6 +226,7 @@ def createhuman(creator):
                       'acting':0,
                       'house':random.choice(houses),
                       'age':random.randint(18,100),
+                      'atwork':0,
                       'love':None,
                       'friends':[],
                       'seer':None          # Внутренний голос: айди наблюдающего за человеком
