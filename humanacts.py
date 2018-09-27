@@ -56,7 +56,7 @@ def actfind(human, year, month, day, hour, minute):
         tryfindwork(human)
     elif hour>=9 and hour<=16:
       if human['variables']['atwork']==0:
-        if human['variable']['student']==1 or human['variable']['worker']==1:
+        if human['variables']['student']==1 or human['variables']['worker']==1:
           if human['variables']['mood']>=330 and human['diligence']>=340:
             gotowork(human)
           else:
