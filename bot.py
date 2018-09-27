@@ -287,7 +287,7 @@ def life():
     year+=1
   x=humans.find({})
   for ids in x:
-    if ids['acting']==0:
+    if ids['variables']['acting']==0:
       humanacts.actfind(ids, year, month, day, hour, minute)
   
 def timewrite():
