@@ -39,7 +39,8 @@ def actfind(human, year, month, day, hour, minute):
             preparetowork(human)
       else:
         tryfindwork(human)
-          
+        
+        
   elif human['age']<=35:
     pass
   elif human['age']<=60:
@@ -49,7 +50,14 @@ def actfind(human, year, month, day, hour, minute):
   elif human['age']<=110:
     pass
 
+def preparetowork(human):
+  humans.update_one({'id':human['id']},{'$set':{'func.preparetowork':1}})
+  t=threading.Timer(50, actend, args=[human])
+  t.start()
+  
+  
 def foundwork(human):
+  humans.update_one({'id':human['id']},{'$set':{'func.foundwork':1}})
   x=((human['attentiveness']/60)+(human['diligence']/60))*(human['luck']/385)
   z=random.randint(1,100)
   if z<=x:
@@ -69,6 +77,7 @@ def tryfindwork(human):
   t=threading.Timer(180, foundwork, args=[human])
   t.start()
   x=int(8/((human['happy']/550)*(human['diligence']/420)))
+  humans.update_one({'id':human['id']},{'$set':{'func.tryfindwork':1}})
   humans.update_one({'id':human['id']},{'$set':{'variables.acting':1}})
   humans.update_one({'id':human['id']},{'$inc':{'variables.mood':-x}})
   
@@ -89,8 +98,20 @@ def homework(human):
   relax(human)
     
 def relax(human):
-  t=threading.Timer(30, actend, args=[human])
-  t.start()
+  humans.update_one({'id':human['id']},{'$set':{'func.relax':1}})
+  x=citytime.find_one({})
+  hour=x['hours']
+  if hour>=22 or hour<=4:
+    if hour>=22:
+      p=24-hour
+      p=7+p
+    elif hour<=4:
+      p=7-hour
+    t=threading.Timer(p, actend, args=[human])
+    t.start()
+  else:
+    t=threading.Timer(30, actend, args=[human])
+    t.start()
   humans.update_one({'id':human['id']},{'$set':{'variables.acting':1}})
   humans.update_one({'id':human['id']},{'$inc':{'variables.mood':10}})
     
@@ -98,6 +119,10 @@ def relax(human):
   
 def actend(human):
   humans.update_one({'id':human['id']},{'$set':{'variables.acting':0}})
+  humans.update_one({'id':human['id']},{'$set':{'func.preparetowork':0}})
+  humans.update_one({'id':human['id']},{'$set':{'func.tryfindwork':0}})
+  humans.update_one({'id':human['id']},{'$set':{'func.relax':0}})
+  humans.update_one({'id':human['id']},{'$set':{'func.gohome':0}})
   
 def tohome(human):
   humans.update_one({'id':human['id']},{'$set':{'variables.athome':1}})
@@ -107,6 +132,7 @@ def gohome(human):
   t.start()
   f=threading.Timer(60, tohome, args=[human])
   f.start()
+  humans.update_one({'id':human['id']},{'$set':{'func.gohome':1}})
   humans.update_one({'id':human['id']},{'$set':{'variables.acting':1}})
   
   
