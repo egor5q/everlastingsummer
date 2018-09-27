@@ -72,7 +72,13 @@ def actfind(human, year, month, day, hour, minute):
 
 def dowork(human):
   if human['variables']['student']==1:
-    t=threading.Timer(360, 
+    t=threading.Timer(360, actend, args=[human])
+    t.start()
+    if human['diligence']>=735:
+      mood=25
+    else:
+      mood=-15
+    humans.update_one({'id':human['id']},{'$inc':{'variables.mood':mood}})
   
   
 def preparetowork(human):
