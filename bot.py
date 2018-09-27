@@ -234,6 +234,7 @@ def createhuman(creator):
                       'student':random.randint(0,1),
                       'worker':random.randint(0,1),
                       'love':None,
+                      'mood':random.randint(1,1000),
                       'friends':[],
                       'seer':None          # Внутренний голос: айди наблюдающего за человеком
                      },
