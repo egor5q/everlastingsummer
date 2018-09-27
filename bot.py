@@ -155,7 +155,25 @@ def createhumans(m):
     bot.send_message(m.chat.id, '100 человек успешно созданы и в данный момент проживают в городе!')
 
 
-
+@bot.message_handler(commands=['watchhuman'])
+def watchhuman(m):
+  x=users.find_one({'id':m.from_user.id})
+  if x!=None:
+    y=[]
+    z=humans.find({})
+    for ids in z:
+      if ids['variables']['age']<=22 and ids['variables']['seer']==None:
+        y.append(ids)
+    if len(y)>0:
+      human=random.choice(y)
+      users.update_one({'id':m.from_user.id},{'$set':{'currenthuman':human['id']}})
+      humans.update_one({'id':human['id']},{'$set':{'variables.seer':m.from_user.id}})
+      bot.send_message(m.chat.id, 'Теперь вы наблюдаете за человеком с именем '+human['name']+'... '+
+                       'Его уникальный номер - '+str(human['id']))
+    
+    
+    
+    
 def createuser(id, name):
     return{'id':id,
            'name':name,
@@ -210,7 +228,7 @@ def createhuman(creator):
                       'age':random.randint(18,100),
                       'love':None,
                       'friends':[],
-                      'innervoice':None          # Внутренний голос: айди наблюдающего за человеком
+                      'seer':None          # Внутренний голос: айди наблюдающего за человеком
                      },
          'func':{'preparetowork':0,
                  'tryfindwork':0,
