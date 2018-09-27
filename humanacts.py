@@ -14,7 +14,7 @@ def actfind(human, year, month, day, hour, minute):
          if human['variables']['mood']>=500:
            if human['variables']['seer']!=None:
              if random.randint(1,100)<=50:
-               askgod(human, 'callfriend', human['variables']['seer'])
+               askgod(human, 'callfriend')
              else:
                if random.randint(1,100)<=20:
                   callfriend(human)
@@ -46,6 +46,15 @@ def actfind(human, year, month, day, hour, minute):
   elif human['age']<=110:
     pass
 
+ 
+def actend(human):
+  
+
+def gohome(human):
+  t=threading.Timer(60, actend, args=[human])
+  t.start()
+  humans.update_one({'id':human['id']},{'$set':{'variables.acting':1}})
+  
   
   'sociality':random.randint(1,1000),
          'luck':random.randint(1,1000),
