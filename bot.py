@@ -221,7 +221,7 @@ def createhuman(creator):
          'gender':gender,
          'gay':gay,
          'id':id,                                # Уникальный индекс человека                      
-         'creator':creator                       # Айди бога, создавшего этого человека
+         'creator':creator,                       # Айди бога, создавшего этого человека
          'variables':{'currentmoney':random.randint(0,1000000),
                       'acting':0,
                       'house':random.choice(houses),
