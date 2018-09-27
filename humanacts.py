@@ -89,17 +89,17 @@ def dowork(human):
   if human['variables']['student']==1:
     t=threading.Timer(360, actend, args=[human])
     t.start()
-    if human['seer']!=None:
-      bot.send_message(human['seer'], human['name']+' учится! Закончит через 6 часов.')
+    if human['variables']['seer']!=None:
+      bot.send_message(human['variables']['seer'], human['name']+' учится! Закончит через 6 часов.')
     if human['diligence']>=735:
       mood=25
-      if human['seer']!=None:
-        bot.send_message(human['seer'], '"В принципе, на учёбе не так уж и плохо. От этого можно даже получать удовольствие!"'+
+      if human['variables']['seer']!=None:
+        bot.send_message(human['variables']['seer'], '"В принципе, на учёбе не так уж и плохо. От этого можно даже получать удовольствие!"'+
                          ' - мысли человека "'+human['name']+'".')
     else:
       mood=-15
-      if human['seer']!=None:
-        bot.send_message(human['seer'], '"Не люблю учебу... Скукота!"')
+      if human['variables']['seer']!=None:
+        bot.send_message(human['variables']['seer'], '"Не люблю учебу... Скукота!"')
     humans.update_one({'id':human['id']},{'$inc':{'variables.mood':mood}})
   
   
@@ -108,8 +108,8 @@ def preparetowork(human):
   x=x['day']
   humans.update_one({'id':human['id']},{'$set':{'func.preparetowork':1}})
   humans.update_one({'id':human['id']},{'$set':{'variables.acting':1}})
-  if human['seer']!=None:
-      bot.send_message(human['seer'], human['name']+' готовится к новому дню.\n"Сегодня '+str(x)+'е число. Пора собираться!"')
+  if human['variables']['seer']!=None:
+      bot.send_message(human['variables']['seer'], human['name']+' готовится к новому дню.\n"Сегодня '+str(x)+'е число. Пора собираться!"')
   t=threading.Timer(50, actend, args=[human])
   t.start()
   
@@ -121,11 +121,11 @@ def foundwork(human):
   if z<=x:
     foundedwork(human)
     humans.update_one({'id':human['id']},{'$inc':{'variables.mood':55}})
-    if human['seer']!=None:
-      bot.send_message(human['seer'], '"Ура! Я нашел работу!"')
+    if human['variables']['seer']!=None:
+      bot.send_message(human['variables']['seer'], '"Ура! Я нашел работу!"')
   else:
-    if human['seer']!=None:
-      bot.send_message(human['seer'],'"Я не смог найти работу... Попробую в другой раз."')
+    if human['variables']['seer']!=None:
+      bot.send_message(human['variables']['seer'],'"Я не смог найти работу... Попробую в другой раз."')
     humans.update_one({'id':human['id']},{'$inc':{'variables.mood':-14}})
     
   
@@ -134,8 +134,8 @@ def foundedwork(human):
   
   
 def tryfindwork(human):
-  if human['seer']!=None:
-      bot.send_message(human['seer'],'"Попробую найти работу..."')
+  if human['variables']['seer']!=None:
+      bot.send_message(human['variables']['seer'],'"Попробую найти работу..."')
   t=threading.Timer(180, actend, args=[human])
   t.start()
   t=threading.Timer(180, foundwork, args=[human])
@@ -173,11 +173,11 @@ def relax(human):
       p=7-hour
     t=threading.Timer(p, actend, args=[human])
     t.start()
-    if human['seer']!=None:
-      bot.send_message(human['seer'], '"Сегодня был тяжелый день... Пойду спать!"')
+    if human['variables']['seer']!=None:
+      bot.send_message(human['variables']['seer'], '"Сегодня был тяжелый день... Пойду спать!"')
   else:
-    if human['seer']!=None:
-      bot.send_message(human['seer'], '"Отдохну-ка я..."')
+    if human['variables']['seer']!=None:
+      bot.send_message(human['variables']['seer'], '"Отдохну-ка я..."')
     t=threading.Timer(30, actend, args=[human])
     t.start()
   humans.update_one({'id':human['id']},{'$set':{'variables.acting':1}})
@@ -196,8 +196,8 @@ def tohome(human):
   humans.update_one({'id':human['id']},{'$set':{'variables.athome':1}})
 
 def gohome(human):
-  if human['seer']!=None:
-      bot.send_message(human['seer'], human['name']+'"Иду домой..."')
+  if human['variables']['seer']!=None:
+      bot.send_message(human['variables']['seer'], human['name']+'"Иду домой..."')
   t=threading.Timer(60, actend, args=[human])
   t.start()
   f=threading.Timer(60, tohome, args=[human])
@@ -207,7 +207,7 @@ def gohome(human):
   
 def askgod(human, question):
   if question=='callfriend':
-    if human['seer']!=None:
-      bot.send_message(human['seer'], '"Как же поступить... В прочем, неважно!"')
+    if human['variables']['seer']!=None:
+      bot.send_message(human['variables']['seer'], '"Как же поступить... В прочем, неважно!"')
   
   
