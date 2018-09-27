@@ -76,13 +76,13 @@ def actfind(human, year, month, day, hour, minute):
       else:
         dowork(human)
         
-  elif human['age']<=35:
+  elif human['variables']['age']<=35:
     pass
-  elif human['age']<=60:
+  elif human['variables']['age']<=60:
     pass
-  elif human['age']<=85:
+  elif human['variables']['age']<=85:
     pass
-  elif human['age']<=110:
+  elif human['variables']['age']<=110:
     pass
 
 def dowork(human):
