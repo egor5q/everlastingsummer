@@ -163,6 +163,7 @@ def createhumans(m):
 def watchhuman(m):
   x=users.find_one({'id':m.from_user.id})
   if x!=None:
+   if x['currenthuman']==None:
     y=[]
     z=humans.find({})
     for ids in z:
@@ -174,7 +175,9 @@ def watchhuman(m):
       humans.update_one({'id':human['id']},{'$set':{'variables.seer':m.from_user.id}})
       bot.send_message(m.chat.id, 'Теперь вы наблюдаете за человеком с именем '+human['name']+'... '+
                        'Его уникальный номер - '+str(human['id']))
-    
+   else:
+    bot.send_message(m.chat.id, 'Вы уже наблюдаете за одним человеком!')
+   
     
     
     
