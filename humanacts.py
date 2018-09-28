@@ -22,7 +22,7 @@ citytime=db.citytime
 
 
 def actfind(human, year, month, day, hour, minute):
-  if human['variables']['age']<=22:
+  if human['variables']['age']<=150:
     if hour>=22 or hour<=5:
       if human['variables']['athome']==0:
        if len(human['variables']['friends'])>0:
