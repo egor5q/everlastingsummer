@@ -147,7 +147,10 @@ def monthtotext(month):
 def humansinfo(m):
   if m.from_user.id==441399484:
     x=humans.find({})
-    bot.send_message(m.chat.id, 'Количество человек, проживающих в городе: '+str(len(x))+'!')
+    y=0
+    for ids in x:
+      y+=1
+    bot.send_message(m.chat.id, 'Количество человек, проживающих в городе: '+str(y)+'!')
 
 @bot.message_handler(commands=['createhumans'])
 def createhumans(m):
