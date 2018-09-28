@@ -147,7 +147,7 @@ def tryfindwork(human):
   
   
 def homework(human):
- if human['variables']['homeworkready']==0 and human['variable']['student']==1:
+ if human['variables']['homeworkready']==0 and human['variables']['student']==1:
   if human['diligence']>=350 and human['variables']['mood']>=320:
     if random.randint(1,100)<=95:
       dohomework(human)           # Уроки
