@@ -337,6 +337,9 @@ if True:
 if True:
  #try:
    print('7777')
+   x=users.find({})
+   for ids in x:
+      bot.send_message(ids['id'], 'Бот был перезагружен! Возможно, вышло обновление.')
    bot.polling(none_stop=True,timeout=600)
  #except:
  #       print('!!! READTIME OUT !!!') 
