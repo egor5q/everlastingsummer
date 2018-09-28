@@ -84,8 +84,17 @@ def actfind(human, year, month, day, hour, minute):
     pass
   elif human['variables']['age']<=110:
     pass
-
+  
+  
+  
+def gotowork(human):
+  t=threading.Timer(60, actend, args=[human])
+  t.start()
+  humans.update_one({'id':human['id']},{'$set':{'variables.acting':1}})
+  
+  
 def dowork(human):
+  humans.update_one({'id':human['id']},{'$set':{'variables.acting':1}})
   if human['variables']['student']==1:
     t=threading.Timer(360, actend, args=[human])
     t.start()
