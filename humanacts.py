@@ -164,7 +164,7 @@ def homework(human):
 def relax(human):
   humans.update_one({'id':human['id']},{'$set':{'func.relax':1}})
   x=citytime.find_one({})
-  hour=x['hours']
+  hour=x['hour']
   if hour>=22 or hour<=4:
     if hour>=22:
       p=24-hour
