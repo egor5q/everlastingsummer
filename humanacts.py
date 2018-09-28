@@ -90,6 +90,7 @@ def actfind(human, year, month, day, hour, minute):
 def gotowork(human):
   t=threading.Timer(60, actend, args=[human])
   t.start()
+  humans.update_one({'id':human['id']},{'$set':{'variables.athome':0}})
   humans.update_one({'id':human['id']},{'$set':{'variables.acting':1}})
   
   
