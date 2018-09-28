@@ -161,6 +161,13 @@ def homework(human):
  else:
   relax(human)
     
+    
+    
+def dohomework(human):
+  t=threading.Timer(60, actend, args=[human])
+  t.start()
+  humans.update_one({'id':human['id']},{'$set':{'variables.acting':1}})
+    
 def relax(human):
   humans.update_one({'id':human['id']},{'$set':{'func.relax':1}})
   x=citytime.find_one({})
