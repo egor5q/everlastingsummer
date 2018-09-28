@@ -44,7 +44,7 @@ def actfind(human, year, month, day, hour, minute):
       else:
         homework(human)
     elif hour>=6 and hour<=8:
-      if human['variable']['student']==1 or human['variable']['worker']==1:
+      if human['variables']['student']==1 or human['variables']['worker']==1:
         if human['variables']['mood']>=150 and human['diligence']>=230:
           preparetowork(human)
         else:
