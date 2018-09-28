@@ -61,7 +61,7 @@ def myhuman(m):
         if y!=None:
           bot.send_message(m.chat.id, 'Информация о человеке с именем "*'+y['name']+'*":\n\n'+
                            'Наличные: '+str(y['variables']['currentmoney'])+'\n'+
-                           'Дом: '+housetotext(y['variables']['house'])+'\n'+
+                           'Дом: '+'неизвестно'+'\n'+
                            'Социальность: '+str(y['sociality'])+'\n'+
                            'Удача: '+str(y['luck'])+'\n'+
                            'Счастье: '+str(y['happy'])+'\n'+
@@ -76,8 +76,8 @@ def myhuman(m):
                            'Пол: '+gendertotext(y['gender'])+'\n'+
                            'Ориентация: '+gaytotext(y['gay'])+'\n'+
                            'Личный идентефикатор: '+str(y['id'])+'\n'+
-                           'Кто в данный момент следит за человеком: '+idtoname(y['variables']['innervoice'])+'\n'+
-                           'Кто создал человека: '+creatortotext(y['creator'])
+                           'Кто в данный момент следит за человеком: '+'неизвестно'+'\n'+
+                           'Кто создал человека: '+'world'
                           )
           
   
