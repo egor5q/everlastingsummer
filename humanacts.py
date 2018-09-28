@@ -201,7 +201,7 @@ def relax(human):
   else:
     if human['variables']['seer']!=None:
       bot.send_message(human['variables']['seer'], '"Отдохну-ка я..."')
-    t=threading.Timer(30, actend, args=[human])
+    t=threading.Timer(90, actend, args=[human])
     t.start()
   humans.update_one({'id':human['id']},{'$set':{'variables.acting':1}})
   humans.update_one({'id':human['id']},{'$inc':{'variables.mood':10}})
