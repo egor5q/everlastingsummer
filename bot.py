@@ -235,6 +235,7 @@ def createhuman(creator):
                       'age':random.randint(18,100),
                       'atwork':0,
                       'athome':1,
+                      'homeworkready':0,
                       'student':random.randint(0,1),
                       'worker':random.randint(0,1),
                       'love':None,
