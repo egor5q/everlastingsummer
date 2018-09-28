@@ -329,24 +329,24 @@ if True:
     
   
 if True:
- try:
+ #try:
    print('7777')
    bot.polling(none_stop=True,timeout=600)
- except:
-        print('!!! READTIME OUT !!!') 
-        try:
-           bot.stop_polling()
-        except:
-           pass
-        time.sleep(1)
-        check = True
-        while check==True:
-          try:
-            bot.polling(none_stop=True,timeout=1)
-            print('checkkk')
-            check = False
-          except:
-            time.sleep(1)
+ #except:
+ #       print('!!! READTIME OUT !!!') 
+ #       try:
+ #          bot.stop_polling()
+ #       except:
+ #          pass
+ #       time.sleep(1)
+ #       check = True
+ #       while check==True:
+ #         try:
+ #           bot.polling(none_stop=True,timeout=1)
+ #           print('checkkk')
+ #           check = False
+ #         except:
+ #           time.sleep(1)
    
 #if __name__ == '__main__':
  # bot.polling(none_stop=True)
