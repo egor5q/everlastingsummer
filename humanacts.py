@@ -49,6 +49,12 @@ def actfind(human, year, month, day, hour, minute):
           preparetowork(human)
         else:
           if random.randint(1,100)<=50:
+            if human['variables']['seer']!=None:
+              if human['variables']['student']==1:
+                text='Так лень идти на учёбу! Останусь лучше дома...'
+              elif human['variables']['worker']==1:
+                text='На работе сегодня и без меня справятся! Останусь лучше дома...'
+              bot.send_message(human['variables']['seer'], human['name']+':\n"'+text+'"')
             relax(human)
           else:
             preparetowork(human)
