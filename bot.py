@@ -329,7 +329,10 @@ if True:
 if True:
   life()
     
-    
+ 
+if True:
+  humans.update_many({},{'set':{'variables.acting':0}})
+
   
 if True:
  #try:
