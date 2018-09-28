@@ -153,10 +153,10 @@ def humansinfo(m):
 def createhumans(m):
   if m.from_user.id==441399484:
     x=0
-    while x<50:
+    while x<25:
       humans.insert_one(createhuman('world'))
       x+=1
-    bot.send_message(m.chat.id, '100 человек успешно созданы и в данный момент проживают в городе!')
+    bot.send_message(m.chat.id, '25 человек успешно созданы и в данный момент проживают в городе!')
 
 
 @bot.message_handler(commands=['watchhuman'])
@@ -234,10 +234,10 @@ def createhuman(creator):
                       'house':random.choice(houses),
                       'age':random.randint(18,100),
                       'atwork':0,
+                      'athome':1,
                       'student':random.randint(0,1),
                       'worker':random.randint(0,1),
                       'love':None,
-                      'athome':1,
                       'mood':random.randint(1,1000),
                       'friends':[],
                       'seer':None          # Внутренний голос: айди наблюдающего за человеком
