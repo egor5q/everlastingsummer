@@ -331,7 +331,7 @@ if True:
     
  
 if True:
-  humans.update_many({},{'set':{'variables.acting':0}})
+  humans.update_many({},{'$set':{'variables.acting':0}})
 
   
 if True:
