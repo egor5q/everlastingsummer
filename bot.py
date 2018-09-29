@@ -21,34 +21,6 @@ users=db.users
 
   
 if True:
- #try:
    print('7777')
-   x=users.find({})
-   for ids in x:
-      bot.send_message(ids['id'], 'Бот был перезагружен! Возможно, вышло обновление.')
    bot.polling(none_stop=True,timeout=600)
- #except:
- #       print('!!! READTIME OUT !!!') 
- #       try:
- #          bot.stop_polling()
- #       except:
- #          pass
- #       time.sleep(1)
- #       check = True
- #       while check==True:
- #         try:
- #           bot.polling(none_stop=True,timeout=1)
- #           print('checkkk')
- #           check = False
- #         except:
- #           time.sleep(1)
-   
-#if __name__ == '__main__':
- # bot.polling(none_stop=True)
 
-#while True:
-#    try:
-  #      bot.polling()
- #   except:
-  #      pass
-#    time.sleep(0.1)
