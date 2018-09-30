@@ -39,7 +39,10 @@ def createuser(id, name, username):
            'username':username,
            'team':None,
            'gold':0,
-           'hero':None
+           'heroname':None,
+           'strenght':3,
+           'agility':3,
+           'intelligence':3
           }
     
     
