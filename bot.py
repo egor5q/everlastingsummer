@@ -38,7 +38,8 @@ def createuser(id, name, username):
            'name':name,
            'username':username,
            'team':None,
-           'gold':0
+           'gold':0,
+           'hero':None
           }
     
     
