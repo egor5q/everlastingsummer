@@ -39,9 +39,15 @@ def work(m):
     x=users.find_one({'id':m.from_user.id})
     if x!=None:
         if x['working']==0:
-            bot.reply_to_message(m.chat.id, random.choice(worktexts))
+            bot.send_message(m.chat.id, random.choice(worktexts), reply_to_message_id=m.message_id)
+            t=threading.Timer(random.randint(60,120),givework, args=[m.from_user.id])
+            t.start()
            
-           
+def givework(id):
+    pass
+
+
+
 worktexts=['Ну что, пионер, скучаешь? Ничего, сейчас найду для тебя подходящее занятие! Подожди немного.',
            'Бездельничаешь? Сейчас я это исправлю! Подожди пару минут, найду тебе занятие.']
   
