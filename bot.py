@@ -34,8 +34,16 @@ def start(m):
   
 
 
-
-
+@bot.message_handler(commands=['work'])
+def work(m):
+    x=users.find_one({'id':m.from_user.id})
+    if x!=None:
+        if x['working']==0:
+            bot.reply_to_message(m.chat.id, random.choice(worktexts))
+           
+           
+worktexts=['Ну что, пионер, скучаешь? Ничего, сейчас найду для тебя подходящее занятие! Подожди немного.',
+           'Бездельничаешь? Сейчас я это исправлю! Подожди пару минут, найду тебе занятие.']
   
 @bot.message_handler()
 def messag(m):
@@ -64,7 +72,8 @@ def createuser(id, name, username):
            'agility':3,
            'intelligence':3,
            'setname':1,
-           'respect':100
+           'respect':100,
+           'working':0
           }
     
     
