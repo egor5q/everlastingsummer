@@ -24,25 +24,29 @@ def start(m):
  if m.chat.id==m.from_user.id:
   if users.find_one({'id':m.from_user.id})==None:
     users.insert_one(createuser(m.from_user.id, m.from_user.first_name, m.from_user.username))
-    kb=types.InlineKeyboardMarkup()
-    kb.add(types.InlineKeyboardButton(text='Свет', callback_data='radiant'))
-    kb.add(types.InlineKeyboardButton(text='Тьма', callback_data='dire'))
-    bot.send_message(m.chat.id, 'Здраствуй! Ты попал на поле бесконечной битвы, где герои возрождаются снова и снова только для того, '+
-                    'чтобы выяснить: кто же сильнее? Свет или Тьма? Вам предстоит выбрать, за кого будете сражаться.')
+    bot.send_message(m.chat.id,'Здраствуй, пионер! Впереди тебя ждёт интересная жизнь в лагере "Совёнок"! '+
+                     'А сейчас скажи нам, как тебя зовут (следующим сообщением).')
   else:
     bot.send_message(m.chat.id, 'Бот работает!')
   
 
+  
+@bot.message_handler()
+def messag(m):
+    x=users.find_one({'id':m.from_user.id})
+    if x!=None:
+        if x['setname']==1:
+            users.update_one({'id':m.from_user.id},{'$set':
+  
 def createuser(id, name, username):
     return{'id':id,
            'name':name,
            'username':username,
-           'team':None,
-           'gold':0,
-           'heroname':None,
+           'pionername':None,
            'strenght':3,
            'agility':3,
-           'intelligence':3
+           'intelligence':3,
+           'setname':1
           }
     
     
