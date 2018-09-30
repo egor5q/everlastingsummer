@@ -19,6 +19,16 @@ db=client.worldseer
 users=db.users
 
 
+@bot.message_handler(commands=['start'])
+def start(m):
+ if m.chat.id==m.from_user.id:
+  kb=types.InlineKeyboardMarkup()
+  kb.add(types.InlineKeyboardButton(text='Свет', callback_data='radiant'))
+  kb.add(types.InlineKeyboardButton(text='Тьма', callback_data='dire'))
+  bot.send_message(m.chat.id, 'Какую сторону выберешь?')
+  
+
+
   
 if True:
    print('7777')
