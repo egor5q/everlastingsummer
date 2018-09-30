@@ -15,21 +15,34 @@ bot = telebot.TeleBot(token)
 
 client1=os.environ['database']
 client=MongoClient(client1)
-db=client.worldseer
+db=client.dotachat
 users=db.users
 
 
 @bot.message_handler(commands=['start'])
 def start(m):
  if m.chat.id==m.from_user.id:
-  kb=types.InlineKeyboardMarkup()
-  kb.add(types.InlineKeyboardButton(text='Свет', callback_data='radiant'))
-  kb.add(types.InlineKeyboardButton(text='Тьма', callback_data='dire'))
-  bot.send_message(m.chat.id, 'Какую сторону выберешь?')
+  if users.find_one({'id':m.from_user.id})==None:
+    users.insert_one(createuser(m.from_user.id, m.from_user.first_name, m.from_user.username))
+    kb=types.InlineKeyboardMarkup()
+    kb.add(types.InlineKeyboardButton(text='Свет', callback_data='radiant'))
+    kb.add(types.InlineKeyboardButton(text='Тьма', callback_data='dire'))
+    bot.send_message(m.chat.id, 'Здраствуй! Ты попал на поле бесконечной битвы, где герои возрождаются снова и снова только для того, '+
+                    'чтобы выяснить: кто же сильнее? Свет или Тьма? Вам предстоит выбрать, за кого будете сражаться.')
+  else:
+    bot.send_message(m.chat.id, 'Бот работает!')
   
 
-
-  
+def createuser(id, name, username):
+    return{'id':id,
+           'name':name,
+           'username':username,
+           'team':None,
+           'gold':0
+          }
+    
+    
+    
 if True:
    print('7777')
    bot.polling(none_stop=True,timeout=600)
