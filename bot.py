@@ -46,6 +46,8 @@ def messag(m):
             if not==0:
                 users.update_one({'id':m.from_user.id},{'$set':{'pionername':m.text}})
                 users.update_one({'id':m.from_user.id},{'$set':{'setname':0}})
+                bot.send_message(m.chat.id, 'Привет, '+m.text+'! Заходи в '+
+                                 '@everlastingsummerchat, и знакомься с остальными пионерами!')
             else:
                 bot.send_message(m.chat.id, 'Доступны только символы русского и английского алфавита!')
   
