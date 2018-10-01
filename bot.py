@@ -22,6 +22,7 @@ db=client.everlastingsummer
 users=db.users
 x=0
 ss=users.find({})
+print('1')
 for ids in ss:
         x+=1
 print(str(x))
