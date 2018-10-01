@@ -124,7 +124,14 @@ def messag(m):
                                  '@everlastingsummerchat, и знакомься с остальными пионерами!')
             else:
                 bot.send_message(m.chat.id, 'Доступны только символы русского и английского алфавита!')
-  
+  else:
+   if m.reply_to_message!=None:
+     x=users.find_one({'id':m.from_user.id})
+     if x!=None:
+        if x['answering']==1:
+            users.update_one({'id':m.from_user.id},{'$set':{'answering':0}})
+            if m.text=='Хорошо, Ольга Дмитриевна!':
+                 sendm('Молодец, пионер!')
 def createuser(id, name, username):
     return{'id':id,
            'name':name,
@@ -136,6 +143,7 @@ def createuser(id, name, username):
            'setname':1,
            'respect':50,
            'working':0,
+           'answering':0,
            'OlgaDmitrievna_respect':50,
            'Slavya_respect':50,
            'Uliana_respect':50,
