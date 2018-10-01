@@ -94,7 +94,8 @@ def givework(id):
            quest=random.choice(lvl2quests)
            if quest=='pickberrys':
               text+='Собери-ка ягоды для вечернего торта! Можешь взять себе в помощь еще кого-нибудь, если хочешь. Одному грести до острова тяжеловато.'
-           
+           sendto=types.ForceReply(selective=False)
+           bot.send_message(-1001351496983, text, reply_markup=sendto)
        else:
            text+='Ответственные задания я тебе пока что доверить не могу, ['+x['pionername']+'](tg://user?id='+id+'). Чтобы вырастить из тебя образцового пионера,  начнем с малого. Сделай вот что:\n'
        
