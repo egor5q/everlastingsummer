@@ -113,11 +113,11 @@ def messag(m):
     x=users.find_one({'id':m.from_user.id})
     if x!=None:
         if x['setname']==1:
-            not=0
+            nott=0
             for ids in m.text:
                 if ids.lower() not in symbollist:
-                    not=1
-            if not==0:
+                    nott=1
+            if nott==0:
                 users.update_one({'id':m.from_user.id},{'$set':{'pionername':m.text}})
                 users.update_one({'id':m.from_user.id},{'$set':{'setname':0}})
                 bot.send_message(m.chat.id, 'Привет, '+m.text+'! Заходи в '+
