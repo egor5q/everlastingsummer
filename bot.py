@@ -96,6 +96,7 @@ def givework(id):
            if quest=='pickberrys':
               text+='Собери-ка ягоды для вечернего торта! Можешь взять себе в помощь еще кого-нибудь, если хочешь. '+
            'Одному грести до острова тяжеловато.'
+           
        else:
            text+='Ответственные задания я тебе пока что доверить не могу, ['+x['pionername']+'](tg://user?id='+id+'). Чтобы '+
            'вырастить из тебя образцового пионера,  начнем с малого. Сделай вот что:\n'
@@ -110,21 +111,22 @@ worktexts=['Ну что, пионер, скучаешь? Ничего, сейч�
   
 @bot.message_handler()
 def messag(m):
+  print(str(m.chat.id))
   if m.from_user.id==m.chat.id:
     x=users.find_one({'id':m.from_user.id})
     if x!=None:
         if x['setname']==1:
             not=0
             for ids in m.text:
-                if ids not in symbollist:
+                if ids.lower() not in symbollist:
                     not=1
             if not==0:
                 users.update_one({'id':m.from_user.id},{'$set':{'pionername':m.text}})
                 users.update_one({'id':m.from_user.id},{'$set':{'setname':0}})
                 bot.send_message(m.chat.id, 'Привет, '+m.text+'! Заходи в '+
-                                 '@everlastingsummerchat, и знакомься с остальными пионерами!')
+                                 '@Everlastingsummerchat, и знакомься с остальными пионерами!')
             else:
-                bot.send_message(m.chat.id, 'Доступны только символы русского и английского алфавита!')
+                bot.send_message(m.chat.id, 'Нет-нет! Имя может содержать только буквы русского и английского алфавита!')
   else:
    if m.reply_to_message!=None:
      x=users.find_one({'id':m.from_user.id})
