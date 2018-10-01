@@ -86,7 +86,9 @@ def givework(id):
            text+='Так как ты у нас ответственный пионер, для тебя есть важное задание:\n'
            lvl1quests=lvlsort(1)
            quest=random.choice(lvl1quests)
-           
+           if quest=='concertready':
+              text+='Тебе нужно подготовить сцену для сегодняшнего выступления: '+
+           'принести декорации и аппаратуру, которые нужны выступающим пионерам, выровнять стулья. Приступай!'
        elif x['OlgaDmitrievna_respect']>=40:
            text+='Нашла для тебя занятие, ['+x['pionername']+'](tg://user?id='+id+'):\n'
        else:
