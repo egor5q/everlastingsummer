@@ -131,7 +131,9 @@ def messag(m):
         if x['answering']==1:
             users.update_one({'id':m.from_user.id},{'$set':{'answering':0}})
             if m.text=='Хорошо, Ольга Дмитриевна!':
-                 sendm('Молодец, пионер!')
+                 sendm('Молодец, пионер! Как закончишь - сообщи мне.')
+           
+           
 def createuser(id, name, username):
     return{'id':id,
            'name':name,
