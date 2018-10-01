@@ -38,6 +38,20 @@ lvl3works={
            'washgenda':0
           }
 
+def lvlsort(x):
+   finallist=[]
+   if x==1:
+      work=lvl1works
+   elif x==2:
+      work=lvl2works
+   elif x==3:
+      work=lvl3works
+   for ids in work:
+      if ids==0:
+         finallist.append(ids)
+   return finallist
+           
+
 @bot.message_handler(commands=['start'])
 def start(m):
  if m.chat.id==m.from_user.id:
