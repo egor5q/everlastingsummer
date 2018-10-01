@@ -44,7 +44,18 @@ def work(m):
             t.start()
            
 def givework(id):
-    pass
+    x=users.find_one({'id':m.from_user.id})
+    if x!=None:
+       text=''
+       if x['respect']>=75:
+           text+='Так как ты у нас ответственный пионер, для тебя есть важное задание:\n'
+       elif x['respect']>=40:
+           text+='Нашла для тебя занятие, ['+x['pionername']+'](tg://user?id='+id+'):\n'
+       else:
+           pass
+           
+           
+           
 
 
 
