@@ -15,7 +15,7 @@ bot = telebot.TeleBot(token)
 
 client1=os.environ['database']
 client=MongoClient(client1)
-db=client.dotachat
+db=client.everlastingsummer
 users=db.users
 
 symbollist=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
