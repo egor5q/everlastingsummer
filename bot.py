@@ -8,7 +8,10 @@ import threading
 from emoji import emojize
 from telebot import types
 from pymongo import MongoClient
-from emoji import emojize
+
+from requests.exceptions import ReadTimeout
+from requests.exceptions import ConnectionError
+
 
 token = os.environ['TELEGRAM_TOKEN']
 bot = telebot.TeleBot(token)
