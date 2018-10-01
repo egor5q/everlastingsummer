@@ -93,6 +93,8 @@ def givework(id):
               text+='Тебе нужно подготовить сцену для сегодняшнего выступления: принести декорации и аппаратуру, которые нужны выступающим пионерам, выровнять стулья. Приступишь?'
            elif quest=='sortmedicaments':
               text+='Тебе нужно помочь медсестре с лекарствами. Не знаю точно, что там требуется, уточнишь у неё. Возьмёшься?'
+           elif quest=='checkpionerssleeping':
+              text+='Уже вечер, и все пионеры должны в это время ложиться спать. Пройдись по лагерю и поторопи гуляющих. Готов?'
            t=threading.Timer(60, cancelquest, args=[id])
            t.start()
        elif x['OlgaDmitrievna_respect']>=40:
@@ -104,8 +106,15 @@ def givework(id):
            sendto=types.ForceReply(selective=False)
            bot.send_message(-1001351496983, text, reply_markup=sendto)
        else:
-           text+='Ответственные задания я тебе пока что доверить не могу, ['+x['pionername']+'](tg://user?id='+id+'). Чтобы вырастить из тебя образцового пионера,  начнем с малого. Сделай вот что:\n'
-       
+           text+='Ответственные задания я тебе пока что доверить не могу, ['+x['pionername']+'](tg://user?id='+id+'). Чтобы вырастить из тебя образцового пионера,  начнем с малого.\n'
+           lvl3quests=lvlsort(3)
+           quest=random.choice(lvl3quests)
+           if quest=='washgenda':
+              text+='Наш памятник на главной площади совсем запылился. Не мог бы ты помыть его?'
+           if quest=='cleanterritory':
+              text+='Территория лагеря всегда должна быть в чистоте! Возьми веник и совок, и подмети здесь всё. Справишься?'
+           sendto=types.ForceReply(selective=False)
+           bot.send_message(-1001351496983, text, reply_markup=sendto)
            
            
 def cancelquest(id):
