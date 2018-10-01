@@ -28,9 +28,15 @@ lvl1works={
           }
 lvl2works={
            'pickberrys':0,
-           
+           'bringfoodtokitchen':0,
+           'helpinmedpunkt':0,
+           'helpinkitchen':0
           }
 
+lvl3works={
+           'cleanterritory':0,
+           'washgenda':0
+          }
 
 @bot.message_handler(commands=['start'])
 def start(m):
@@ -58,9 +64,12 @@ def givework(id):
     x=users.find_one({'id':m.from_user.id})
     if x!=None:
        text=''
-       if x['respect']>=75:
+       if x['OlgaDmitrievna_respect']>=75:
            text+='Так как ты у нас ответственный пионер, для тебя есть важное задание:\n'
-       elif x['respect']>=40:
+           lvl1quests=lvl1sort()
+           quest=random.choice(lvl1quests)
+           
+       elif x['OlgaDmitrievna_respect']>=40:
            text+='Нашла для тебя занятие, ['+x['pionername']+'](tg://user?id='+id+'):\n'
        else:
            text+='Ответственные задания я тебе пока что доверить не могу, ['+x['pionername']+'](tg://user?id='+id+'). Чтобы '+
@@ -102,7 +111,16 @@ def createuser(id, name, username):
            'intelligence':3,
            'setname':1,
            'respect':50,
-           'working':0
+           'working':0,
+           'OlgaDmitrievna_respect':50,
+           'Slavya_respect':50,
+           'Uliana_respect':50,
+           'Alisa_respect':50,
+           'Lena_respect':50,
+           'Electronic_respect':50,
+           'Miku_respect':50,
+           'Zhenya_respect':35
+           
           }
     
     
