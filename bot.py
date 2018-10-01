@@ -55,7 +55,8 @@ def lvlsort(x):
 @bot.message_handler(commands=['start'])
 def start(m):
  if m.chat.id==m.from_user.id:
-  if users.find_one({'id':m.from_user.id})==None:
+  x=users.find_one({'id':m.from_user.id})
+  if x==None:
     users.insert_one(createuser(m.from_user.id, m.from_user.first_name, m.from_user.username))
     bot.send_message(m.chat.id,'Здраствуй, пионер! Меня зовут Ольга Дмитриевна, я буду твоей вожатой. Впереди тебя ждёт интересная жизнь в лагере "Совёнок"! '+
                      'А сейчас скажи нам, как тебя зовут (следующим сообщением).')
