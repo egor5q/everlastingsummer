@@ -21,6 +21,15 @@ users=db.users
 symbollist=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
            'а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ъ','ы','ь','э','ю','я']
 
+lvl1works={
+           'concertready':0,
+           'sortmedicaments':0,
+           'checkpionerssleeping':0
+          }
+lvl2works={
+           'pickberrys':0
+          }
+
 
 @bot.message_handler(commands=['start'])
 def start(m):
@@ -95,7 +104,7 @@ def createuser(id, name, username):
            'agility':3,
            'intelligence':3,
            'setname':1,
-           'respect':100,
+           'respect':50,
            'working':0
           }
     
