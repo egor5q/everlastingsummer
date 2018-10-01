@@ -73,6 +73,8 @@ def work(m):
     x=users.find_one({'id':m.from_user.id})
     if x!=None:
         if x['working']==0:
+          if x['waitforwork']==0:
+            users.update_one({'id':m.from_user.id},{'$set':{'waitforwork':1}})
             bot.send_message(m.chat.id, random.choice(worktexts), reply_to_message_id=m.message_id)
             t=threading.Timer(random.randint(60,120),givework, args=[m.from_user.id])
             t.start()
@@ -87,13 +89,17 @@ def givework(id):
            lvl1quests=lvlsort(1)
            quest=random.choice(lvl1quests)
            if quest=='concertready':
-              text+='Тебе нужно подготовить сцену для сегодняшнего выступления: принести декорации и аппаратуру, которые нужны выступающим пионерам, выровнять стулья. Приступай!'
+              text+='Тебе нужно подготовить сцену для сегодняшнего выступления: принести декорации и аппаратуру, которые нужны выступающим пионерам, выровнять стулья. Приступишь?'
+           elif quest=='sortmedicaments':
+              text+='Тебе нужно помочь медсестре с лекарствами. Не знаю точно, что там требуется, уточнишь у неё. Возьмёшься?'
+           t=threading.Timer(60, cancelquest, args=[id])
+           t.start()
        elif x['OlgaDmitrievna_respect']>=40:
            text+='Нашла для тебя занятие, ['+x['pionername']+'](tg://user?id='+id+')!\n'
            lvl2quests=lvlsort(2)
            quest=random.choice(lvl2quests)
            if quest=='pickberrys':
-              text+='Собери-ка ягоды для вечернего торта! Можешь взять себе в помощь еще кого-нибудь, если хочешь. Одному грести до острова тяжеловато.'
+              text+='Собери-ка ягоды для вечернего торта! Можешь взять себе в помощь еще кого-нибудь, если хочешь. Одному грести до острова тяжеловато. Ты готов, пионер?'
            sendto=types.ForceReply(selective=False)
            bot.send_message(-1001351496983, text, reply_markup=sendto)
        else:
@@ -101,7 +107,13 @@ def givework(id):
        
            
            
-
+def cancelquest(id):
+    x=users.find_one({'id':id})
+    if x!=None:
+        if x['working']==0:
+            bot.send_message(-1001351496983, '['+x['pionername']+'](tg://user?id='+id+')! Почему не отвечаешь? Неприлично, знаешь ли. Ну, раз не хочешь, найду другого пионера для этой работы.')
+            
+            
 
 
 worktexts=['Ну что, пионер, скучаешь? Ничего, сейчас найду для тебя подходящее занятие! Подожди немного.',
@@ -132,9 +144,29 @@ def messag(m):
         if x['answering']==1:
             users.update_one({'id':m.from_user.id},{'$set':{'answering':0}})
             if m.text=='Хорошо, Ольга Дмитриевна!':
+                 users.update_one({'id':m.from_user.id},{'$set':{'working':1}})
+                 users.update_one({'id':m.from_user.id},{'$set':{'waitforwork':0}})
+                 dowork(m.from_user.id)
                  sendm('Молодец, пионер! Как закончишь - сообщи мне.')
            
-           
+def dowork(id):
+    t=threading.Timer(300, endwork, args=[id])
+    t.start()
+    
+    
+def endwork(id):
+    x=users.find_one({'id':id})
+    users.update_one({'id':id},{'$set':{'working':0}})
+    users.update_one({'id':id},{'$set':{'relaxing':1}})
+    bot.send_message(-1001351496983, 'Отличная работа, ['+x['pionername']+'](tg://user?id='+id+')! Теперь можешь отдохнуть.')
+    t=threading.Timer(600,relax,args=[id])
+    t.start()
+    
+def relax(id):
+    users.update_one({'id':id},{'$set':{'relaxing':0}})
+    
+    
+    
 def createuser(id, name, username):
     return{'id':id,
            'name':name,
@@ -147,6 +179,7 @@ def createuser(id, name, username):
            'waitforwork':0,
            'respect':50,
            'working':0,
+           'relaxing':0,
            'answering':0,
            'OlgaDmitrievna_respect':50,
            'Slavya_respect':50,
@@ -155,7 +188,7 @@ def createuser(id, name, username):
            'Lena_respect':50,
            'Electronic_respect':50,
            'Miku_respect':50,
-           'Zhenya_respect':35
+           'Zhenya_respect':50
            
           }
     
