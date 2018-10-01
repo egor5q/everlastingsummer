@@ -27,7 +27,8 @@ lvl1works={
            'checkpionerssleeping':0
           }
 lvl2works={
-           'pickberrys':0
+           'pickberrys':0,
+           
           }
 
 
@@ -52,11 +53,7 @@ def work(m):
             t=threading.Timer(random.randint(60,120),givework, args=[m.from_user.id])
             t.start()
            
-lvl1work=[]
-lvl2work=[]
-lvl3work=[]
-           
-           
+          
 def givework(id):
     x=users.find_one({'id':m.from_user.id})
     if x!=None:
