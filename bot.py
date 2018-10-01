@@ -66,7 +66,7 @@ def givework(id):
        text=''
        if x['OlgaDmitrievna_respect']>=75:
            text+='Так как ты у нас ответственный пионер, для тебя есть важное задание:\n'
-           lvl1quests=lvl1sort()
+           lvl1quests=lvlsort(1)
            quest=random.choice(lvl1quests)
            
        elif x['OlgaDmitrievna_respect']>=40:
