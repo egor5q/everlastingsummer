@@ -43,6 +43,11 @@ def work(m):
             t=threading.Timer(random.randint(60,120),givework, args=[m.from_user.id])
             t.start()
            
+lvl1work=[]
+lvl2work=[]
+lvl3work=[]
+           
+           
 def givework(id):
     x=users.find_one({'id':m.from_user.id})
     if x!=None:
@@ -54,7 +59,7 @@ def givework(id):
        else:
            text+='Ответственные задания я тебе пока что доверить не могу, ['+x['pionername']+'](tg://user?id='+id+'). Чтобы '+
            'вырастить из тебя образцового пионера,  начнем с малого. Сделай вот что:\n'
-           
+       
            
            
 
