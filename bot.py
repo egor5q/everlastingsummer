@@ -125,7 +125,7 @@ def givework(id):
            if quest=='cleanterritory':
               text+='Территория лагеря всегда должна быть в чистоте! Возьми веник и совок, и подмети здесь всё. Справишься?'
            sendto=types.ForceReply(selective=False)
-           bot.send_message(-1001351496983, text, reply_markup=sendto)
+           bot.send_message(-1001351496983, text, reply_markup=sendto, parse_mode='markdown')
            
            
 def cancelquest(id):
