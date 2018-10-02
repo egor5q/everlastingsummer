@@ -180,7 +180,7 @@ def endwork(id):
     x=users.find_one({'id':id})
     users.update_one({'id':id},{'$set':{'working':0}})
     users.update_one({'id':id},{'$set':{'relaxing':1}})
-    bot.send_message(-1001351496983, 'Отличная работа, ['+x['pionername']+'](tg://user?id='+id+')! Теперь можешь отдохнуть.')
+    bot.send_message(-1001351496983, 'Отличная работа, ['+x['pionername']+'](tg://user?id='+str(id)+')! Теперь можешь отдохнуть.', parse_mode='markdown')
     t=threading.Timer(600,relax,args=[id])
     t.start()
     
