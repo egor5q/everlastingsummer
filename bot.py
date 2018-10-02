@@ -96,7 +96,7 @@ def givework(id):
     x=users.find_one({'id':id})
     if x!=None:
        text=''
-       users.update_one({'id'id},{'$set':{'answering':1}})
+       users.update_one({'id':id},{'$set':{'answering':1}})
        if x['OlgaDmitrievna_respect']>=75:
            text+='Так как ты у нас ответственный пионер, для тебя есть важное задание!\n'
            lvl1quests=lvlsort(1)
