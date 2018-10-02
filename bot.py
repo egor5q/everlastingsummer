@@ -82,6 +82,7 @@ def start(m):
     bot.send_message(m.chat.id,'Здраствуй, пионер! Меня зовут Ольга Дмитриевна, я буду твоей вожатой. Впереди тебя ждёт интересная жизнь в лагере "Совёнок"! '+
                      'А сейчас скажи нам, как тебя зовут (следующим сообщением).')
   else:
+   if x['setgender']==0 and x['setname']==0:
     x=users.find_one({'id':m.from_user.id})
     if x['working']==1:
        bot.send_message(m.chat.id, 'Здраствуй, пионер! Вижу, ты занят. Молодец! Не буду отвлекать.')
@@ -94,6 +95,7 @@ def start(m):
 def work(m):
     x=users.find_one({'id':m.from_user.id})
     if x!=None:
+      if x['setgender']==0 and x['setname']==0:
         if x['working']==0:
           if x['waitforwork']==0:
            if x['relaxing']==0:
@@ -207,17 +209,30 @@ def messag(m):
             if nott==0:
                 users.update_one({'id':m.from_user.id},{'$set':{'pionername':m.text}})
                 users.update_one({'id':m.from_user.id},{'$set':{'setname':0}})
-                bot.send_message(m.chat.id, 'Привет, '+m.text+'! Заходи в '+
-                                 '@Everlastingsummerchat, и знакомься с остальными пионерами!')
+                bot.send_message(m.chat.id, 'Отлично! И еще одна просьба... Прости конечно, но это нужно для документа, в котором '+
+                                 'хранится информация обо всех пионерах. Я, конечно, сама вижу, но это надо сделать твоей рукой. '+
+                                 'Напиши вот тут свой пол (М или Д).')
             else:
                 bot.send_message(m.chat.id, 'Нет-нет! Имя может содержать только буквы русского и английского алфавита!')
+        else:
+            if x['setgender']==1:
+                  if m.text.lower()=='м':
+                        users.update_one({'id':m.from_user.id},{'$set':{'setgender':0}})
+                        users.update_one({'id':m.from_user.id},{'$set':{'gender':'male'}})
+                  elif m.text.lower()=='ж':
+                        users.update_one({'id':m.from_user.id},{'$set':{'setgender':0}})
+                        users.update_one({'id':m.from_user.id},{'$set':{'gender':'female'}})
+                  bot.send_message(m.chat.id, 'Добро пожаловать в лагерь, '+x['name']+'! Заходи в '+
+                                 '@(Ссылка на лагерь пока неизвестна, подождите немного), и знакомься с остальными пионерами!')
+      
   else:
-   if m.reply_to_message!=None:
-    if m.reply_to_message.from_user.id==636658457:
-     x=users.find_one({'id':m.from_user.id})
-     if x!=None:
-        if x['answering']==1:
-            if m.text=='Хорошо, Ольга Дмитриевна!':
+    x=users.find_one({'id':m.from_user.id})
+    if x!=None:
+      if x['setgender']==0 and x['setname']==0:
+        if m.reply_to_message!=None:
+          if m.reply_to_message.from_user.id==636658457:
+             if x['answering']==1:
+               if m.text=='Хорошо, Ольга Дмитриевна!':
                  users.update_one({'id':m.from_user.id},{'$set':{'answering':0}})
                  users.update_one({'id':m.from_user.id},{'$set':{'working':1}})
                  users.update_one({'id':m.from_user.id},{'$set':{'waitforwork':0}})
@@ -247,10 +262,12 @@ def createuser(id, name, username):
            'name':name,
            'username':username,
            'pionername':None,
+           'gender':None,
            'strenght':3,
            'agility':3,
            'intelligence':3,
            'setname':1,
+           'setgender':1,
            'waitforwork':0,
            'respect':50,
            'working':0,
