@@ -210,5 +210,8 @@ def createuser(id, name, username):
     
 if True:
    print('7777')
+   users.update_many({},{'$set':{'working':0}})
+   users.update_many({},{'$set':{'waitforwork':0}})
+   users.update_many({},{'$set':{'relaxing':0}})
    bot.polling(none_stop=True,timeout=600)
 
