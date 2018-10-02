@@ -226,7 +226,7 @@ def messag(m):
                         users.update_one({'id':m.from_user.id},{'$set':{'gender':'female'}})
                         da=1
                   if da==1:
-                      bot.send_message(m.chat.id, 'Добро пожаловать в лагерь, '+x['name']+'! Заходи в '+
+                      bot.send_message(m.chat.id, 'Добро пожаловать в лагерь, '+x['pionername']+'! Заходи в '+
                                  '@(Ссылка на лагерь пока неизвестна, подождите немного), и знакомься с остальными пионерами!')
       
   else:
