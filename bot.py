@@ -32,13 +32,13 @@ lvl1works={
           }
 lvl2works={{'name':'pickberrys',
             'value':0
-            }
+            },
            {'name':'bringfoodtokitchen',
             'value':0
-            }
+            },
            {'name':'helpinmedpunkt',
             'value':0
-            }
+            },
            {'name':'helpinkitchen',
             'value':0
             }
