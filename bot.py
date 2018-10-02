@@ -86,7 +86,7 @@ def work(m):
            
           
 def givework(id):
-    x=users.find_one({'id':m.from_user.id})
+    x=users.find_one({'id':id})
     if x!=None:
        text=''
        if x['OlgaDmitrievna_respect']>=75:
