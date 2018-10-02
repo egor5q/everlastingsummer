@@ -58,7 +58,7 @@ def lvlsort(x):
    elif x==3:
       work=lvl3works
    for ids in work:
-      if ids.value==0:
+      if work[ids]['value']==0:
          finallist.append(ids['name'])
    return finallist
            
