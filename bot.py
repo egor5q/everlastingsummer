@@ -185,7 +185,7 @@ def cancelquest(id):
     if x!=None:
         if x['answering']==1:
             users.update_one({'id':id},{'$set':{'answering':0}})
-            bot.send_message(-1001351496983, '['+x['pionername']+'](tg://user?id='+id+')! Почему не отвечаешь? Неприлично, знаешь ли. Ну, раз не хочешь, найду другого пионера для этой работы.',parse_mode='markdown')
+            bot.send_message(-1001351496983, '['+x['pionername']+'](tg://user?id='+str(id)+')! Почему не отвечаешь? Неприлично, знаешь ли. Ну, раз не хочешь, найду другого пионера для этой работы.',parse_mode='markdown')
             
             
 
@@ -213,6 +213,7 @@ def messag(m):
                 bot.send_message(m.chat.id, 'Нет-нет! Имя может содержать только буквы русского и английского алфавита!')
   else:
    if m.reply_to_message!=None:
+    if m.reply_to_message.from_user.id==636658457:
      x=users.find_one({'id':m.from_user.id})
      if x!=None:
         if x['answering']==1:
