@@ -111,6 +111,10 @@ def givework(id):
     x=users.find_one({'id':id})
     if x!=None:
        text=''
+       if x['gender']=='male':
+          gndr=''
+       if x['gender']=='female':
+          gndr='а'
        lvl1quests=lvlsort(1)
        lvl2quests=lvlsort(2)
        lvl3quests=lvlsort(3)
@@ -126,7 +130,7 @@ def givework(id):
                elif quest=='sortmedicaments':
                   text+='Тебе нужно помочь медсестре с лекарствами. Не знаю точно, что там требуется, уточнишь у неё. Возьмёшься?'
                elif quest=='checkpionerssleeping':
-                  text+='Уже вечер, и все пионеры должны в это время ложиться спать. Пройдись по лагерю и поторопи гуляющих. Готов?'
+                  text+='Уже вечер, и все пионеры должны в это время ложиться спать. Пройдись по лагерю и поторопи гуляющих. Готов'+gndr+'?'
                bot.send_message(-1001351496983, text, reply_markup=sendto, parse_mode='markdown')
                users.update_one({'id':id},{'$set':{'answering':1}})
                t=threading.Timer(60, cancelquest, args=[id])
@@ -145,7 +149,9 @@ def givework(id):
                   if quest=='bringfoodtokitchen':
                      text+='На кухне не хватает продуктов. Посети библиотеку, кружок кибернетиков и медпункт, там должны быть некоторые ингридиенты. Справишься?'
                   if quest=='washgenda':
-                      text+='Наш памятник на главной площади совсем запылился. Не мог бы ты помыть его?'
+                      if x['gender']=='female':
+                          gndr='ла'
+                      text+='Наш памятник на главной площади совсем запылился. Не мог'+gndr+' бы ты помыть его?'
                   if quest=='cleanterritory':
                       text+='Территория лагеря всегда должна быть в чистоте! Возьми веник и совок, и подмети здесь всё. Справишься?'
                   bot.send_message(-1001351496983, text, reply_markup=sendto, parse_mode='markdown')
@@ -162,17 +168,21 @@ def givework(id):
            if quest=='helpinmedpunkt':
               text+='Медсестре нужна какая-то помощь. Точно не знаю, но пойди узнай у неё. Приступишь?'
            if quest=='helpinkitchen':
-              text+='На кухне не хватает людей! Было бы хорошо, если бы ты помог им с приготовлением. Готов?'
+              if x['gender']=='female':
+                  gndr='а'
+              text+='На кухне не хватает людей! Было бы хорошо, если бы ты помог им с приготовлением. Готов'+gndr+'?'
            sendto=types.ForceReply(selective=False)
            bot.send_message(-1001351496983, text, reply_markup=sendto, parse_mode='markdown')
            users.update_one({'id':id},{'$set':{'answering':1}})
            t=threading.Timer(60, cancelquest, args=[id])
            t.start()
        else:
-           text+='Ответственные задания я тебе пока что доверить не могу, ['+x['pionername']+'](tg://user?id='+id+'). Чтобы вырастить из тебя образцового пионера,  начнем с малого.\n'
+           text+='Ответственные задания я тебе пока что доверить не могу, ['+x['pionername']+'](tg://user?id='+id+'). Чтобы вырастить из тебя образцового пионера, начнем с малого.\n'
            quest=random.choice(lvl3quests)
            if quest=='washgenda':
-              text+='Наш памятник на главной площади совсем запылился. Не мог бы ты помыть его?'
+              if x['gender']=='female':
+                 gndr='ла'
+              text+='Наш памятник на главной площади совсем запылился. Не мог'+gndr+' бы ты помыть его?'
            if quest=='cleanterritory':
               text+='Территория лагеря всегда должна быть в чистоте! Возьми веник и совок, и подмети здесь всё. Справишься?'
            sendto=types.ForceReply(selective=False)
