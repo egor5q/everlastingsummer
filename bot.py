@@ -59,7 +59,7 @@ def lvlsort(x):
       work=lvl3works
    for ids in work:
       if work[ids]['value']==0:
-         finallist.append(ids['name'])
+         finallist.append(work[ids]['name'])
    return finallist
            
 
