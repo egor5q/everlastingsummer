@@ -109,13 +109,13 @@ def givework(id):
            t=threading.Timer(60, cancelquest, args=[id])
            t.start()
        elif x['OlgaDmitrievna_respect']>=40:
-           text+='Нашла для тебя занятие, ['+x['pionername']+'](tg://user?id='+id+')!\n'
+           text+='Нашла для тебя занятие, ['+x['pionername']+'](tg://user?id='+str(id)+')!\n'
            lvl2quests=lvlsort(2)
            quest=random.choice(lvl2quests)
            if quest=='pickberrys':
               text+='Собери-ка ягоды для вечернего торта! Можешь взять себе в помощь еще кого-нибудь, если хочешь. Одному грести до острова тяжеловато. Ты готов, пионер?'
            sendto=types.ForceReply(selective=False)
-           bot.send_message(-1001351496983, text, reply_markup=sendto)
+           bot.send_message(-1001351496983, text, reply_markup=sendto, parse_mode='markdown')
        else:
            text+='Ответственные задания я тебе пока что доверить не могу, ['+x['pionername']+'](tg://user?id='+id+'). Чтобы вырастить из тебя образцового пионера,  начнем с малого.\n'
            lvl3quests=lvlsort(3)
