@@ -52,7 +52,7 @@ lvl2works={1:{'name':'pickberrys',
 
 lvl3works={
            1:{'name':'cleanterritory',
-              'value:0
+              'value':0
              },
            2:{'name':'washgenda',
               'value':0
