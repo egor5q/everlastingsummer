@@ -36,9 +36,12 @@ lvl2works={{'name':'pickberrys',
            {'name':'bringfoodtokitchen',
             'value':0
             }
-           {
-           'helpinmedpunkt':0,
-           'helpinkitchen':0
+           {'name':'helpinmedpunkt',
+            'value':0
+            }
+           {'name':'helpinkitchen',
+            'value':0
+            }
           }
 
 lvl3works={
@@ -55,8 +58,8 @@ def lvlsort(x):
    elif x==3:
       work=lvl3works
    for ids in work:
-      if ids==0:
-         finallist.append(ids)
+      if ids['value']==0:
+         finallist.append(ids['name'])
    return finallist
            
 
