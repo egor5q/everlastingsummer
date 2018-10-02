@@ -26,9 +26,15 @@ symbollist=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q',
            'а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ъ','ы','ь','э','ю','я']
 
 lvl1works={
-           'concertready':0,
-           'sortmedicaments':0,
-           'checkpionerssleeping':0
+           1:{'name':'concertready',
+              'value':0
+             },
+           2:{'name':'sortmedicaments',
+              'value':0
+             },
+           3:{'name':'checkpionerssleeping',
+              'value':0
+             }
           }
 lvl2works={1:{'name':'pickberrys',
             'value':0
@@ -45,8 +51,12 @@ lvl2works={1:{'name':'pickberrys',
           }
 
 lvl3works={
-           'cleanterritory':0,
-           'washgenda':0
+           1:{'name':'cleanterritory',
+              'value:0
+             },
+           2:{'name':'washgenda',
+              'value':0
+             }
           }
 
 def lvlsort(x):
@@ -86,10 +96,13 @@ def work(m):
     if x!=None:
         if x['working']==0:
           if x['waitforwork']==0:
+           if x['relaxing']==0:
             users.update_one({'id':m.from_user.id},{'$set':{'waitforwork':1}})
             bot.send_message(m.chat.id, random.choice(worktexts), reply_to_message_id=m.message_id)
             t=threading.Timer(random.randint(60,120),givework, args=[m.from_user.id])
             t.start()
+           else:
+              bot.send_message(m.chat.id, 'Нельзя так часто работать! Хвалю, конечно, за трудолюбивость, но сначала отдохни.', reply_to_message_id=m.message_id)
            
           
 def givework(id):
