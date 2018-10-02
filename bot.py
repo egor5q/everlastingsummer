@@ -30,16 +30,16 @@ lvl1works={
            'sortmedicaments':0,
            'checkpionerssleeping':0
           }
-lvl2works={{'name':'pickberrys',
+lvl2works={1:{'name':'pickberrys',
             'value':0
             },
-           {'name':'bringfoodtokitchen',
+           2:{'name':'bringfoodtokitchen',
             'value':0
             },
-           {'name':'helpinmedpunkt',
+           3:{'name':'helpinmedpunkt',
             'value':0
             },
-           {'name':'helpinkitchen',
+           4:{'name':'helpinkitchen',
             'value':0
             }
           }
