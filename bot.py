@@ -183,8 +183,9 @@ def givework(id):
 def cancelquest(id):
     x=users.find_one({'id':id})
     if x!=None:
-        if x['working']==0:
-            bot.send_message(-1001351496983, '['+x['pionername']+'](tg://user?id='+id+')! Почему не отвечаешь? Неприлично, знаешь ли. Ну, раз не хочешь, найду другого пионера для этой работы.')
+        if x['answering']==1:
+            users.update_one({'id':id},{'$set':{'answering':0}})
+            bot.send_message(-1001351496983, '['+x['pionername']+'](tg://user?id='+id+')! Почему не отвечаешь? Неприлично, знаешь ли. Ну, раз не хочешь, найду другого пионера для этой работы.',parse_mode='markdown')
             
             
 
@@ -215,8 +216,8 @@ def messag(m):
      x=users.find_one({'id':m.from_user.id})
      if x!=None:
         if x['answering']==1:
-            users.update_one({'id':m.from_user.id},{'$set':{'answering':0}})
             if m.text=='Хорошо, Ольга Дмитриевна!':
+                 users.update_one({'id':m.from_user.id},{'$set':{'answering':0}})
                  users.update_one({'id':m.from_user.id},{'$set':{'working':1}})
                  users.update_one({'id':m.from_user.id},{'$set':{'waitforwork':0}})
                  dowork(m.from_user.id)
