@@ -257,7 +257,7 @@ def messag(m):
                  users.update_one({'id':m.from_user.id},{'$set':{'working':1}})
                  users.update_one({'id':m.from_user.id},{'$set':{'waitforwork':0}})
                  dowork(m.from_user.id)
-                 users.update_one({'id':id},{'$set':{'prepareto':None}})
+                 users.update_one({'id':m.from_user.id},{'$set':{'prepareto':None}})
                  bot.send_message(m.chat.id,'Молодец, пионер! Как закончишь - сообщи мне.',reply_to_message_id=m.message_id )
            
 def dowork(id):
