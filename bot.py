@@ -109,7 +109,7 @@ def givework(id):
            t=threading.Timer(60, cancelquest, args=[id])
            t.start()
        elif x['OlgaDmitrievna_respect']>=40:
-           text+='Нашла для тебя занятие, ['+x['pionername']+'](tg://user?id='+str(id)+')!\n'
+           text+='Нашла для тебя занятие, ('+x['pionername']+')[tg://user?id='+str(id)+']!\n'
            lvl2quests=lvlsort(2)
            quest=random.choice(lvl2quests)
            if quest=='pickberrys':
