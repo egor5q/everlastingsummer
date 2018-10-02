@@ -197,6 +197,7 @@ def cancelquest(id):
     if x!=None:
         if x['answering']==1:
             users.update_one({'id':id},{'$set':{'answering':0}})
+            users.update_one({'id':id},{'$set':{'waitforwork':0}})
             bot.send_message(-1001351496983, '['+x['pionername']+'](tg://user?id='+str(id)+')! Почему не отвечаешь? Неприлично, знаешь ли. Ну, раз не хочешь, найду другого пионера для этой работы.',parse_mode='markdown')
             
             
