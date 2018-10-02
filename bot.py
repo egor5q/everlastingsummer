@@ -131,6 +131,7 @@ def givework(id):
                   text+='Тебе нужно помочь медсестре с лекарствами. Не знаю точно, что там требуется, уточнишь у неё. Возьмёшься?'
                elif quest=='checkpionerssleeping':
                   text+='Уже вечер, и все пионеры должны в это время ложиться спать. Пройдись по лагерю и поторопи гуляющих. Готов'+gndr+'?'
+               users.update_one({'id':id},{'$set':{'prepareto':quest}})
                bot.send_message(-1001351496983, text, reply_markup=sendto, parse_mode='markdown')
                users.update_one({'id':id},{'$set':{'answering':1}})
                t=threading.Timer(60, cancelquest, args=[id])
@@ -155,6 +156,7 @@ def givework(id):
                   if quest=='cleanterritory':
                       text+='Территория лагеря всегда должна быть в чистоте! Возьми веник и совок, и подмети здесь всё. Справишься?'
                   bot.send_message(-1001351496983, text, reply_markup=sendto, parse_mode='markdown')
+                  users.update_one({'id':id},{'$set':{'prepareto':quest}})
                   users.update_one({'id':id},{'$set':{'answering':1}})
                else:
                    bot.send_message(-1001351496983, 'К сожалению, заданий для тебя сейчас нет, ['+x['pionername']+'](tg://user?id='+str(id)+'). Но за желание помочь лагерю хвалю!', reply_markup=sendto, parse_mode='markdown')
@@ -172,6 +174,7 @@ def givework(id):
                   gndr='а'
               text+='На кухне не хватает людей! Было бы хорошо, если бы ты помог им с приготовлением. Готов'+gndr+'?'
            sendto=types.ForceReply(selective=False)
+           users.update_one({'id':id},{'$set':{'prepareto':quest}})
            bot.send_message(-1001351496983, text, reply_markup=sendto, parse_mode='markdown')
            users.update_one({'id':id},{'$set':{'answering':1}})
            t=threading.Timer(60, cancelquest, args=[id])
@@ -186,6 +189,7 @@ def givework(id):
            if quest=='cleanterritory':
               text+='Территория лагеря всегда должна быть в чистоте! Возьми веник и совок, и подмети здесь всё. Справишься?'
            sendto=types.ForceReply(selective=False)
+           users.update_one({'id':id},{'$set':{'prepareto':quest}})
            bot.send_message(-1001351496983, text, reply_markup=sendto, parse_mode='markdown')
            users.update_one({'id':id},{'$set':{'answering':1}})
            t=threading.Timer(60, cancelquest, args=[id])
@@ -196,6 +200,7 @@ def cancelquest(id):
     x=users.find_one({'id':id})
     if x!=None:
         if x['answering']==1:
+            users.update_one({'id':id},{'$set':{'prepareto':None}})
             users.update_one({'id':id},{'$set':{'answering':0}})
             users.update_one({'id':id},{'$set':{'waitforwork':0}})
             bot.send_message(-1001351496983, '['+x['pionername']+'](tg://user?id='+str(id)+')! Почему не отвечаешь? Неприлично, знаешь ли. Ну, раз не хочешь, найду другого пионера для этой работы.',parse_mode='markdown')
@@ -252,6 +257,7 @@ def messag(m):
                  users.update_one({'id':m.from_user.id},{'$set':{'working':1}})
                  users.update_one({'id':m.from_user.id},{'$set':{'waitforwork':0}})
                  dowork(m.from_user.id)
+                 users.update_one({'id':id},{'$set':{'prepareto':None}})
                  bot.send_message(m.chat.id,'Молодец, пионер! Как закончишь - сообщи мне.',reply_to_message_id=m.message_id )
            
 def dowork(id):
@@ -281,6 +287,7 @@ def createuser(id, name, username):
            'strenght':3,
            'agility':3,
            'intelligence':3,
+           'prepareto':None,
            'setname':1,
            'setgender':1,
            'waitforwork':0,
