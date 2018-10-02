@@ -127,7 +127,9 @@ def givework(id):
            lvl2quests=lvlsort(2)
            quest=random.choice(lvl2quests)
            if quest=='pickberrys':
-              text+='Собери-ка ягоды для вечернего торта! Можешь взять себе в помощь еще кого-нибудь, если хочешь. Одному грести до острова тяжеловато. Ты готов, пионер?'
+              text+='Собери-ка ягоды для вечернего торта! Ты готов, пионер?'
+           if quest=='bringfoodtokitchen':
+              text+='На кухне не хватает продуктов. Посети библиотеку, кружок кибернетиков и медпункт, там должны быть некоторые ингридиенты. Справишься?'
            sendto=types.ForceReply(selective=False)
            bot.send_message(-1001351496983, text, reply_markup=sendto, parse_mode='markdown')
        else:
