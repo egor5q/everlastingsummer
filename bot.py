@@ -216,13 +216,17 @@ def messag(m):
                 bot.send_message(m.chat.id, 'Нет-нет! Имя может содержать только буквы русского и английского алфавита!')
         else:
             if x['setgender']==1:
+                  da=0
                   if m.text.lower()=='м':
                         users.update_one({'id':m.from_user.id},{'$set':{'setgender':0}})
                         users.update_one({'id':m.from_user.id},{'$set':{'gender':'male'}})
-                  elif m.text.lower()=='ж':
+                        da=1
+                  elif m.text.lower()=='д':
                         users.update_one({'id':m.from_user.id},{'$set':{'setgender':0}})
                         users.update_one({'id':m.from_user.id},{'$set':{'gender':'female'}})
-                  bot.send_message(m.chat.id, 'Добро пожаловать в лагерь, '+x['name']+'! Заходи в '+
+                        da=1
+                  if da==1:
+                      bot.send_message(m.chat.id, 'Добро пожаловать в лагерь, '+x['name']+'! Заходи в '+
                                  '@(Ссылка на лагерь пока неизвестна, подождите немного), и знакомься с остальными пионерами!')
       
   else:
