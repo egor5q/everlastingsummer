@@ -352,15 +352,15 @@ def gettime(t):
          if idss==':':
             tru=ids
    x=tru
-      print(x)
-      x=x.split(":")
-      print(x)
-      minute=int(x[1])
-      hour=int(x[0])+3
-      if t=='h':
-        return hour
-      elif t=='m':
-        return minute
+   print(x)
+   x=x.split(":")
+   print(x)
+   minute=int(x[1])
+   hour=int(x[0])+3
+   if t=='h':
+     return hour
+   elif t=='m':
+     return minute
             
 def checktime():
     t=threading.Timer(60, checktime)
