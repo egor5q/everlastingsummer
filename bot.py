@@ -191,6 +191,7 @@ def givework(id):
            else:
                lvl3quests=lvlsort(3)
                if len(lvl3quests)>0:
+                   quest=random.choice(lvl3quests)
                    if quest=='washgenda':
                      if x['gender']=='female':
                         gndr='ла'
