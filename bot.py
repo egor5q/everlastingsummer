@@ -69,8 +69,8 @@ works=[
 def lvlsort(x):
    finallist=[]
    for ids in works:
-      if works[ids]['lvl']==x and works[ids]['value']==0:
-         finallist.append(work[ids]['name'])
+      if ids['lvl']==x and ids['value']==0:
+         finallist.append(ids['name'])
    return finallist
            
 
