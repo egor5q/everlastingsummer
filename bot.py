@@ -345,15 +345,12 @@ def createuser(id, name, username):
 def gettime(t):
    x=time.ctime()
    x=x.split(" ")
-   print(x)
    for ids in x:
       for idss in ids:
          if idss==':':
             tru=ids
    x=tru
-   print(x)
    x=x.split(":")
-   print(x)
    minute=int(x[1])
    hour=int(x[0])+3
    if t=='h':
