@@ -303,13 +303,15 @@ def reloadquest(index):
     
     
 def dowork(id):
-    x=users.find_one({'id':id})
-    i=0
-    for ids in works:
-        if x['prepareto']==ids['name']:
-           work=ids
-           index=i
-        i+=1
+   x=users.find_one({'id':id})
+   i=0
+   index=None
+   for ids in works:
+       if x['prepareto']==ids['name']:
+          work=ids
+          index=i
+       i+=1
+   if index!=None:
     works[index]['value']=1
     hour=gettime('h')
     minute=gettime('m')
