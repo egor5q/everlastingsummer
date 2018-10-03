@@ -343,7 +343,6 @@ def createuser(id, name, username):
     
     
 def gettime(t):
-  if x=='h':
    x=time.ctime()
    x=x.split(" ")
    print(x)
