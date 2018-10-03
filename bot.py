@@ -281,26 +281,24 @@ def dowork(id):
     works[index]['value']=1
     hour=gettime('h')
     minute=gettime('m')
+    z=None
     if works[index]['name']=='sortmedicaments':
-        t=threading.Timer(random.randint(3600,7200),reloadquest, args=[index])
-        t.start()
+        z=random.randint(3600,7200)
     if works[index]['name']=='pickberrys':
-        t=threading.Timer(random.randint(7200,9200),reloadquest, args=[index])
+        z=random.randint(7200,9200)
+    if works[index]['name']=='bringfoodtokitchen':
+        z=random.randint(2200,3600)
+    if works[index]['name']=='helpmedpunkt':
+        z=random.randint(7200,10200)
+    if works[index]['name']=='cleanterritory' or works[index]['name']=='washgenda':
+        z=random.randint(900,2700)
+    if z!=None:
+        t=threading.Timer(z,reloadquest, args=[index])
         t.start()
-        
-       
-
     t=threading.Timer(300, endwork, args=[id])
     t.start()
     
-           {'name':'pickberrys',
-           {'name':'bringfoodtokitchen',
-           {'name':'helpinmedpunkt',
-           {'name':'helpinkitchen',
-           {'name':'cleanterritory',
-           {'name':'washgenda',
-
-           
+       
            
 def endwork(id):
     x=users.find_one({'id':id})
@@ -369,12 +367,14 @@ def checktime():
     t.start()
     hour=gettime('h')
     minute=gettime('m')
-    x=None
     if hour==17 and minute==0:
         x=findindex('concertready')
+        works[x]['value']=0
     if hour==21 and minute==30:
         x=findindex('checkpionerssleeping')
-    if x!=None:
+        works[x]['value']=0
+    if (hour==9 and minute==0) or(hour==13 and minute==0) or(hour==18 and minute==0)
+        x=findindex('helpinkitchen')
         works[x]['value']=0
     
                 
