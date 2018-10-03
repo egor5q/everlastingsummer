@@ -25,6 +25,7 @@ users=db.users
 symbollist=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
            'а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ъ','ы','ь','э','ю','я']
 
+
 works=[
            {'name':'concertready',
               'value':0,
@@ -102,12 +103,13 @@ def work(m):
            if x['relaxing']==0:
             users.update_one({'id':m.from_user.id},{'$set':{'waitforwork':1}})
             bot.send_message(m.chat.id, random.choice(worktexts), reply_to_message_id=m.message_id)
-            t=threading.Timer(random.randint(60,120),givework, args=[m.from_user.id])
+            t=threading.Timer(random.randint(3,5),givework, args=[m.from_user.id])
             t.start()
            else:
               bot.send_message(m.chat.id, 'Нельзя так часто работать! Хвалю, конечно, за трудолюбивость, но сначала отдохни.', reply_to_message_id=m.message_id)
            
-          
+
+
 def givework(id):
     x=users.find_one({'id':id})
     if x!=None:
@@ -132,6 +134,7 @@ def givework(id):
                elif quest=='checkpionerssleeping':
                   text+='Уже вечер, и все пионеры должны в это время ложиться спать. Пройдись по лагерю и поторопи гуляющих. Готов'+gndr+'?'
                users.update_one({'id':id},{'$set':{'prepareto':quest}})
+               print('Юзер готовится к квесту: '+quest)
                bot.send_message(-1001351496983, text, reply_markup=sendto, parse_mode='markdown')
                users.update_one({'id':id},{'$set':{'answering':1}})
                t=threading.Timer(60, cancelquest, args=[id])
@@ -158,47 +161,72 @@ def givework(id):
                   if quest=='cleanterritory':
                       text+='Территория лагеря всегда должна быть в чистоте! Возьми веник и совок, и подмети здесь всё. Справишься?'
                   bot.send_message(-1001351496983, text, reply_markup=sendto, parse_mode='markdown')
+                  print('Юзер готовится к квесту: '+quest)
                   users.update_one({'id':id},{'$set':{'prepareto':quest}})
                   users.update_one({'id':id},{'$set':{'answering':1}})
                else:
                    bot.send_message(-1001351496983, 'К сожалению, заданий для тебя сейчас нет, ['+x['pionername']+'](tg://user?id='+str(id)+'). Но за желание помочь лагерю хвалю!', reply_markup=sendto, parse_mode='markdown')
        elif x['OlgaDmitrievna_respect']>=40:
            text+='Нашла для тебя занятие, ['+x['pionername']+'](tg://user?id='+str(id)+')!\n'
-         
            lvl2quests=lvlsort(2) 
-           quest=random.choice(lvl2quests)
-           if quest=='pickberrys':
-              text+='Собери-ка ягоды для вечернего торта! Ты готов, пионер?'
-           if quest=='bringfoodtokitchen':
-              text+='На кухне не хватает продуктов. Посети библиотеку, кружок кибернетиков и медпункт, там должны быть некоторые ингридиенты. Справишься?'
-           if quest=='helpinmedpunkt':
-              text+='Медсестре нужна какая-то помощь. Точно не знаю, но пойди узнай у неё. Приступишь?'
-           if quest=='helpinkitchen':
-              if x['gender']=='female':
-                  gndr='а'
-              text+='На кухне не хватает людей! Было бы хорошо, если бы ты помог им с приготовлением. Готов'+gndr+'?'
-           sendto=types.ForceReply(selective=False)
-           users.update_one({'id':id},{'$set':{'prepareto':quest}})
-           bot.send_message(-1001351496983, text, reply_markup=sendto, parse_mode='markdown')
-           users.update_one({'id':id},{'$set':{'answering':1}})
-           t=threading.Timer(60, cancelquest, args=[id])
-           t.start()
+           if len(lvl2quests)>0:
+                quest=random.choice(lvl2quests)
+                if quest=='pickberrys':
+                    text+='Собери-ка ягоды для вечернего торта! Ты готов, пионер?'
+                if quest=='bringfoodtokitchen':
+                    text+='На кухне не хватает продуктов. Посети библиотеку, кружок кибернетиков и медпункт, там должны быть некоторые ингридиенты. Справишься?'
+                if quest=='helpinmedpunkt':
+                    text+='Медсестре нужна какая-то помощь. Точно не знаю, но пойди узнай у неё. Приступишь?'
+                if quest=='helpinkitchen':
+                    if x['gender']=='female':
+                        gndr='а'
+                    text+='На кухне не хватает людей! Было бы хорошо, если бы ты помог им с приготовлением. Готов'+gndr+'?'
+                sendto=types.ForceReply(selective=False)
+                users.update_one({'id':id},{'$set':{'prepareto':quest}})
+                bot.send_message(-1001351496983, text, reply_markup=sendto, parse_mode='markdown')
+                users.update_one({'id':id},{'$set':{'answering':1}})
+                print('Юзер готовится к квесту: '+quest)
+                t=threading.Timer(60, cancelquest, args=[id])
+                t.start()
+           else:
+               lvl3quests=lvlsort(3)
+               if len(lvl3quests)>0:
+                   if quest=='washgenda':
+                     if x['gender']=='female':
+                        gndr='ла'
+                     text+='Наш памятник на главной площади совсем запылился. Не мог'+gndr+' бы ты помыть его?'
+                   if quest=='cleanterritory':
+                        text+='Территория лагеря всегда должна быть в чистоте! Возьми веник и совок, и подмети здесь всё. Справишься?'
+                   sendto=types.ForceReply(selective=False)
+                   print('Юзер готовится к квесту: '+quest)
+                   users.update_one({'id':id},{'$set':{'prepareto':quest}})
+                   bot.send_message(-1001351496983, text, reply_markup=sendto, parse_mode='markdown')
+                   users.update_one({'id':id},{'$set':{'answering':1}})
+                   t=threading.Timer(60, cancelquest, args=[id])
+                   t.start()
+               else:
+                   bot.send_message(-1001351496983, 'К сожалению, заданий для тебя сейчас нет, ['+x['pionername']+'](tg://user?id='+str(id)+'). Но за желание помочь лагерю хвалю!', reply_markup=sendto, parse_mode='markdown')
+            
        else:
            text+='Ответственные задания я тебе пока что доверить не могу, ['+x['pionername']+'](tg://user?id='+id+'). Чтобы вырастить из тебя образцового пионера, начнем с малого.\n'
            lvl3quest=lvlsort(3) 
-           quest=random.choice(lvl3quests)
-           if quest=='washgenda':
-              if x['gender']=='female':
-                 gndr='ла'
-              text+='Наш памятник на главной площади совсем запылился. Не мог'+gndr+' бы ты помыть его?'
-           if quest=='cleanterritory':
-              text+='Территория лагеря всегда должна быть в чистоте! Возьми веник и совок, и подмети здесь всё. Справишься?'
-           sendto=types.ForceReply(selective=False)
-           users.update_one({'id':id},{'$set':{'prepareto':quest}})
-           bot.send_message(-1001351496983, text, reply_markup=sendto, parse_mode='markdown')
-           users.update_one({'id':id},{'$set':{'answering':1}})
-           t=threading.Timer(60, cancelquest, args=[id])
-           t.start()
+           if len(lvl3quests)>0:
+             quest=random.choice(lvl3quests)
+             if quest=='washgenda':
+                if x['gender']=='female':
+                   gndr='ла'
+                text+='Наш памятник на главной площади совсем запылился. Не мог'+gndr+' бы ты помыть его?'
+             if quest=='cleanterritory':
+                text+='Территория лагеря всегда должна быть в чистоте! Возьми веник и совок, и подмети здесь всё. Справишься?'
+             sendto=types.ForceReply(selective=False)
+             users.update_one({'id':id},{'$set':{'prepareto':quest}})
+             print('Юзер готовится к квесту: '+quest)
+             bot.send_message(-1001351496983, text, reply_markup=sendto, parse_mode='markdown')
+             users.update_one({'id':id},{'$set':{'answering':1}})
+             t=threading.Timer(60, cancelquest, args=[id])
+             t.start()
+           else:
+             bot.send_message(-1001351496983, 'К сожалению, заданий для тебя сейчас нет, ['+x['pionername']+'](tg://user?id='+str(id)+'). Но за желание помочь лагерю хвалю!', reply_markup=sendto, parse_mode='markdown')
            
            
 def cancelquest(id):
@@ -267,6 +295,7 @@ def messag(m):
     
 def reloadquest(index):
     works[index]['value']=0
+    print('Квест '+works[index]['name']+' обновлён!')
     
     
     
@@ -295,7 +324,7 @@ def dowork(id):
     if z!=None:
         t=threading.Timer(z,reloadquest, args=[index])
         t.start()
-    t=threading.Timer(300, endwork, args=[id])
+    t=threading.Timer(7, endwork, args=[id])
     t.start()
     
        
@@ -305,7 +334,7 @@ def endwork(id):
     users.update_one({'id':id},{'$set':{'working':0}})
     users.update_one({'id':id},{'$set':{'relaxing':1}})
     bot.send_message(-1001351496983, 'Отличная работа, ['+x['pionername']+'](tg://user?id='+str(id)+')! Теперь можешь отдохнуть.', parse_mode='markdown')
-    t=threading.Timer(600,relax,args=[id])
+    t=threading.Timer(6,relax,args=[id])
     t.start()
     
 def relax(id):
