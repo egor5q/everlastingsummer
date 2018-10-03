@@ -178,9 +178,11 @@ def givework(id):
                 if quest=='helpinmedpunkt':
                     text+='Медсестре нужна какая-то помощь. Точно не знаю, но пойди узнай у неё. Приступишь?'
                 if quest=='helpinkitchen':
+                    gndr2=''
                     if x['gender']=='female':
                         gndr='а'
-                    text+='На кухне не хватает людей! Было бы хорошо, если бы ты помог им с приготовлением. Готов'+gndr+'?'
+                        gndr2='ла'
+                    text+='На кухне не хватает людей! Было бы хорошо, если бы ты помог'+gndr2+' им с приготовлением. Готов'+gndr+'?'
                 sendto=types.ForceReply(selective=False)
                 users.update_one({'id':id},{'$set':{'prepareto':quest}})
                 bot.send_message(-1001351496983, text, reply_markup=sendto, parse_mode='markdown')
