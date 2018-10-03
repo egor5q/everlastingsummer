@@ -262,6 +262,12 @@ def messag(m):
            
 def dowork(id):
     x=users.find_one({'id':id})
+    if x['preparelvl']==1:
+     
+    
+     
+    
+         
     t=threading.Timer(300, endwork, args=[id])
     t.start()
     
@@ -289,6 +295,7 @@ def createuser(id, name, username):
            'agility':3,
            'intelligence':3,
            'prepareto':None,
+           'preparelvl':None,
            'setname':1,
            'setgender':1,
            'waitforwork':0,
