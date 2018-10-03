@@ -25,7 +25,7 @@ users=db.users
 symbollist=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
            'а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ъ','ы','ь','э','ю','я']
 
-works={
+works=[
            {'name':'concertready',
               'value':0,
               'lvl':1
@@ -55,17 +55,16 @@ works={
             'value':0,
             'lvl':2
             },
-          
-
+           
            {'name':'cleanterritory',
               'value':0,
               'lvl':3
              },
            {'name':'washgenda',
               'value':0,
-            'lvl':3
+              'lvl':3
              }
-       }
+]
 
 def lvlsort(x):
    finallist=[]
