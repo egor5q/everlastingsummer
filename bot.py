@@ -123,9 +123,7 @@ def givework(id):
           gndr=''
        if x['gender']=='female':
           gndr='а'
-       lvl1quests=lvlsort(1)
-       lvl2quests=lvlsort(2)
-       lvl3quests=lvlsort(3)
+       quests=lvlsort(1)  
        sendto=types.ForceReply(selective=False)
        users.update_one({'id':id},{'$set':{'answering':1}})
        quest=None
