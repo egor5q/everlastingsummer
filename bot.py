@@ -25,39 +25,47 @@ users=db.users
 symbollist=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
            'а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ъ','ы','ь','э','ю','я']
 
-lvl1works={
-           1:{'name':'concertready',
-              'value':0
+works={
+           {'name':'concertready',
+              'value':0,
+              'lvl':1
              },
-           2:{'name':'sortmedicaments',
-              'value':0
+           {'name':'sortmedicaments',
+              'value':0,
+              'lvl':1
              },
-           3:{'name':'checkpionerssleeping',
-              'value':0
-             }
-          }
-lvl2works={1:{'name':'pickberrys',
-            'value':0
+           {'name':'checkpionerssleeping',
+              'value':0,
+              'lvl':1
+             },
+          
+           {'name':'pickberrys',
+            'value':0,
+            'lvl':2
             },
-           2:{'name':'bringfoodtokitchen',
-            'value':0
+           {'name':'bringfoodtokitchen',
+            'value':0,
+            'lvl':2
             },
-           3:{'name':'helpinmedpunkt',
-            'value':0
+           {'name':'helpinmedpunkt',
+            'value':0,
+            'lvl':2
             },
-           4:{'name':'helpinkitchen',
-            'value':0
-            }
-          }
+           {'name':'helpinkitchen',
+            'value':0,
+            'lvl':2
+            },
+          
 
-lvl3works={
-           1:{'name':'cleanterritory',
-              'value':0
+           {'name':'cleanterritory',
+              'value':0,
+              'lvl':3
              },
-           2:{'name':'washgenda',
-              'value':0
+           {'name':'washgenda',
+              'value':0,
+            'lvl':3
              }
-          }
+       }
 
 def lvlsort(x):
    finallist=[]
@@ -262,7 +270,8 @@ def messag(m):
            
 def dowork(id):
     x=users.find_one({'id':id})
-    if x['preparelvl']==1:
+    for ids in lvl1works:
+        if lvl1works[ids]
      
     
      
@@ -294,8 +303,7 @@ def createuser(id, name, username):
            'strenght':3,
            'agility':3,
            'intelligence':3,
-           'prepareto':None,
-           'preparelvl':None,
+           'prepareto':None,           
            'setname':1,
            'setgender':1,
            'waitforwork':0,
