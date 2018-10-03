@@ -269,12 +269,8 @@ def messag(m):
 def dowork(id):
     x=users.find_one({'id':id})
     for ids in lvl1works:
-        if lvl1works[ids]
-     
-    
-     
-    
-         
+        pass
+
     t=threading.Timer(300, endwork, args=[id])
     t.start()
     
