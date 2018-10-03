@@ -261,6 +261,7 @@ def messag(m):
                  bot.send_message(m.chat.id,'Молодец, пионер! Как закончишь - сообщи мне.',reply_to_message_id=m.message_id )
            
 def dowork(id):
+    x=users.find_one({'id':id})
     t=threading.Timer(300, endwork, args=[id])
     t.start()
     
