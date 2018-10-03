@@ -264,7 +264,12 @@ def messag(m):
                  dowork(m.from_user.id)
                  users.update_one({'id':m.from_user.id},{'$set':{'prepareto':None}})
                  bot.send_message(m.chat.id,'Молодец, пионер! Как закончишь - сообщи мне.',reply_to_message_id=m.message_id )
-           
+    
+def reloadquest(index):
+    works[index]['value']=0
+    
+    
+    
 def dowork(id):
     x=users.find_one({'id':id})
     i=0
@@ -273,17 +278,21 @@ def dowork(id):
            work=ids
            index=i
         i+=1
-    ctime=time.
-    if works[index]['name']=='concertready':
+    works[index]['value']=1
+    hour=gettime('h')
+    minute=gettime('m')
+    if works[index]['name']=='sortmedicaments':
+        t=threading.Timer(random.randint(3600,7200),reloadquest, args=[index])
+        t.start()
+    if works[index]['name']=='pickberrys':
+        t=threading.Timer(random.randint(7200,9200),reloadquest, args=[index])
+        t.start()
         
        
 
     t=threading.Timer(300, endwork, args=[id])
     t.start()
     
-           {'name':'concertready',
-           {'name':'sortmedicaments',
-           {'name':'checkpionerssleeping',
            {'name':'pickberrys',
            {'name':'bringfoodtokitchen',
            {'name':'helpinmedpunkt',
@@ -335,7 +344,56 @@ def createuser(id, name, username):
           }
     
     
+def gettime(t):
+  if x=='h':
+   x=time.ctime()
+   x=x.split(" ")
+   print(x)
+   for ids in x:
+      for idss in ids:
+         if idss==':':
+            tru=ids
+   x=tru
+      print(x)
+      x=x.split(":")
+      print(x)
+      minute=int(x[1])
+      hour=int(x[0])+3
+      if t=='h':
+        return hour
+      elif t=='m':
+        return minute
+            
+def checktime():
+    t=threading.Timer(60, checktime)
+    t.start()
+    hour=gettime('h')
+    minute=gettime('m')
+    x=None
+    if hour==17 and minute==0:
+        x=findindex('concertready')
+    if hour==21 and minute==30:
+        x=findindex('checkpionerssleeping')
+    if x!=None:
+        works[x]['value']=0
     
+                
+            
+def findindex(x):
+    i=0
+    for ids in works:
+            if ids['name']==x:
+                index=i
+            i+=1
+    return index
+            
+            
+            
+if True:
+    checktime()
+            
+            
+            
 if True:
    print('7777')
    users.update_many({},{'$set':{'working':0}})
