@@ -373,7 +373,7 @@ def checktime():
     if hour==21 and minute==30:
         x=findindex('checkpionerssleeping')
         works[x]['value']=0
-    if (hour==9 and minute==0) or(hour==13 and minute==0) or(hour==18 and minute==0)
+    if (hour==9 and minute==0) or(hour==13 and minute==0) or(hour==18 and minute==0):
         x=findindex('helpinkitchen')
         works[x]['value']=0
     
