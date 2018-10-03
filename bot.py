@@ -69,14 +69,8 @@ works={
 
 def lvlsort(x):
    finallist=[]
-   if x==1:
-      work=lvl1works
-   elif x==2:
-      work=lvl2works
-   elif x==3:
-      work=lvl3works
-   for ids in work:
-      if work[ids]['value']==0:
+   for ids in works:
+      if works[ids]['lvl']==x and works[ids]['value']==0:
          finallist.append(work[ids]['name'])
    return finallist
            
@@ -128,8 +122,9 @@ def givework(id):
        users.update_one({'id':id},{'$set':{'answering':1}})
        quest=None
        if x['OlgaDmitrievna_respect']>=75:
+           quests=lvlsort(1) 
            text+='Так как ты у нас ответственный пионер, ['+x['pionername']+'](tg://user?id='+str(id)+'), у меня для тебя есть важное задание!\n'
-           if len(lvl1quests)>0:
+           if len(quests)>0:
                quest=random.choice(lvl1quests)
                if quest=='concertready':
                   text+='Тебе нужно подготовить сцену для сегодняшнего выступления: принести декорации и аппаратуру, которые нужны выступающим пионерам, выровнять стулья. Приступишь?'
@@ -145,10 +140,12 @@ def givework(id):
            else:
                text='Важных заданий на данный момент нет, ['+x['pionername']+'](tg://user?id='+str(id)+')... Но ничего, обычная работа почти всегда найдётся!\n'
                questt=[]
-               if len(lvl2quests)>0:
-                  questt.append(random.choice(lvl2quests))
-               if len(lvl3quests)>0:
-                  questt.append(random.choice(lvl3quests))
+               quest2=lvlsort(2)
+               quest3=lvlsort(3) 
+               for ids in quest2:
+                   questt.append(ids)
+               for ids in quest3:
+                   questt.append(ids)
                if len(questt)>0:
                   quest=random.choice(questt)
                   if quest=='pickberrys':
@@ -168,6 +165,8 @@ def givework(id):
                    bot.send_message(-1001351496983, 'К сожалению, заданий для тебя сейчас нет, ['+x['pionername']+'](tg://user?id='+str(id)+'). Но за желание помочь лагерю хвалю!', reply_markup=sendto, parse_mode='markdown')
        elif x['OlgaDmitrievna_respect']>=40:
            text+='Нашла для тебя занятие, ['+x['pionername']+'](tg://user?id='+str(id)+')!\n'
+         
+           lvl2quests=lvlsort(2) 
            quest=random.choice(lvl2quests)
            if quest=='pickberrys':
               text+='Собери-ка ягоды для вечернего торта! Ты готов, пионер?'
@@ -187,6 +186,7 @@ def givework(id):
            t.start()
        else:
            text+='Ответственные задания я тебе пока что доверить не могу, ['+x['pionername']+'](tg://user?id='+id+'). Чтобы вырастить из тебя образцового пионера, начнем с малого.\n'
+           lvl3quest=lvlsort(3) 
            quest=random.choice(lvl3quests)
            if quest=='washgenda':
               if x['gender']=='female':
