@@ -267,13 +267,32 @@ def messag(m):
            
 def dowork(id):
     x=users.find_one({'id':id})
-    for ids in lvl1works:
-        pass
+    i=0
+    for ids in works:
+        if x['prepareto']==ids['name']:
+           work=ids
+           index=i
+        i+=1
+    ctime=time.
+    if works[index]['name']=='concertready':
+        
+       
 
     t=threading.Timer(300, endwork, args=[id])
     t.start()
     
-    
+           {'name':'concertready',
+           {'name':'sortmedicaments',
+           {'name':'checkpionerssleeping',
+           {'name':'pickberrys',
+           {'name':'bringfoodtokitchen',
+           {'name':'helpinmedpunkt',
+           {'name':'helpinkitchen',
+           {'name':'cleanterritory',
+           {'name':'washgenda',
+
+           
+           
 def endwork(id):
     x=users.find_one({'id':id})
     users.update_one({'id':id},{'$set':{'working':0}})
