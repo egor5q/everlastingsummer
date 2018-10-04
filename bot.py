@@ -373,12 +373,25 @@ def endwork(id, work):
     if work=='cleanterritory' or work=='washgenda':
         strenght=random.randint(0,2)
         agility=random.randint(0,1)
+    if work=='checkpionerssleeping':
+        agility=random.randint(1,2)
+        intelligence=random.randint(1,100)
+        if intelligence<=40:
+            intelligence=random.randint(0,2)
+        else:
+            intelligence=0
+    if work=='helpinkitchen':
+        agility=random.randint(1,2)
+        intelligence=1
+        strenght=random.randint(0,1)
     if agility>0:
         text+='*Ловкость*\n'
     if strenght>0:
         text+='*Сила*\n'
     if intelligence>0:
         text+='*Интеллект*\n'
+    if text=='':
+        text='Физических улучшений не заметно, но ты заслужил'+gndr+' уважение вожатой!'
     users.update_one({'id':id},{'$inc':{'strenght':strenght}})
     users.update_one({'id':id},{'$inc':{'agility':agility}})
     users.update_one({'id':id},{'$inc':{'intelligence':intelligence}})
