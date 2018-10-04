@@ -384,9 +384,9 @@ def endwork(id, work):
     users.update_one({'id':id},{'$inc':{'intelligence':intelligence}})
     bot.send_message(-1001351496983, 'Отличная работа, ['+x['pionername']+'](tg://user?id='+str(id)+')! Теперь можешь отдохнуть.', parse_mode='markdown')
     try:
-        world.send_message(id, text)
+        world.send_message(id, text,parse_mode='markdown')
     except:
-        world.send_message(-1001351496983, '['+x['pionername']+'](tg://user?id='+str(id)+')'+random.choice(worldtexts)+text)
+        world.send_message(-1001351496983, '['+x['pionername']+'](tg://user?id='+str(id)+')'+random.choice(worldtexts)+text, parse_mode='markdown')
     t=threading.Timer(6,relax,args=[id])
     t.start()
     
