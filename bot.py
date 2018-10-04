@@ -135,7 +135,7 @@ def givework(id):
                   text+='Уже вечер, и все пионеры должны в это время ложиться спать. Пройдись по лагерю и поторопи гуляющих. Готов'+gndr+'?'
                users.update_one({'id':id},{'$set':{'prepareto':quest}})
                print('Юзер готовится к квесту: '+quest)
-               bot.send_message(-1001351496983, text, reply_markup=sendto, parse_mode='markdown')
+               bot.send_message(-1001351496983, text, parse_mode='markdown')
                users.update_one({'id':id},{'$set':{'answering':1}})
                t=threading.Timer(60, cancelquest, args=[id])
                t.start()
@@ -160,7 +160,7 @@ def givework(id):
                       text+='Наш памятник на главной площади совсем запылился. Не мог'+gndr+' бы ты помыть его?'
                   if quest=='cleanterritory':
                       text+='Территория лагеря всегда должна быть в чистоте! Возьми веник и совок, и подмети здесь всё. Справишься?'
-                  bot.send_message(-1001351496983, text, reply_markup=sendto, parse_mode='markdown')
+                  bot.send_message(-1001351496983, text, parse_mode='markdown')
                   print('Юзер готовится к квесту: '+quest)
                   users.update_one({'id':id},{'$set':{'prepareto':quest}})
                   users.update_one({'id':id},{'$set':{'answering':1}})
@@ -185,7 +185,7 @@ def givework(id):
                     text+='На кухне не хватает людей! Было бы хорошо, если бы ты помог'+gndr2+' им с приготовлением. Готов'+gndr+'?'
                 sendto=types.ForceReply(selective=False)
                 users.update_one({'id':id},{'$set':{'prepareto':quest}})
-                bot.send_message(-1001351496983, text, reply_markup=sendto, parse_mode='markdown')
+                bot.send_message(-1001351496983, text, parse_mode='markdown')
                 users.update_one({'id':id},{'$set':{'answering':1}})
                 print('Юзер готовится к квесту: '+quest)
                 t=threading.Timer(60, cancelquest, args=[id])
@@ -203,7 +203,7 @@ def givework(id):
                    sendto=types.ForceReply(selective=False)
                    print('Юзер готовится к квесту: '+quest)
                    users.update_one({'id':id},{'$set':{'prepareto':quest}})
-                   bot.send_message(-1001351496983, text, reply_markup=sendto, parse_mode='markdown')
+                   bot.send_message(-1001351496983, text, parse_mode='markdown')
                    users.update_one({'id':id},{'$set':{'answering':1}})
                    t=threading.Timer(60, cancelquest, args=[id])
                    t.start()
@@ -224,7 +224,7 @@ def givework(id):
              sendto=types.ForceReply(selective=False)
              users.update_one({'id':id},{'$set':{'prepareto':quest}})
              print('Юзер готовится к квесту: '+quest)
-             bot.send_message(-1001351496983, text, reply_markup=sendto, parse_mode='markdown')
+             bot.send_message(-1001351496983, text, parse_mode='markdown')
              users.update_one({'id':id},{'$set':{'answering':1}})
              t=threading.Timer(60, cancelquest, args=[id])
              t.start()
@@ -329,19 +329,43 @@ def dowork(id):
     if z!=None:
         t=threading.Timer(z,reloadquest, args=[index])
         t.start()
-    t=threading.Timer(7, endwork, args=[id])
+    t=threading.Timer(7, endwork, args=[id, works[index]['name']])
     t.start()
     
        
            
-def endwork(id):
+def endwork(id, work):
     x=users.find_one({'id':id})
     users.update_one({'id':id},{'$set':{'working':0}})
     users.update_one({'id':id},{'$set':{'relaxing':1}})
+    srtenght=0
+    agility=0
+    intelligence=0
+    if work=='sortmedicaments':
+        agility=random.randint(0,2)
+        strenght=random.randint(1,100)
+        if strenght<=15:
+           strenght=1
+        else:
+           strenght=0
+    users.update_one({'id':id},{'$inc':{'strenght':strenght}})
+    users.update_one({'id':id},{'$inc':{'agility':agility}})
+    users.update_one({'id':id},{'$inc':{'intelligence':intelligence}})
     bot.send_message(-1001351496983, 'Отличная работа, ['+x['pionername']+'](tg://user?id='+str(id)+')! Теперь можешь отдохнуть.', parse_mode='markdown')
     t=threading.Timer(6,relax,args=[id])
     t.start()
     
+'sortmedicaments':
+    if works[index]['name']=='pickberrys':
+
+    if works[index]['name']=='bringfoodtokitchen':
+
+    if works[index]['name']=='helpmedpunkt':
+
+    if works[index]['name']=='cleanterritory' or works[index]['name']=='washgenda':
+  
+           
+           
 def relax(id):
     users.update_one({'id':id},{'$set':{'relaxing':0}})
     
@@ -353,6 +377,7 @@ def createuser(id, name, username):
            'username':username,
            'pionername':None,
            'gender':None,
+           'popularity':1,
            'strenght':3,
            'agility':3,
            'intelligence':3,
