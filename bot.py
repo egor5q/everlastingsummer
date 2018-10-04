@@ -123,7 +123,7 @@ def givework(id):
           gndr='а'
        quests=lvlsort(1)  
        sendto=types.ForceReply(selective=False)
-       users.update_one({'id':id},{'$set':{'answering':1}})
+     
        quest=None
        if x['OlgaDmitrievna_respect']>=75:
            quests=lvlsort(1) 
@@ -216,6 +216,7 @@ def givework(id):
                    gndr2='ла'
               text+='На кухне не хватает людей! Было бы хорошо, если бы ты помог'+gndr2+' им с приготовлением. Готов'+gndr+'?'
        if nosend==0:
+           users.update_one({'id':id},{'$set':{'answering':1}})
            bot.send_message(-1001351496983, text, parse_mode='markdown')
            
 def cancelquest(id):
