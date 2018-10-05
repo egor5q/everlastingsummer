@@ -17,6 +17,11 @@ token = os.environ['TELEGRAM_TOKEN']
 world = os.environ['worldtoken']
 bot = telebot.TeleBot(token)
 world=telebot.TeleBot(world)
+alisa=telebot.Telebot(os.environ['alisa'])
+miku=telebot.Telebot(os.environ['miku'])
+lena=telebot.Telebot(os.environ['lena'])
+slavya=telebot.Telebot(os.environ['slavya'])
+uliana=telebot.Telebot(os.environ['uliana'])
 
 client1=os.environ['database']
 client=MongoClient(client1)
