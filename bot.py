@@ -572,7 +572,7 @@ def electronichandler(m):
                 else:
                     reply_to_message_id=m.message_id
                 electronic.send_message(m.chat.id, '['+x['pionername']+'](tg://user?id='+str(x['id'])+\
-                                        ', ты уже записан'+gndr+' на турнир!', parse_mode='markdown', reply_to_message_id=reply_to_message_id)
+                                        '), ты уже записан'+gndr+' на турнир!', parse_mode='markdown', reply_to_message_id=reply_to_message_id)
         else:
             if m.from_user.id==m.chat.id:
                 reply_to_message_id=None
