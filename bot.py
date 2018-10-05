@@ -639,12 +639,17 @@ if True:
     checktime()
             
             
-            
+def polling(pollingbot):
+    pollingbot.polling(none_stop=True,timeout=600)
+
+
 if True:
    print('7777')
    users.update_many({},{'$set':{'working':0}})
    users.update_many({},{'$set':{'waitforwork':0}})
    users.update_many({},{'$set':{'relaxing':0}})
-   bot.polling(none_stop=True,timeout=600)
-   electronic.polling(none_stop=True,timeout=600)
+   t=threading.Timer(3, polling, args=[bot])
+   t.start()
+   t=threading.Timer(3, polling, args=[electronic])
+   t.start()
 
