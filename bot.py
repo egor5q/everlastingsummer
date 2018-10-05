@@ -569,7 +569,7 @@ def starttournier(game):
             newplayers.remove(randomplayer)
             g+=1
         text=''
-        setka={}
+        setka=[]
         i=0
         h=len(cardplayers)
         while i<(h/2):
@@ -577,7 +577,7 @@ def starttournier(game):
             cardplayers.remove(player1)
             player2=random.choice(cardplayers)
             cardplayers.remove(player2)
-            setka.update(i:[player1, player2])
+            setka.append([player1, player2])
             i+=1
         for ids in setka:
             text+='\n\n'
