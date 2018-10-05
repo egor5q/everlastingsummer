@@ -646,4 +646,5 @@ if True:
    users.update_many({},{'$set':{'waitforwork':0}})
    users.update_many({},{'$set':{'relaxing':0}})
    bot.polling(none_stop=True,timeout=600)
+   electronic.polling(none_stop=True,timeout=600)
 
