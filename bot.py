@@ -531,13 +531,72 @@ def eveninggames():
                                               'Регистрация заканчивается через 20 минут!', 'markdown'])
         t.start()
         electronicstats['waitingplayers']=1
+        t=threading.Timer(30, starttournier, args=['cards'])
+        t.start()
 
     elif x=='football':
         leader='uliana'
     elif x=='ropepulling':
         leader='alisa'
         
-           
+def starttournier(game):
+    if game=='cards':
+        newplayers=['miku','slavya','zhenya','alisa','lena','uliana']
+        specialrules=0
+        i=0
+        for ids in cardplayers:
+            i+=1
+        if i%2==0:
+            if i>=10:
+                prm=16
+            elif i>0:
+                prm=8
+            else:
+                prm=0
+        else:
+            if i==1:
+                prm=4
+            elif i==3 or i==5 or i==7:
+                prm=8
+            elif i==9:
+                prm=12
+                specialrules=1
+        g=0
+        while g<(prm-i):
+            randomplayer=random.choice(newplayers)
+            cardplayers.append(randomplayer)
+            newplayers.remove(randomplayer)
+            g+=1
+        text=''
+        for ids in cardplayers:
+            try:
+                int(ids)
+                x=users.find_one({'id':ids})
+                text+='['+x['pionername']+'](tg://user?id='+str(x['id'])+')\n'
+            except:
+                text+=nametopioner(ids)+'\n'
+                
+        electronic.send_message(-1001351496983, 'Ну что, все в сборе? Тогда вот вам турнирная сетка на первый этап:\n'+text, parse_mode='markdown')
+                
+                    
+def nametopioner(pioner):
+    if pioner=='miku':
+        return '[Мику](https://t.me/ES_MikuBot)'
+    if pioner=='alisa':
+        return '[Алиса](https://t.me/ES_AlisaBot)'
+    if pioner=='zhenya':
+        return '[Женя](https://t.me/ES_ZhenyaBot)'
+    if pioner=='uliana':
+        return '[Ульяна](https://t.me/ES_UlianaBot)'
+    if pioner=='slavya':
+        return '[Славя](https://t.me/SlavyaBot)'
+    if pioner=='lena':
+        return '[Лена](https://t.me/ES_LenaBot)'
+
+def addtogame(name,game):
+    game.append(name)
+                
+                
 def sendmes(sender, text, parse_mode):
     sender.send_message(-1001351496983,text, parse_mode=parse_mode)
            
@@ -616,6 +675,12 @@ electronicstats={
     'intelligence':4,
     'waitingplayers':0,
     'playingcards':0
+           
+}
+zhenyastats={
+    'strenght':2,
+    'agility':1,
+    'intelligence':3
            
 }
 
