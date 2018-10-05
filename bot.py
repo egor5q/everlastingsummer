@@ -606,13 +606,17 @@ def starttournier(game):
             for idss in ids:
                 try:
                     int(idss)
+                    i+=1
                 except:
                     if i==0:
                         index=1
                     elif i==1:
                         index=0
-                    talkwithplayer(ids[index], idss)
-                i+=1
+                    try:
+                        int(ids[index])
+                        talkwithplayer(ids[index], idss)
+                    except:
+                        pass
    
 def cards_nextturn():
     pass
@@ -725,6 +729,7 @@ def electronichandler(m):
                                   'Рад, что тебя заинтересовала моя игра. Теперь ты тоже в списке участников!']
                     text=random.choice(texts)
                     electronic.send_message(m.chat.id, text)
+                    cardplayers.append(x['id'])
                 else:
                     if m.reply_to_message!=None:
                         if m.reply_to_message.from_user.id==609648686:
@@ -733,7 +738,7 @@ def electronichandler(m):
                                   'Рад, что тебя заинтересовала моя игра. Теперь ты тоже в списке участников!']
                             text=random.choice(texts)
                             electronic.send_message(m.chat.id, text, parse_mode='markdown', reply_to_message_id=m.message_id)
-                cardplayers.append(x['id'])
+                            cardplayers.append(x['id'])
             else:
                 if m.from_user.id==m.chat.id:
                     reply_to_message_id=None
