@@ -686,7 +686,7 @@ def sayto(pioner, pionername, id, texts):
         time.sleep(5)
         pioner.send_message(id, random.choice(texts))
     except:
-        pioner.send_chat_action(id,'typing')
+        pioner.send_chat_action(-1001351496983,'typing')
         time.sleep(5)
         pioner.send_message(-1001351496983, random.choice(textstochat), parse_mode='markdown')
         
