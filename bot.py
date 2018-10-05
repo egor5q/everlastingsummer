@@ -503,7 +503,7 @@ def eveninggames():
         electronic.send_chat_action(-1001351496983,'typing')
         bot.send_message(-1001351496983, 'Уже 7 вечера, а это значит, что пора начинать наши вечерние игры! На сегодня '+
                          'у нас по плану придуманная Электроником карточная игра. [Электроник](https://t.me/ES_ElectronicBot), '+
-                         'дальше расскажешь ты.', parse_mode='markdown', chat_action='typing')
+                         'дальше расскажешь ты.', parse_mode='markdown')
         t=threading.Timer(3, sendmes, args=[electronic, 'Есть, Ольга Дмитриевна!'])
         t.start()
         
