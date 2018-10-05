@@ -499,7 +499,6 @@ def eveninggames():
     x=random.choice(egames)
     if x=='cards':
         leader='electronic'
-        game='
         bot.send_message(-1001351496983, 'Уже 7 вечера, а это значит, что пора начинать наши вечерние игры! На сегодня '+
                          'у нас по плану придуманная Электроником карточная игра. [Электроник](https://t.me/ES_ElectronicBot), '+
                          'дальше расскажешь ты.', parse_mode='markdown')
