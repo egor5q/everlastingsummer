@@ -238,7 +238,13 @@ def cancelquest(id):
 
 
 worktexts=['Ну что, пионер, скучаешь? Ничего, сейчас найду для тебя подходящее занятие! Подожди немного.',
-           'Бездельничаешь? Сейчас я это исправлю! Подожди пару минут, найду тебе занятие.']
+  'Бездельничаешь? Сейчас я это исправлю! Подожди пару минут, найду тебе занятие.']
+
+
+@bot.message_handler(commands=['gamestest'])
+def gamestest(m):
+    eveninggames()
+
   
 @bot.message_handler()
 def messag(m):
@@ -487,11 +493,6 @@ def checktime():
     if(hour==19 and minute==0):
         eveninggames()
         
-        
-     
-@bot.message_handler(commands=['gamestest'])
-def gamestest(m):
-    eveninggames()
         
     
 def eveninggames():
