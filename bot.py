@@ -491,6 +491,7 @@ def checktime():
         x=findindex('helpinkitchen')
         works[x]['value']=0
     if(hour==19 and minute==0):
+        cardplayers=[]
         eveninggames()
         
         
@@ -568,13 +569,27 @@ def starttournier(game):
             newplayers.remove(randomplayer)
             g+=1
         text=''
-        for ids in cardplayers:
-            try:
-                int(ids)
-                x=users.find_one({'id':ids})
-                text+='['+x['pionername']+'](tg://user?id='+str(x['id'])+')\n'
-            except:
-                text+=nametopioner(ids)+'\n'
+        setka={}
+        i=0
+        h=len(cardplayers)
+        while i<(h/2):
+            player1=random.choice(cardplayers)
+            cardplayers.remove(player1)
+            player2=random.choice(cardplayers)
+            cardplayers.remove(player2)
+            setka.update(i:[player1, player2])
+            i+=1
+        for ids in setka:
+            text+='\n\n'
+            vs=' VS '
+            for idss in ids:
+                try:
+                    int(idss)
+                    x=users.find_one({'id':idss})
+                    text+='['+x['pionername']+'](tg://user?id='+str(x['id'])+')'+vs
+                except:
+                    text+=nametopioner(idss)+vs
+                vs=''
                 
         electronic.send_message(-1001351496983, 'Ну что, все в сборе? Тогда вот вам турнирная сетка на первый этап:\n'+text, parse_mode='markdown')
                 
