@@ -500,11 +500,14 @@ def eveninggames():
     x=random.choice(egames)
     if x=='cards':
         leader='electronic'
+        bot.send_chat_action(-1001351496983,'typing')
+        t=threading.Timer(3, sendmes, args=[bot, 'Уже 7 вечера, а это значит, что пора начинать наши вечерние игры! На сегодня '+\
+                         'у нас по плану придуманная Электроником карточная игра. [Электроник](https://t.me/ES_ElectronicBot), '+\
+                         'дальше расскажешь ты.', 'markdown'])
+        t.start()
+        time.sleep(3)
         electronic.send_chat_action(-1001351496983,'typing')
-        bot.send_message(-1001351496983, 'Уже 7 вечера, а это значит, что пора начинать наши вечерние игры! На сегодня '+
-                         'у нас по плану придуманная Электроником карточная игра. [Электроник](https://t.me/ES_ElectronicBot), '+
-                         'дальше расскажешь ты.', parse_mode='markdown')
-        t=threading.Timer(3, sendmes, args=[electronic, 'Есть, Ольга Дмитриевна!'])
+        t=threading.Timer(3, sendmes, args=[electronic, 'Есть, Ольга Дмитриевна!', None])
         t.start()
         
     elif x=='football':
@@ -513,8 +516,8 @@ def eveninggames():
         leader='alisa'
         
            
-def sendmes(sender, text):
-    sender.send_message(-1001351496983,text)
+def sendmes(sender, text, parse_mode):
+    sender.send_message(-1001351496983,text, parse_mode=parse_mode)
            
  
 alisastats={
