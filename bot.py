@@ -23,6 +23,7 @@ lena=telebot.TeleBot(os.environ['lena'])
 slavya=telebot.TeleBot(os.environ['slavya'])
 uliana=telebot.TeleBot(os.environ['uliana'])
 electronic=telebot.TeleBot(os.environ['electronic'])
+zhenya=telebot.TeleBot(os.environ['zhenya'])
 
 client1=os.environ['database']
 client=MongoClient(client1)
