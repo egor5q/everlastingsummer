@@ -590,10 +590,103 @@ def starttournier(game):
                 except:
                     text+=nametopioner(idss)+vs
                 vs=''
-                
+        electronic.send_chat_action(-1001351496983,'typing') 
+        time.sleep(5)
         electronic.send_message(-1001351496983, 'Ну что, все в сборе? Тогда вот вам турнирная сетка на первый этап:\n'+text, parse_mode='markdown')
+        time.sleep(1.5)
+        electronic.send_chat_action(-1001351496983,'typing')
+        time.sleep(3)
+        electronic.send_message(-1001351496983, 'А теперь прошу к столам! Каждый садится со своим соперником. Через 2 минуты начинается '+
+                                'первый этап!')
+        t=threading.Timer(120, cards_nextturn)
+        t.start()
+        for ids in setka:
+            i=0
+            for idss in ids:
+                try:
+                    int(idss)
+                except:
+                    if i==0:
+                        index=1
+                    elif i==1:
+                        index=0
+                    talkwithplayer(ids[index], idss)
+                i+=1
+   
+def cards_nextturn():
+    pass
+
+
                 
-                    
+def talkwithlayer(player, pioner):
+    if pioner=='miku':
+        t=threading.Timer(random.randint(10,90), sayto, args=[miku, 'miku', player, cards_startround_mikutexts])
+        t.start()    
+    if pioner=='alisa':
+        t=threading.Timer(random.randint(10,90), sayto, args=[alisa, 'alisa', player, cards_startround_alisatexts])
+        t.start()    
+    if pioner=='zhenya':
+        t=threading.Timer(random.randint(10,90), sayto, args=[zhenya, 'zhenya', player, cards_startround_zhenyatexts])
+        t.start()    
+    if pioner=='uliana':
+        t=threading.Timer(random.randint(10,90), sayto, args=[uliana, 'uliana', player, cards_startround_ulianatexts])
+        t.start()    
+    if pioner=='slavya':
+        t=threading.Timer(random.randint(10,90), sayto, args=[slavya, 'slavya', player, cards_startround_slavyatexts])
+        t.start()    
+    if pioner=='lena':
+        t=threading.Timer(random.randint(10,90), sayto, args=[lena, 'lena', player, cards_startround_lenatexts])
+        t.start()    
+
+
+        
+cards_startround_mikutexts=['Ой, Привет! Если не помнишь, то меня Мику зовут. Мы сейчас с тобой '+\
+                              'играем! Ты хорошо играешь? Я не очень...','Привет! Мы с тобой уже знакомы, если помнишь... '+\
+                              'Удачи на турнире!']   
+cards_startround_alisatexts=['Ну привет. Готовься проиграть!']
+cards_startround_slavyatexts=['Привет! Интересно, кто победит в турнире в этот раз...']
+cards_startround_ulianatexts=['Привет-привет! Я сегодня настроена на победу, так что советую сразу сдаться!']
+cards_startround_lenatexts=['Привет. Удачи на сегодняшнем турнире!']
+cards_startround_zhenyatexts=['Выходит, мы с тобой сегодня играем. Давай сразу к игре, без лишних разговоров!']
+    
+    
+
+def sayto(pioner, pionername, id, texts):
+    x=users.find_one({'id':id})
+    if x['gender']=='female':
+        gndr='а'
+    else:
+        gndr=''
+    if pionername=='miku':
+        textstochat=['Привет, '+x['pionername']+'! Меня Мику зовут! Мы ещё не знакомы, можем '+\
+                            '[поговорить](https://t.me/ES_MikuBot) после турнира... А сейчас - удачи!']
+    elif pionername=='alisa':
+        textstochat=['Ну привет, '+x['pionername']+'! Думаешь победить в турнире? Даже не надейся! Меня тебе '+\
+                            'точно не обыграть!']
+    elif pionername=='slavya':
+        textstochat=['Привет, 'x['pionername']+'! Чего-то я тебя не видела раньше... Меня Славя зовут! Можем '+\
+                            '[познакомиться](https://t.me/SlavyaBot) на досуге. Ну а сейчас готовься к игре!']
+    elif pionername=='uliana':
+        textstochat=['Привет! Тебя ведь 'x['pionername']+' зовут? Я Ульяна! Готов'+gndr+' проиграть?']
+        
+    elif pionername=='lena':
+        textstochat=['Привет, 'x['pionername']+'. Меня Лена зовут... Хотя ты наверняка уже знаешь, ведь в турнирной сетке написано. '+\
+                    'Удачи!']
+        
+    elif pionername=='zhenya':
+        textstochat=['Ну привет, 'x['pionername']+'. Не знаю, зачем я вообще играю, но уже поздно передумывать.']
+                            
+    try:
+        pioner.send_chat_action(id,'typing')
+        time.sleep(5)
+        pioner.send_message(id, random.choice(texts))
+    except:
+        pioner.send_chat_action(id,'typing')
+        time.sleep(5)
+        pioner.send_message(-1001351496983, random.choice(textstochat), parse_mode='markdown')
+        
+        
+
 def nametopioner(pioner):
     if pioner=='miku':
         return '[Мику](https://t.me/ES_MikuBot)'
