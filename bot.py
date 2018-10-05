@@ -509,7 +509,7 @@ def eveninggames():
         electronic.send_chat_action(-1001351496983,'typing')
         t=threading.Timer(2, sendmes, args=[electronic, 'Есть, Ольга Дмитриевна!', None])
         t.start()
-        time.sleep(3)
+        time.sleep(4)
         electronic.send_chat_action(-1001351496983,'typing') 
         t=threading.Timer(10, sendmes, args=[electronic, 'Итак. Правила игры просты: надо выиграть, собрав на руке более сильную '+\
                                             'комбинацию, чем у соперника. Процесс игры заключается в том, что соперники поочереди '+\
@@ -520,7 +520,11 @@ def eveninggames():
                                             'такой же ход повторяется со стороны соперника. Всего каждый участник делает 3 хода, '+\
                                             'и после этого оба игрока вскрываются...', None])
         t.start()
-        time.sleep(12)
+        time.sleep(4)
+        electronic.send_chat_action(-1001351496983,'typing') 
+        time.sleep(4)
+        electronic.send_chat_action(-1001351496983,'typing') 
+        time.sleep(4)
         electronic.send_chat_action(-1001351496983,'typing') 
         t=threading.Timer(5, sendmes, args=[electronic, 'Что смешного? Ладно, неважно. Все поняли правила? Отлично! Для '+\
                                               'регистрации в турнире нужно подойти ко мне, и сказать: "`Хочу принять участие в турнире!`". '+\
