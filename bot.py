@@ -505,7 +505,7 @@ def eveninggames():
                          'у нас по плану придуманная Электроником карточная игра. [Электроник](https://t.me/ES_ElectronicBot), '+\
                          'дальше расскажешь ты.', 'markdown'])
         t.start()
-        time.sleep(3)
+        time.sleep(4)
         electronic.send_chat_action(-1001351496983,'typing')
         t=threading.Timer(3, sendmes, args=[electronic, 'Есть, Ольга Дмитриевна!', None])
         t.start()
