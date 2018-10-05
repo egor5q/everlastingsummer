@@ -530,9 +530,8 @@ def eveninggames():
                                               'регистрации в турнире нужно подойти ко мне, и сказать: "`Хочу принять участие в турнире!`". '+\
                                               'Регистрация заканчивается через 20 минут!', 'markdown'])
         t.start()
-        
-        
-        
+        electronicstats['waitingplayers']=1
+
     elif x=='football':
         leader='uliana'
     elif x=='ropepulling':
@@ -542,7 +541,50 @@ def eveninggames():
 def sendmes(sender, text, parse_mode):
     sender.send_message(-1001351496983,text, parse_mode=parse_mode)
            
- 
+@electronic.message_handler()
+def electronichandler(m):
+    if electronicstats['waitingplayers']==1:
+        if m.text.lower()=='хочу принять участие в турнире!':
+            x=users.find_one({'id':m.from_user.id})
+            if x['gender']=='female':
+                gndr='а'
+            else:
+                gndr=''
+            if x['id'] not in cardplayers:
+                if m.from_user.id==m.chat.id:
+                    texts=['Привет! Записал тебя в список участников. Жди начала турнира!',
+                                  'Хорошо. Записал тебя!',
+                                  'Рад, что тебя заинтересовала моя игра. Теперь ты тоже в списке участников!']
+                    text=random.choice(texts)
+                    electronic.send_message(m.chat.id, text)
+                else:
+                    if m.reply_to_message!=None:
+                        if m.reply_to_message.from_user.id==609648686:
+                            texts=['Привет, ['+x['pionername']+'](tg://user?id='+str(x['id'])+')! Записал тебя в список участников. Жди начала турнира!',
+                                  'Хорошо, ['+x['pionername']+'](tg://user?id='+str(x['id'])+'. Записал тебя!',
+                                  'Рад, что тебя заинтересовала моя игра. Теперь ты тоже в списке участников!']
+                            text=random.choice(texts)
+                            electronic.send_message(m.chat.id, text, parse_mode='markdown', reply_to_message_id=m.message_id)
+                cardplayers.append(x['id'])
+            else:
+                if m.from_user.id==m.chat.id:
+                    reply_to_message_id=None
+                else:
+                    reply_to_message_id=m.message_id
+                electronic.send_message(m.chat.id, '['+x['pionername']+'](tg://user?id='+str(x['id'])+\
+                                        ', ты уже записан'+gndr+' на турнир!', parse_mode='markdown', reply_to_message_id=reply_to_message_id)
+        else:
+            if m.from_user.id==m.chat.id:
+                reply_to_message_id=None
+            else:
+                reply_to_message_id=m.message_id
+            electronic.send_message(m.chat.id, 'Привет, ['+x['pionername']+'](tg://user?id='+str(x['id'])+')! А я тут '+\
+                                    'собираю участников для вечернего турнира. Не хочешь принять участие?', parse_mode='markdown', reply_to_message_id=reply_to_message_id)
+
+
+cardplayers=[]
+        
+        
 alisastats={
     'strenght':1,
     'agility':2,
@@ -571,7 +613,10 @@ slavyastats={
 electronicstats={
     'strenght':3,
     'agility':1,
-    'intelligence':4
+    'intelligence':4,
+    'waitingplayers':0,
+    'playingcards':0
+           
 }
 
 
