@@ -664,17 +664,17 @@ def sayto(pioner, pionername, id, texts):
         textstochat=['Ну привет, '+x['pionername']+'! Думаешь победить в турнире? Даже не надейся! Меня тебе '+\
                             'точно не обыграть!']
     elif pionername=='slavya':
-        textstochat=['Привет, 'x['pionername']+'! Чего-то я тебя не видела раньше... Меня Славя зовут! Можем '+\
+        textstochat=['Привет, '+x['pionername']+'! Чего-то я тебя не видела раньше... Меня Славя зовут! Можем '+\
                             '[познакомиться](https://t.me/SlavyaBot) на досуге. Ну а сейчас готовься к игре!']
     elif pionername=='uliana':
-        textstochat=['Привет! Тебя ведь 'x['pionername']+' зовут? Я Ульяна! Готов'+gndr+' проиграть?']
+        textstochat=['Привет! Тебя ведь '+x['pionername']+' зовут? Я Ульяна! Готов'+gndr+' проиграть?']
         
     elif pionername=='lena':
-        textstochat=['Привет, 'x['pionername']+'. Меня Лена зовут... Хотя ты наверняка уже знаешь, ведь в турнирной сетке написано. '+\
+        textstochat=['Привет, '+x['pionername']+'. Меня Лена зовут... Хотя ты наверняка уже знаешь, ведь в турнирной сетке написано. '+\
                     'Удачи!']
         
     elif pionername=='zhenya':
-        textstochat=['Ну привет, 'x['pionername']+'. Не знаю, зачем я вообще играю, но уже поздно передумывать.']
+        textstochat=['Ну привет, '+x['pionername']+'. Не знаю, зачем я вообще играю, но уже поздно передумывать.']
                             
     try:
         pioner.send_chat_action(id,'typing')
