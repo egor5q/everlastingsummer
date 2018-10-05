@@ -22,6 +22,7 @@ miku=telebot.Telebot(os.environ['miku'])
 lena=telebot.Telebot(os.environ['lena'])
 slavya=telebot.Telebot(os.environ['slavya'])
 uliana=telebot.Telebot(os.environ['uliana'])
+electronic=telebot.Telebot(os.environ['electronic'])
 
 client1=os.environ['database']
 client=MongoClient(client1)
@@ -480,11 +481,72 @@ def checktime():
     if hour==21 and minute==30:
         x=findindex('checkpionerssleeping')
         works[x]['value']=0
-    if (hour==9 and minute==0) or(hour==13 and minute==0) or(hour==18 and minute==0):
+    if (hour==8 and minute==10) or(hour==13 and minute==0) or(hour==20 and minute==30):
         x=findindex('helpinkitchen')
         works[x]['value']=0
+    if(hour==19 and minute==0):
+        eveninggames()
+        
+        
+     
+@bot.message_handler(commands=['gamestest'])
+def gamestest(m):
+    eveninggames()
+        
     
-                
+def eveninggames():
+    egames=['cards']#,'football','ropepulling']
+    x=random.choice(egames)
+    if x=='cards':
+        leader='electronic'
+        game='
+        bot.send_message(-1001351496983, 'Уже 7 вечера, а это значит, что пора начинать наши вечерние игры! На сегодня '+
+                         'у нас по плану придуманная Электроником карточная игра. [Электроник](https://t.me/ES_ElectronicBot), '+
+                         'дальше расскажешь ты.', parse_mode='markdown')
+        electronic.send_message(-1001351496983, 'Есть, Ольга Дмитриевна!')
+        
+    elif x=='football':
+        leader='uliana'
+    elif x=='ropepulling':
+        leader='alisa'
+        
+ 
+alisastats={
+    'strenght':1,
+    'agility':2,
+    'intelligence':3
+}
+lenastats={
+    'strenght':2,
+    'agility':2,
+    'intelligence':2
+}
+mikustats={
+    'strenght':2,
+    'agility':2,
+    'intelligence':2
+}
+ulianastats={
+    'strenght':1,
+    'agility':4,
+    'intelligence':1
+}
+slavyastats={
+    'strenght':1,
+    'agility':1,
+    'intelligence':4
+}
+electronicstats={
+    'strenght':3,
+    'agility':1,
+    'intelligence':4
+}
+
+
+
+zavtrak='9:00'
+obed='14:00'
+uzhin='21:00'
             
 def findindex(x):
     i=0
