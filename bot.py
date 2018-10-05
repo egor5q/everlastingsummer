@@ -618,7 +618,7 @@ def cards_nextturn():
 
 
                 
-def talkwithlayer(player, pioner):
+def talkwithplayer(player, pioner):
     if pioner=='miku':
         t=threading.Timer(random.randint(10,90), sayto, args=[miku, 'miku', player, cards_startround_mikutexts])
         t.start()    
@@ -728,7 +728,7 @@ def electronichandler(m):
                     if m.reply_to_message!=None:
                         if m.reply_to_message.from_user.id==609648686:
                             texts=['Привет, ['+x['pionername']+'](tg://user?id='+str(x['id'])+')! Записал тебя в список участников. Жди начала турнира!',
-                                  'Хорошо, ['+x['pionername']+'](tg://user?id='+str(x['id'])+'. Записал тебя!',
+                                  'Хорошо, ['+x['pionername']+'](tg://user?id='+str(x['id'])+'). Записал тебя!',
                                   'Рад, что тебя заинтересовала моя игра. Теперь ты тоже в списке участников!']
                             text=random.choice(texts)
                             electronic.send_message(m.chat.id, text, parse_mode='markdown', reply_to_message_id=m.message_id)
