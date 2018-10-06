@@ -807,18 +807,28 @@ def cards_nextturn():
     electronic.send_message(-1001351496983,text1+text+'\n'+text3, parse_mode='markdown')
     setka=[]
     i=0
-    x=len(cardplayers)/2
-    while i<x:
-        player1=random.choice(cardplayers)
-        cardplayers.remove(player1)
-        player2=random.choice(cardplayers)
-        cardplayers.remove(player2)
-        lst=[player1, player2]
-        setka.append(lst)
-        i+=1
-    t=threading.Timer(10, cards_nextturn)
-    t.start()
-                
+    if len(cardplayers)>1:
+        x=len(cardplayers)/2
+        while i<x:
+            player1=random.choice(cardplayers)
+            cardplayers.remove(player1)
+            player2=random.choice(cardplayers)
+            cardplayers.remove(player2)
+            lst=[player1, player2]
+            setka.append(lst)
+            i+=1
+        t=threading.Timer(10, cards_nextturn)
+        t.start()
+    else:
+        time.sleep(2)
+        bot.send_chat_action(-1001351496983,'typing') 
+        time.sleep(5)
+        try:
+            name=users.find_one({'id':cardplayers[0]})['pionername']
+        except:
+            name=pionertoname(cardplayers[0])
+        bot.send_message(-1001351496983, 'Отлично! Поздравляю, '+name+'! А теперь приберитесь тут, скоро ужин.')
+        bot.send_sticker(-1001351496983, 'CAADAgADqwADgi0zDzm_zSmMbMmiAg')
             
                 
     
