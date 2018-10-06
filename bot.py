@@ -773,9 +773,9 @@ def cards_nextturn():
     text=''
     x=0
     for dd in cardplayers:
+        x+=1
         try:
             int(dd)
-            x+=1
             text+=users.find_one({'id':dd})['pionername']+'\n'
         except:
             text+=nametopioner(dd)+'\n'
