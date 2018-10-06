@@ -703,17 +703,50 @@ def cards_nextturn():
                     i=10
                 except:
                     if idss[0]=='miku':
-                        intelligence=mikustats['intelligence']
+                        intelligence1=mikustats['intelligence']
                     if idss[0]=='alisa':
-                        intelligence=alisastats['intelligence']
+                        intelligence1=alisastats['intelligence']
                     if idss[0]=='lena':
-                        intelligence=lenastats['intelligence']
-                    if idss[index]=='slavya':
-                        intelligence=slavyastats['intelligence']
-                    if idss[index]=='zhenya':
-                        intelligence=zhenyastats['intelligence']
-                    if idss[index]=='uliana':
-                        intelligence=ulianastats['intelligence']
+                        intelligence1=lenastats['intelligence']
+                    if idss[0]=='slavya':
+                        intelligence1=slavyastats['intelligence']
+                    if idss[0]=='zhenya':
+                        intelligence1=zhenyastats['intelligence']
+                    if idss[0]=='uliana':
+                        intelligence1=ulianastats['intelligence']
+                    if idss[1]=='miku':
+                        intelligence2=mikustats['intelligence']
+                    if idss[1]=='alisa':
+                        intelligence2=alisastats['intelligence']
+                    if idss[1]=='lena':
+                        intelligence2=lenastats['intelligence']
+                    if idss[1]=='slavya':
+                        intelligence2=slavyastats['intelligence']
+                    if idss[1]=='zhenya':
+                        intelligence2=zhenyastats['intelligence']
+                    if idss[1]=='uliana':
+                        intelligence2=ulianastats['intelligence']
+                    z=intelligence1-intelligence2
+                    if z==0:
+                        x=50
+                    elif z==1:
+                        x=60
+                    elif z==2:
+                        x=75
+                    elif z==3:
+                        x=85
+                    if random.randint(1,100)<=x:
+                        cardplayers.remove(idss[1])
+                    else:
+                        cardplayers.remove(idss[0])
+                    i=10
+    for dd in cardplayers:
+        try:
+            int(dd)
+            text+=users.find_one({'id':dd})['pionername']+'\n'
+        except:
+            text+=nametopioner(dd)+'\n'
+    electronic.send_message(-1001351496983,text)
                 
             
                 
