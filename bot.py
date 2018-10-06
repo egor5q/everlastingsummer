@@ -703,29 +703,29 @@ def cards_nextturn():
                         cardplayers.remove(idss[1])
                     i=10
                 except:
-                    if idss[0]=='miku':
+                    if ids[0]='miku':
                         intelligence1=mikustats['intelligence']
-                    if idss[0]=='alisa':
+                    if ids[0]=='alisa':
                         intelligence1=alisastats['intelligence']
-                    if idss[0]=='lena':
+                    if ids[0]=='lena':
                         intelligence1=lenastats['intelligence']
-                    if idss[0]=='slavya':
+                    if ids[0]=='slavya':
                         intelligence1=slavyastats['intelligence']
-                    if idss[0]=='zhenya':
+                    if ids[0]=='zhenya':
                         intelligence1=zhenyastats['intelligence']
-                    if idss[0]=='uliana':
+                    if ids[0]=='uliana':
                         intelligence1=ulianastats['intelligence']
-                    if idss[1]=='miku':
+                    if ids[1]=='miku':
                         intelligence2=mikustats['intelligence']
-                    if idss[1]=='alisa':
+                    if ids[1]=='alisa':
                         intelligence2=alisastats['intelligence']
-                    if idss[1]=='lena':
+                    if ids[1]=='lena':
                         intelligence2=lenastats['intelligence']
-                    if idss[1]=='slavya':
+                    if ids[1]=='slavya':
                         intelligence2=slavyastats['intelligence']
-                    if idss[1]=='zhenya':
+                    if ids[1]=='zhenya':
                         intelligence2=zhenyastats['intelligence']
-                    if idss[1]=='uliana':
+                    if ids[1]=='uliana':
                         intelligence2=ulianastats['intelligence']
                     z=intelligence1-intelligence2
                     if z==0:
