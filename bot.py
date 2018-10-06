@@ -632,16 +632,20 @@ def cards_nextturn():
     print(setka)
     for ids in setka:
         i=-1
+        print(ids)
         for idss in ids:
+            print(idss)
             i+=1
             if i<2:
               try:
+                print('try1')
                 int(ids[0])
                 if i==0:
                     index=1
                 else:
                     index=0
                 try:
+                    print('try2')
                     int(ids[index])
                     player1=users.find_one({'id':ids[0]})
                     player2=users.find_one({'id':ids[1]})
@@ -653,6 +657,8 @@ def cards_nextturn():
                     else:
                         cardplayers.remove(player1['id'])
                     i=10
+                    print('try2complete')
+                
                 except:
                     if ids[index]=='miku':
                         intelligence=mikustats['intelligence']
@@ -679,8 +685,10 @@ def cards_nextturn():
                     else:
                         cardplayers.remove(ids[0])
                     i=10
+              print('try1complete')
               except:
                 try:
+                    print('try3')
                     int(ids[1])
                     index=0
                     if ids[index]=='miku':
@@ -708,7 +716,9 @@ def cards_nextturn():
                     else:
                         cardplayers.remove(ids[1])
                     i=10
+                print('try3complete')
                 except:
+                    print('try4')
                     if ids[0]=='miku':
                         intelligence1=mikustats['intelligence']
                     if ids[0]=='alisa':
