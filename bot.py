@@ -776,7 +776,7 @@ def cards_nextturn():
             text+=users.find_one({'id':dd})['pionername']+'\n'
         except:
             text+=nametopioner(dd)+'\n'
-    electronic.send_message(-1001351496983,text)
+    electronic.send_message(-1001351496983,text, parse_mode='markdown')
                 
             
                 
