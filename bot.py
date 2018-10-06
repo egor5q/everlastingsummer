@@ -631,6 +631,9 @@ def starttournier(game):
 
 def cards_nextturn():
     global cardplayers
+    for ab in setka:
+        cardplayers.append(ab[0])
+        cardplayers.append(ab[1])
     print(setka)
     print(cardplayers)
     for ids in setka:
