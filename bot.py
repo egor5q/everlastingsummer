@@ -752,6 +752,12 @@ def cards_nextturn():
                         x=75
                     elif z==3:
                         x=85
+                    elif z==-1:
+                      x=40
+                    elif z==-2:
+                      x=25
+                    elif z==-3:
+                      x=15
                     if random.randint(1,100)<=x:
                         cardplayers.remove(idss[1])
                     else:
