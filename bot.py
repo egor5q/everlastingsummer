@@ -797,6 +797,18 @@ def cards_nextturn():
         text3='Скоро начнётся раунд 2. Игроки, приготовьтесь!'
     electronicstats['cardsturn']+=1
     electronic.send_message(-1001351496983,text1+text+'\n'+text3, parse_mode='markdown')
+    setka=[]
+    i=0
+    x=len(cardplayers)/2
+    while i<x:
+        player1=random.choice(cardplayers)
+        cardplayers.remove(player1)
+        player2=random.choice(cardplayers)
+        cardplayers.remove(player2)
+        lst=[player1, player2]
+        setka.append(lst)
+        i+=1
+    cards_nextturn()
                 
             
                 
