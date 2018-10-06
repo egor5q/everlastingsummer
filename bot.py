@@ -556,6 +556,28 @@ def eveninggames():
 
     elif x=='football':
         leader='uliana'
+        bot.send_chat_action(-1001351496983,'typing')
+        t=threading.Timer(3.5, sendmes, args=[bot, 'Уже 7 вечера, а это значит, что пора начинать наши вечерние игры! На сегодня '+\
+                         'у нас по плану футбол! [Ульяна](https://t.me/ES_ElectronicBot), '+\
+                         'расскажет вам про правила проведения турнира.', 'markdown'])
+        t.start()
+        time.sleep(4.5)
+        uliana.send_chat_action(-1001351496983,'typing')
+        t=threading.Timer(2, sendmes, args=[uliana, 'Так точно, Ольга Дмитриевна!', None])
+        t.start()
+        t=threading.Timer(2.1, sendstick, args=[uliana, 'CAADAgADKQADgi0zD_inNy0pZyh0Ag'])
+        t.start()
+        time.sleep(4)
+        uliana.send_chat_action(-1001351496983,'typing') 
+        t=threading.Timer(10, sendmes, args=[uliana, 'Правила просты - не жульничать! Для записи на турнир '+\
+                                             'подойдите ко мне и скажите "`Хочу участвовать!`". Вроде бы всё... Жду всех!', 'markdown])
+        t.start()
+        time.sleep(4)
+        uliana.send_chat_action(-1001351496983,'typing') 
+        time.sleep(4)
+        uliana.send_chat_action(-1001351496983,'typing') 
+        time.sleep(4)
+        uliana.send_chat_action(-1001351496983,'typing') 
     elif x=='ropepulling':
         leader='alisa'
  
