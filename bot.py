@@ -84,6 +84,12 @@ def lvlsort(x):
    return finallist
            
 
+@bot.message_handler(content_types=['stickers'])
+def stickercatch(m):
+    print(m.sticker_id
+           
+           
+           
 @bot.message_handler(commands=['start'])
 def start(m):
  if m.chat.id==m.from_user.id:
@@ -741,6 +747,7 @@ def cards_nextturn():
                     else:
                         cardplayers.remove(idss[0])
                     i=10
+    text=''
     for dd in cardplayers:
         try:
             int(dd)
