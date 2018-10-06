@@ -685,7 +685,7 @@ def cards_nextturn():
                     else:
                         cardplayers.remove(ids[0])
                     i=10
-              print('try1complete')
+              
               except:
                 try:
                     print('try3')
@@ -716,7 +716,7 @@ def cards_nextturn():
                     else:
                         cardplayers.remove(ids[1])
                     i=10
-                print('try3complete')
+                
                 except:
                     print('try4')
                     if ids[0]=='miku':
