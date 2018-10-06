@@ -552,6 +552,7 @@ setka=[]
 def starttournier(game):
     if game=='cards':
         global cardplayers
+        global setka
         newplayers=['miku','slavya','zhenya','alisa','lena','uliana']
         specialrules=0
         i=0
@@ -631,6 +632,7 @@ def starttournier(game):
 
 
 def cards_nextturn():
+    global setka
     global cardplayers
     for ab in setka:
         cardplayers.append(ab[0])
