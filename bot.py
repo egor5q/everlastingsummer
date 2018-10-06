@@ -630,7 +630,7 @@ def cards_nextturn():
             i+=1
             if i<2:
               try:
-                int(idss[0])
+                int(ids[0])
                 if i==0:
                     index=1
                 else:
@@ -648,17 +648,17 @@ def cards_nextturn():
                         cardplayers.remove(player1['id'])
                     i=10
                 except:
-                    if idss[index]=='miku':
+                    if ids[index]=='miku':
                         intelligence=mikustats['intelligence']
-                    if idss[index]=='alisa':
+                    if ids[index]=='alisa':
                         intelligence=alisastats['intelligence']
-                    if idss[index]=='lena':
+                    if ids[index]=='lena':
                         intelligence=lenastats['intelligence']
-                    if idss[index]=='slavya':
+                    if ids[index]=='slavya':
                         intelligence=slavyastats['intelligence']
-                    if idss[index]=='zhenya':
+                    if ids[index]=='zhenya':
                         intelligence=zhenyastats['intelligence']
-                    if idss[index]=='uliana':
+                    if ids[index]=='uliana':
                         intelligence=ulianastats['intelligence']
                     if intelligence==1:
                         x=80
@@ -669,25 +669,25 @@ def cards_nextturn():
                     if intelligence==4:
                         x=20
                     if random.randint(1,100)<=x:
-                        cardplayers.remove(idss[1])
+                        cardplayers.remove(ids[1])
                     else:
-                        cardplayers.remove(idss[0])
+                        cardplayers.remove(ids[0])
                     i=10
               except:
                 try:
                     int(idss[1])
                     index=0
-                    if idss[index]=='miku':
+                    if ids[index]=='miku':
                         intelligence=mikustats['intelligence']
-                    if idss[index]=='alisa':
+                    if ids[index]=='alisa':
                         intelligence=alisastats['intelligence']
-                    if idss[index]=='lena':
+                    if ids[index]=='lena':
                         intelligence=lenastats['intelligence']
-                    if idss[index]=='slavya':
+                    if ids[index]=='slavya':
                         intelligence=slavyastats['intelligence']
-                    if idss[index]=='zhenya':
+                    if ids[index]=='zhenya':
                         intelligence=zhenyastats['intelligence']
-                    if idss[index]=='uliana':
+                    if ids[index]=='uliana':
                         intelligence=ulianastats['intelligence']
                     if intelligence==1:
                         x=80
@@ -698,12 +698,12 @@ def cards_nextturn():
                     if intelligence==4:
                         x=20
                     if random.randint(1,100)<=x:
-                        cardplayers.remove(idss[0])
+                        cardplayers.remove(ids[0])
                     else:
-                        cardplayers.remove(idss[1])
+                        cardplayers.remove(ids[1])
                     i=10
                 except:
-                    if ids[0]='miku':
+                    if ids[0]=='miku':
                         intelligence1=mikustats['intelligence']
                     if ids[0]=='alisa':
                         intelligence1=alisastats['intelligence']
