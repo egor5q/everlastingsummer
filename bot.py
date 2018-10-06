@@ -845,8 +845,12 @@ def cards_nextturn():
             name=nametopioner(cardplayers[0])
         bot.send_message(-1001351496983, 'Отлично! Поздравляю, '+name+'! А теперь приберитесь тут, скоро ужин.', parse_mode='markdown')
         bot.send_sticker(-1001351496983, 'CAADAgADqwADgi0zDzm_zSmMbMmiAg')
+        setka=[]
+        cardplayers=[]
   else:
       electronic.send_message(-1001351496983,'К сожалению, игроков для турнира сегодня не набралось. Ну ничего, в следующий раз попробуем!')
+      setka=[]
+      cardplayers=[]
                 
     
 
