@@ -527,7 +527,9 @@ def eveninggames():
         electronic.send_chat_action(-1001351496983,'typing')
         t=threading.Timer(2, sendmes, args=[electronic, 'Есть, Ольга Дмитриевна!', None])
         t.start()
-        time.sleep(4)
+        time.sleep(2)
+        electronic.send_sticker(-1001351496983, 'CAADAgAD1QADgi0zDyFh2eUTYDzzAg')
+        time.sleep(2)
         electronic.send_chat_action(-1001351496983,'typing') 
         t=threading.Timer(10, sendmes, args=[electronic, 'Итак. Правила игры просты: надо выиграть, собрав на руке более сильную '+\
                                             'комбинацию, чем у соперника. Процесс игры заключается в том, что соперники поочереди '+\
