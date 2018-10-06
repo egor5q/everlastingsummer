@@ -847,10 +847,16 @@ def cards_nextturn():
         bot.send_sticker(-1001351496983, 'CAADAgADqwADgi0zDzm_zSmMbMmiAg')
         setka=[]
         cardplayers=[]
+        electronicstats['waitingplayers']=0
+        electronicstats['playingcards']=0
+        electronicstats['cardsturn']=0
   else:
       electronic.send_message(-1001351496983,'К сожалению, игроков для турнира сегодня не набралось. Ну ничего, в следующий раз попробуем!')
       setka=[]
       cardplayers=[]
+      electronicstats['waitingplayers']=0
+      electronicstats['playingcards']=0
+      electronicstats['cardsturn']=0
                 
     
 
