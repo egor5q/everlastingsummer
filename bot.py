@@ -96,11 +96,15 @@ def start(m):
   x=users.find_one({'id':m.from_user.id})
   if x==None:
     users.insert_one(createuser(m.from_user.id, m.from_user.first_name, m.from_user.username))
+    bot.send_chat_action(-1001351496983,'typing')
+    time.sleep(4)
     bot.send_message(m.chat.id,'Здраствуй, пионер! Меня зовут Ольга Дмитриевна, я буду твоей вожатой. Впереди тебя ждёт интересная жизнь в лагере "Совёнок"! '+
                      'А сейчас скажи нам, как тебя зовут (следующим сообщением).')
   else:
    if x['setgender']==0 and x['setname']==0:
     x=users.find_one({'id':m.from_user.id})
+    bot.send_chat_action(-1001351496983,'typing')
+    time.sleep(4)
     if x['working']==1:
        bot.send_message(m.chat.id, 'Здраствуй, пионер! Вижу, ты занят. Молодец! Не буду отвлекать.')
     else:
@@ -827,7 +831,7 @@ def cards_nextturn():
             name=users.find_one({'id':cardplayers[0]})['pionername']
         except:
             name=nametopioner(cardplayers[0])
-        bot.send_message(-1001351496983, 'Отлично! Поздравляю, '+name+'! А теперь приберитесь тут, скоро ужин.')
+        bot.send_message(-1001351496983, 'Отлично! Поздравляю, '+name+'! А теперь приберитесь тут, скоро ужин.', parse_mode='markdown')
         bot.send_sticker(-1001351496983, 'CAADAgADqwADgi0zDzm_zSmMbMmiAg')
             
                 
