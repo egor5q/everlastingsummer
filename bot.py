@@ -813,7 +813,8 @@ def cards_nextturn():
         lst=[player1, player2]
         setka.append(lst)
         i+=1
-    cards_nextturn()
+    t=threading.Timer(10, cards_nextturn)
+    t.start()
                 
             
                 
