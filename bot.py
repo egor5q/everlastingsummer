@@ -607,6 +607,7 @@ def starttournier(game):
         time.sleep(3)
         electronic.send_message(-1001351496983, 'А теперь прошу к столам! Каждый садится со своим соперником. Через 2 минуты начинается '+
                                 'первый этап!')
+        electronicstats['cardsturn']=1
         t=threading.Timer(5, cards_nextturn)
         t.start()
         for ids in setka:
@@ -770,13 +771,32 @@ def cards_nextturn():
                         cardplayers.remove(ids[0])
                     i=10
     text=''
+    x=0
     for dd in cardplayers:
         try:
             int(dd)
+            x+=1
             text+=users.find_one({'id':dd})['pionername']+'\n'
         except:
             text+=nametopioner(dd)+'\n'
-    electronic.send_message(-1001351496983,text, parse_mode='markdown')
+    text1=''
+    text3=''
+    if electronicstats['cardsturn']==1:
+        text1='Завершился первый этап турнира! А вот и наши победители:\n\n'
+    elif electronicstats['cardsturn']==2:
+        text1='Второй этап турнира подошёл к концу! Встречайте победителей:\n\n'
+    elif electronicstats['cardsturn']==3:
+        text1='Полуфинал завершён! В финале встретятся:\n\n'
+    elif electronicstats['cardsturn']==4:
+        text1='Турнир завершён! И наш победитель:\n\n'
+    if x==2:
+        text3='Настало время для финала! Кто же станет победителем на этот раз?'
+    elif x==4:
+        text3='На очереди у нас полуфинал. Кто же из четырёх оставшихся игроков попадёт в финал?'
+    elif x==8:
+        text3='Скоро начнётся раунд 2. Игроки, приготовьтесь!'
+    electronicstats['cardsturn']+=1
+    electronic.send_message(-1001351496983,text1+text+'\n'+text3, parse_mode='markdown')
                 
             
                 
@@ -949,7 +969,8 @@ electronicstats={
     'agility':1,
     'intelligence':4,
     'waitingplayers':0,
-    'playingcards':0
+    'playingcards':0,
+    'cardsturn':0
            
 }
 zhenyastats={
