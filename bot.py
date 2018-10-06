@@ -940,7 +940,7 @@ def sendmes(sender, text, parse_mode):
     sender.send_message(-1001351496983,text, parse_mode=parse_mode)
 
 def sendstick(sender, stick):
-    sender.send_message(-1001351496983,stick)
+    sender.send_sticker(-1001351496983,stick)
            
            
 @electronic.message_handler()
