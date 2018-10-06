@@ -826,7 +826,7 @@ def cards_nextturn():
         try:
             name=users.find_one({'id':cardplayers[0]})['pionername']
         except:
-            name=pionertoname(cardplayers[0])
+            name=nametopioner(cardplayers[0])
         bot.send_message(-1001351496983, 'Отлично! Поздравляю, '+name+'! А теперь приберитесь тут, скоро ужин.')
         bot.send_sticker(-1001351496983, 'CAADAgADqwADgi0zDzm_zSmMbMmiAg')
             
