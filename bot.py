@@ -623,6 +623,7 @@ def starttournier(game):
 
 
 def cards_nextturn():
+    print(setka)
     for ids in setka:
         i=-1
         for idss in ids:
