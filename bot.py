@@ -786,7 +786,10 @@ def cards_nextturn():
     if electronicstats['cardsturn']==1:
         text1='Завершился первый этап турнира! А вот и наши победители:\n\n'
     elif electronicstats['cardsturn']==2:
-        text1='Второй этап турнира подошёл к концу! Встречайте победителей:\n\n'
+        if x>1:
+            text1='Второй этап турнира подошёл к концу! Встречайте победителей:\n\n'
+        else:
+            text1='Финал подошёл к концу! И наш победитель:\n\n'
     elif electronicstats['cardsturn']==3:
       if x==2:
         text1='Полуфинал завершён! В финале встретятся:\n\n'
