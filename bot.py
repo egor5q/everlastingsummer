@@ -606,7 +606,7 @@ def starttournier(game):
         time.sleep(3)
         electronic.send_message(-1001351496983, 'А теперь прошу к столам! Каждый садится со своим соперником. Через 2 минуты начинается '+
                                 'первый этап!')
-        t=threading.Timer(120, cards_nextturn)
+        t=threading.Timer(5, cards_nextturn)
         t.start()
         for ids in setka:
             i=0
