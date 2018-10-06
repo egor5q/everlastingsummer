@@ -636,9 +636,9 @@ def cards_nextturn():
                 else:
                     index=0
                 try:
-                    int(idss[index])
-                    player1=users.find_one({'id':idss[0]})
-                    player2=users.find_one({'id':idss[1]})
+                    int(ids[index])
+                    player1=users.find_one({'id':ids[0]})
+                    player2=users.find_one({'id':ids[1]})
                     r=player1['intelligence']-player2['intelligence']
                     r=r/2
                     x=random.randint(1,100)
@@ -675,7 +675,7 @@ def cards_nextturn():
                     i=10
               except:
                 try:
-                    int(idss[1])
+                    int(ids[1])
                     index=0
                     if ids[index]=='miku':
                         intelligence=mikustats['intelligence']
