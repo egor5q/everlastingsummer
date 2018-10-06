@@ -619,11 +619,16 @@ def starttournier(game):
                     except:
                         pass
    
+
+
+
 def cards_nextturn():
     for ids in setka:
-        i=0
+        i=-1
         for idss in ids:
-            try:
+            i+=1
+            if i<2:
+              try:
                 int(idss)
                 if i==0:
                     index=1
@@ -634,6 +639,39 @@ def cards_nextturn():
                     player1=users.find_one({'id':idss[0]})
                     player2=users.find_one({'id':idss[1]})
                     r=player1['intelligence']-player2['intelligence']
+                    r=r/2
+                    x=random.randint(1,100)
+                    if x<=(50+r):
+                        cardplayers.remove(player2['id'])
+                    else:
+                        cardplayers.remove(player1['id'])
+                    i=10
+                except:
+                    if idss[index]=='miku':
+                        intelligence=mikustats['intelligence']
+                    if idss[index]=='alisa':
+                        intelligence=alisastats['intelligence']
+                    if idss[index]=='lena':
+                        intelligence=lenastats['intelligence']
+                    if idss[index]=='slavya':
+                        intelligence=slavyastats['intelligence']
+                    if idss[index]=='zhenya':
+                        intelligence=zhenyastats['intelligence']
+                    if idss[index]=='uliana':
+                        intelligence=ulianastats['intelligence']
+                    if intelligence==1:
+                        x=80
+                    if intelligence==2:
+                        x=60
+                    if intelligence==3:
+                        x=40
+                    if intelligence==4:
+                        x=20
+                    if random.randint(1,100)<=x:
+                        
+              except:
+                
+            
                 
     
 
