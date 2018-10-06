@@ -586,22 +586,23 @@ def starttournier(game):
                 prm=12
                 specialrules=1
         g=0
-        while g<(prm-i):
+        if prm>0:
+          while g<(prm-i):
             randomplayer=random.choice(newplayers)
             cardplayers.append(randomplayer)
             newplayers.remove(randomplayer)
             g+=1
-        text=''
-        i=0
-        h=len(cardplayers)
-        while i<(h/2):
+          text=''
+          i=0
+          h=len(cardplayers)
+          while i<(h/2):
             player1=random.choice(cardplayers)
             cardplayers.remove(player1)
             player2=random.choice(cardplayers)
             cardplayers.remove(player2)
             setka.append([player1, player2])
             i+=1
-        for ids in setka:
+          for ids in setka:
             text+='\n\n'
             vs=' VS '
             for idss in ids:
@@ -612,18 +613,18 @@ def starttournier(game):
                 except:
                     text+=nametopioner(idss)+vs
                 vs=''
-        electronic.send_chat_action(-1001351496983,'typing') 
-        time.sleep(5)
-        electronic.send_message(-1001351496983, 'Ну что, все в сборе? Тогда вот вам турнирная сетка на первый этап:\n'+text, parse_mode='markdown')
-        time.sleep(1.5)
-        electronic.send_chat_action(-1001351496983,'typing')
-        time.sleep(3)
-        electronic.send_message(-1001351496983, 'А теперь прошу к столам! Каждый садится со своим соперником. Через 2 минуты начинается '+
+          electronic.send_chat_action(-1001351496983,'typing') 
+          time.sleep(5)
+          electronic.send_message(-1001351496983, 'Ну что, все в сборе? Тогда вот вам турнирная сетка на первый этап:\n'+text, parse_mode='markdown')
+          time.sleep(1.5)
+          electronic.send_chat_action(-1001351496983,'typing')
+          time.sleep(3)
+          electronic.send_message(-1001351496983, 'А теперь прошу к столам! Каждый садится со своим соперником. Через 2 минуты начинается '+
                                 'первый этап!')
-        electronicstats['cardsturn']=1
-        t=threading.Timer(5, cards_nextturn)
-        t.start()
-        for ids in setka:
+          electronicstats['cardsturn']=1
+          t=threading.Timer(5, cards_nextturn)
+          t.start()
+          for ids in setka:
             i=0
             for idss in ids:
                 try:
@@ -639,6 +640,8 @@ def starttournier(game):
                         talkwithplayer(ids[index], idss)
                     except:
                         pass
+        else:
+           electronic.send_message(-1001351496983,'К сожалению, игроков для турнира сегодня не набралось. Ну ничего, в следующий раз попробуем!')
    
 
 
