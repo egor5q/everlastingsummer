@@ -124,7 +124,7 @@ def work(m):
             time.sleep(4)
             bot.send_message(m.chat.id, random.choice(worktexts), reply_to_message_id=m.message_id)
             users.update_one({'id':m.from_user.id},{'$set':{'waitforwork':1}})
-            t=threading.Timer(random.randint(3,5),givework, args=[m.from_user.id])
+            t=threading.Timer(random.randint(60,120),givework, args=[m.from_user.id])
             t.start()
            else:
               bot.send_chat_action(m.chat.id,'typing')
@@ -345,7 +345,7 @@ def dowork(id):
     if z!=None:
         t=threading.Timer(z,reloadquest, args=[index])
         t.start()
-    t=threading.Timer(7, endwork, args=[id, works[index]['name']])
+    t=threading.Timer(300, endwork, args=[id, works[index]['name']])
     t.start()
     
        
