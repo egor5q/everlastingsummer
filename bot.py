@@ -629,7 +629,7 @@ def cards_nextturn():
             i+=1
             if i<2:
               try:
-                int(idss)
+                int(idss[0])
                 if i==0:
                     index=1
                 else:
@@ -668,8 +668,52 @@ def cards_nextturn():
                     if intelligence==4:
                         x=20
                     if random.randint(1,100)<=x:
-                        
+                        cardplayers.remove(idss[1])
+                    else:
+                        cardplayers.remove(idss[0])
+                    i=10
               except:
+                try:
+                    int(idss[1])
+                    index=0
+                    if idss[index]=='miku':
+                        intelligence=mikustats['intelligence']
+                    if idss[index]=='alisa':
+                        intelligence=alisastats['intelligence']
+                    if idss[index]=='lena':
+                        intelligence=lenastats['intelligence']
+                    if idss[index]=='slavya':
+                        intelligence=slavyastats['intelligence']
+                    if idss[index]=='zhenya':
+                        intelligence=zhenyastats['intelligence']
+                    if idss[index]=='uliana':
+                        intelligence=ulianastats['intelligence']
+                    if intelligence==1:
+                        x=80
+                    if intelligence==2:
+                        x=60
+                    if intelligence==3:
+                        x=40
+                    if intelligence==4:
+                        x=20
+                    if random.randint(1,100)<=x:
+                        cardplayers.remove(idss[0])
+                    else:
+                        cardplayers.remove(idss[1])
+                    i=10
+                except:
+                    if idss[0]=='miku':
+                        intelligence=mikustats['intelligence']
+                    if idss[0]=='alisa':
+                        intelligence=alisastats['intelligence']
+                    if idss[0]=='lena':
+                        intelligence=lenastats['intelligence']
+                    if idss[index]=='slavya':
+                        intelligence=slavyastats['intelligence']
+                    if idss[index]=='zhenya':
+                        intelligence=zhenyastats['intelligence']
+                    if idss[index]=='uliana':
+                        intelligence=ulianastats['intelligence']
                 
             
                 
