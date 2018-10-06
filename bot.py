@@ -551,6 +551,7 @@ setka=[]
 
 def starttournier(game):
     if game=='cards':
+        global cardplayers
         newplayers=['miku','slavya','zhenya','alisa','lena','uliana']
         specialrules=0
         i=0
@@ -629,6 +630,7 @@ def starttournier(game):
 
 
 def cards_nextturn():
+    global cardplayers
     print(setka)
     print(cardplayers)
     for ids in setka:
