@@ -84,7 +84,7 @@ def lvlsort(x):
    return finallist
            
 
-@bot.message_handler(content_types=['stickers'])
+@bot.message_handler(content_types=['sticker'])
 def stickercatch(m):
     print(m.sticker.file_id)
            
