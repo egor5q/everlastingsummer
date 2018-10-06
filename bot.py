@@ -759,9 +759,9 @@ def cards_nextturn():
                     elif z==-3:
                       x=15
                     if random.randint(1,100)<=x:
-                        cardplayers.remove(idss[1])
+                        cardplayers.remove(ids[1])
                     else:
-                        cardplayers.remove(idss[0])
+                        cardplayers.remove(ids[0])
                     i=10
     text=''
     for dd in cardplayers:
