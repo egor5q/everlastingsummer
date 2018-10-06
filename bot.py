@@ -540,7 +540,9 @@ def eveninggames():
         leader='uliana'
     elif x=='ropepulling':
         leader='alisa'
-        
+ 
+setka=[]
+
 def starttournier(game):
     if game=='cards':
         newplayers=['miku','slavya','zhenya','alisa','lena','uliana']
@@ -570,7 +572,6 @@ def starttournier(game):
             newplayers.remove(randomplayer)
             g+=1
         text=''
-        setka=[]
         i=0
         h=len(cardplayers)
         while i<(h/2):
@@ -619,7 +620,22 @@ def starttournier(game):
                         pass
    
 def cards_nextturn():
-    pass
+    for ids in setka:
+        i=0
+        for idss in ids:
+            try:
+                int(idss)
+                if i==0:
+                    index=1
+                else:
+                    index=0
+                try:
+                    int(idss[index])
+                    player1=users.find_one({'id':idss[0]})
+                    player2=users.find_one({'id':idss[1]})
+                    r=player1['intelligence']-player2['intelligence']
+                
+    
 
 
                 
