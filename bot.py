@@ -570,7 +570,7 @@ def eveninggames():
         time.sleep(4)
         uliana.send_chat_action(-1001351496983,'typing') 
         t=threading.Timer(10, sendmes, args=[uliana, 'Правила просты - не жульничать! Для записи на турнир '+\
-                                             'подойдите ко мне и скажите "`Хочу участвовать!`". Вроде бы всё... Жду всех!', 'markdown])
+                                             'подойдите ко мне и скажите "`Хочу участвовать!`". Вроде бы всё... Жду всех!', 'markdown'])
         t.start()
         time.sleep(4)
         uliana.send_chat_action(-1001351496983,'typing') 
