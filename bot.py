@@ -103,12 +103,12 @@ def start(m):
   else:
    if x['setgender']==0 and x['setname']==0:
     x=users.find_one({'id':m.from_user.id})
-    bot.send_chat_action(-1001351496983,'typing')
+    bot.send_chat_action(m.chat.id,'typing')
     time.sleep(4)
     if x['working']==1:
        bot.send_message(m.chat.id, 'Здраствуй, пионер! Вижу, ты занят. Молодец! Не буду отвлекать.')
     else:
-       bot.send_message(m.chat.id, 'Здраствуй, пионер! Отдыхаешь? Могу найти для тебя найти занятие!')
+       bot.send_message(m.chat.id, 'Здраствуй, пионер! Отдыхаешь? Могу найти для тебя занятие!')
   
 
 
@@ -120,11 +120,15 @@ def work(m):
         if x['working']==0:
           if x['waitforwork']==0:
            if x['relaxing']==0:
-            users.update_one({'id':m.from_user.id},{'$set':{'waitforwork':1}})
+            bot.send_chat_action(m.chat.id,'typing')
+            time.sleep(4)
             bot.send_message(m.chat.id, random.choice(worktexts), reply_to_message_id=m.message_id)
+            users.update_one({'id':m.from_user.id},{'$set':{'waitforwork':1}})
             t=threading.Timer(random.randint(3,5),givework, args=[m.from_user.id])
             t.start()
            else:
+              bot.send_chat_action(m.chat.id,'typing')
+              time.sleep(4)
               bot.send_message(m.chat.id, 'Нельзя так часто работать! Хвалю, конечно, за трудолюбивость, но сначала отдохни.', reply_to_message_id=m.message_id)
            
 
@@ -142,6 +146,8 @@ def givework(id):
        sendto=types.ForceReply(selective=False)
      
        quest=None
+       bot.send_chat_action(id,'typing')
+       time.sleep(4)
        if x['OlgaDmitrievna_respect']>=75:
            quests=lvlsort(1) 
            text+='Так как ты у нас ответственный пионер, ['+x['pionername']+'](tg://user?id='+str(id)+'), у меня для тебя есть важное задание!\n'
