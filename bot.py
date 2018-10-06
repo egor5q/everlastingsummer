@@ -514,7 +514,7 @@ def checktime():
         
     
 def eveninggames():
-    egames=['cards']#,'football','ropepulling']
+    egames=['cards','football']#,'ropepulling']
     x=random.choice(egames)
     if x=='cards':
         leader='electronic'
