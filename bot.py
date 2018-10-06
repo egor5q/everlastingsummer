@@ -644,11 +644,12 @@ def starttournier(game):
 
 
 def cards_nextturn():
-    global setka
-    global cardplayers
-    for ab in setka:
-        cardplayers.append(ab[0])
-        cardplayers.append(ab[1])
+  global setka
+  global cardplayers
+  for ab in setka:
+      cardplayers.append(ab[0])
+      cardplayers.append(ab[1])
+  if len(cardplayers)>0:
     print(setka)
     print(cardplayers)
     for ids in setka:
@@ -841,7 +842,8 @@ def cards_nextturn():
             name=nametopioner(cardplayers[0])
         bot.send_message(-1001351496983, 'Отлично! Поздравляю, '+name+'! А теперь приберитесь тут, скоро ужин.', parse_mode='markdown')
         bot.send_sticker(-1001351496983, 'CAADAgADqwADgi0zDzm_zSmMbMmiAg')
-            
+  else:
+      electronic.send_message(-1001351496983,'К сожалению, игроков для турнира сегодня не набралось. Ну ничего, в следующий раз попробуем!')
                 
     
 
