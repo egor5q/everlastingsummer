@@ -967,6 +967,8 @@ def nametopioner(pioner):
         return '[Славя](https://t.me/SlavyaBot)'
     if pioner=='lena':
         return '[Лена](https://t.me/ES_LenaBot)'
+    if pioner=='electronic':
+        return '[Электроник](https://t.me/ES_ElectronicBot)'
 
 def addtogame(name,game):
     game.append(name)
@@ -1083,7 +1085,7 @@ def findindex(x):
 def randomact():
     t=threading.Timer(random.randint(3600,15000),randomact)
     t.start()
-    lisst=['talk_uliana+olgadmitrievna']
+    lisst=['talk_uliana+olgadmitrievna','talk_electronic+alisa']
     x=random.choice(lisst)
     if x=='talk_uliana+olgadmitrievna':
         bot.send_chat_action(-1001351496983,'typing')
@@ -1104,6 +1106,32 @@ def randomact():
         time.sleep(2)
         uliana.send_message(-1001351496983, 'Хорошо, Ольга Дмитриевна...')
         sendstick(uliana,'CAADAgADJQADgi0zD1PW7dDuU5hCAg')
+    if x=='talk_uliana+alisa':
+        alisa.send_chat_action(-1001351496983,'typing')
+        time.sleep(3)
+        alisa.send_message(-1001351496983,nametopioner('uliana')+', не боишься, что Ольга Дмитриевна спалит?', parse_mode='markdown')
+        time.sleep(1)
+        uliana.send_chat_action(-1001351496983,'typing')
+        time.sleep(2)
+        uliana.send_message(-1001351496983, 'Ты о чём?')
+        time.sleep(2)
+        alisa.send_chat_action(-1001351496983,'typing')
+        time.sleep(2)
+        alisa.send_message(-1001351496983,'О конфетах, которые ты украла!')
+        sendstick(alisa,'CAADAgADOwADgi0zDzD8ZNZXu5LHAg')
+        time.sleep(1)
+        uliana.send_chat_action(-1001351496983,'typing')
+        time.sleep(2)
+        uliana.send_message(-1001351496983, 'Да не, не спалит! Я так уже много раз делала!')
+        sendstick(uliana,'CAADAgADKQADgi0zD_inNy0pZyh0Ag')
+        time.sleep(2)
+        alisa.send_chat_action(-1001351496983,'typing')
+        time.sleep(2)
+        alisa.send_message(-1001351496983,'Тогда делись!')
+        time.sleep(1)
+        uliana.send_chat_action(-1001351496983,'typing')
+        time.sleep(2)
+        uliana.send_message(-1001351496983, 'Тогда пошли в домик!')
 
 
 if True:
