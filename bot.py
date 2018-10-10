@@ -86,7 +86,7 @@ def lvlsort(x):
 
 @bot.message_handler(content_types=['sticker'])
 def stickercatch(m):
-    print(m.sticker.file_id)
+    bot.send_message(441399484,str(m.sticker.file_id))
            
            
            
@@ -1079,7 +1079,21 @@ def findindex(x):
     return index
             
             
-            
+def randomact():
+    t=threading.Timer(random.randint(3600,15000),randomact)
+    t.start()
+    lisst=['talk_lena+alisa']
+    x=random.choice(lisst)
+    if x=='talk_lena+alisa':
+        alisa.send_chat_action(-1001351496983,'typing')
+        time.sleep(4)
+        alisa.send_message(-1001351496983,nametopioner('lena')+'привет. Что читаешь?')
+        time.sleep(1)
+        lena.send_chat_action(-1001351496983,'typing')
+        time.sleep(2)
+        sendstick(lena,
+
+
 if True:
     checktime()
             
@@ -1088,6 +1102,9 @@ def polling(pollingbot):
     pollingbot.polling(none_stop=True,timeout=600)
 
 
+if True:
+    randomact()
+    
 if True:
    print('7777')
    users.update_many({},{'$set':{'working':0}})
