@@ -1088,7 +1088,7 @@ def randomact():
     if x=='talk_uliana+olgadmitrievna':
         bot.send_chat_action(-1001351496983,'typing')
         time.sleep(4)
-        bot.send_message(-1001351496983,nametopioner('uliana')+', а ну стой! Ты эти конфеты где взяла?')
+        bot.send_message(-1001351496983,nametopioner('uliana')+', а ну стой! Ты эти конфеты где взяла?', parse_mode='markdown')
         sendstick(bot,'CAADAgADtwADgi0zD-9trZ_s35yQAg')
         time.sleep(1)
         uliana.send_chat_action(-1001351496983,'typing')
