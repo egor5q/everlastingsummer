@@ -1083,16 +1083,27 @@ def findindex(x):
 def randomact():
     t=threading.Timer(random.randint(3600,15000),randomact)
     t.start()
-    lisst=['talk_lena+alisa']
+    lisst=['talk_uliana+olgadmitrievna']
     x=random.choice(lisst)
-    if x=='talk_lena+alisa':
-        alisa.send_chat_action(-1001351496983,'typing')
+    if x=='talk_uliana+olgadmitrievna':
+        bot.send_chat_action(-1001351496983,'typing')
         time.sleep(4)
-        alisa.send_message(-1001351496983,nametopioner('lena')+'привет. Что читаешь?')
+        bot.send_message(-1001351496983,nametopioner('uliana')+', а ну стой! Ты эти конфеты где взяла?')
+        sendstick(bot,'CAADAgADtwADgi0zD-9trZ_s35yQAg')
         time.sleep(1)
-        lena.send_chat_action(-1001351496983,'typing')
+        uliana.send_chat_action(-1001351496983,'typing')
         time.sleep(2)
-        #sendstick(lena
+        uliana.send_message(-1001351496983, 'Какие конфеты?')
+        sendstick(uliana,'CAADAgADHQADgi0zD1aFI93sTseZAg')
+        time.sleep(2)
+        bot.send_chat_action(-1001351496983,'typing')
+        time.sleep(3)
+        bot.send_message(-1001351496983,'Те, что ты за спиной держишь! Быстро верни их в столовую!')
+        time.sleep(1)
+        uliana.send_chat_action(-1001351496983,'typing')
+        time.sleep(2)
+        uliana.send_message(-1001351496983, 'Хорошо, Ольга Дмитриевна...')
+        sendstick(uliana,'CAADAgADJQADgi0zD1PW7dDuU5hCAg')
 
 
 if True:
