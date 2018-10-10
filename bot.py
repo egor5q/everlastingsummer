@@ -1091,7 +1091,7 @@ def randomact():
         time.sleep(1)
         lena.send_chat_action(-1001351496983,'typing')
         time.sleep(2)
-        sendstick(lena,
+        #sendstick(lena
 
 
 if True:
