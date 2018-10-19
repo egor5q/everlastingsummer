@@ -1092,7 +1092,7 @@ def randomhelp():
     pioners=['lena']
     x=users.find({})
     for ids in x:
-        spisok.append(ids['id'])
+        spisok.append(ids)
     if len(spisok)>0:
         pioner=random.choice(spisok)
         z=random.choice(pioners)
