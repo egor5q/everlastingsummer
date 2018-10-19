@@ -1086,7 +1086,7 @@ def findindex(x):
             
  
 def randomhelp():
-    t=threading.Timer(random.randint(2800,11000),randomhelp)
+    t=threading.Timer(random.randint(3400,14000),randomhelp)
     t.start()
     spisok=[]
     pioners=['lena']
@@ -1104,7 +1104,7 @@ def helpto(pioner,x):
         lena.send_chat_action(-1001351496983,'typing')
         time.sleep(4)
         lena.send_message(-1001351496983,'['+pioner['pionername']+'](tg://user?id='+str(pioner['id'])+'), привет. Не мог бы ты мне помочь?', parse_mode='markdown')
-        sendstick(lena,'CAADAgADtwADgi0zD-9trZ_s35yQAg')
+        sendstick(lena,'CAADAgADaQADgi0zD9ZBO-mNcLuBAg')
             
             
 
@@ -1163,7 +1163,10 @@ def randomact():
 if True:
     checktime()
                    
-        
+if True:
+    randomhelp()
+
+
 def polling(pollingbot):
     pollingbot.polling(none_stop=True,timeout=600)
 
