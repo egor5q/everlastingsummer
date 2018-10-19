@@ -30,6 +30,9 @@ client=MongoClient(client1)
 db=client.everlastingsummer
 users=db.users
 
+yestexts=['Хорошо, Ольга Дмитриевна!','Хорошо!','Я этим займусь!','Я готов!','Я готова!']
+notexts=['Простите, но у меня уже появились дела.']
+
 
 symbollist=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
            'а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ъ','ы','ь','э','ю','я', ' ']
@@ -305,7 +308,7 @@ def messag(m):
         if m.reply_to_message!=None:
           if m.reply_to_message.from_user.id==636658457:
              if x['answering']==1:
-               if m.text=='Хорошо, Ольга Дмитриевна!':
+               if m.text.lower() in yestexts:
                  users.update_one({'id':m.from_user.id},{'$set':{'answering':0}})
                  users.update_one({'id':m.from_user.id},{'$set':{'working':1}})
                  users.update_one({'id':m.from_user.id},{'$set':{'waitforwork':0}})
@@ -1081,7 +1084,30 @@ def findindex(x):
             i+=1
     return index
             
+ 
+def randomhelp():
+    t=threading.Timer(random.randint(2800,11000),randomhelp)
+    t.start()
+    spisok=[]
+    pioners=['lena']
+    x=users.find({})
+    for ids in x:
+        spisok.append(ids['id'])
+    if len(spisok)>0:
+        pioner=random.choice(spisok)
+        z=random.choice(pioners)
+        if z=='lena':
+            helpto(pioner,'lena')
+
+def helpto(pioner,x):
+    if x=='lena':
+        lena.send_chat_action(-1001351496983,'typing')
+        time.sleep(4)
+        lena.send_message(-1001351496983,'['+pioner['pionername']+'](tg://user?id='+str(pioner['id'])+'), привет. Не мог бы ты мне помочь?', parse_mode='markdown')
+        sendstick(lena,'CAADAgADtwADgi0zD-9trZ_s35yQAg')
             
+            
+
 def randomact():
     t=threading.Timer(random.randint(3600,15000),randomact)
     t.start()
@@ -1136,8 +1162,8 @@ def randomact():
 
 if True:
     checktime()
-            
-            
+                   
+        
 def polling(pollingbot):
     pollingbot.polling(none_stop=True,timeout=600)
 
