@@ -1100,10 +1100,14 @@ def randomhelp():
             helpto(pioner,'lena')
 
 def helpto(pioner,x):
+    if pioner['gender']=='male':
+        g=''
+    else:
+        g='ла'
     if x=='lena':
         lena.send_chat_action(-1001351496983,'typing')
         time.sleep(4)
-        lena.send_message(-1001351496983,'['+pioner['pionername']+'](tg://user?id='+str(pioner['id'])+'), привет. Не мог бы ты мне помочь?', parse_mode='markdown')
+        lena.send_message(-1001351496983,'['+pioner['pionername']+'](tg://user?id='+str(pioner['id'])+'), привет. Не мог'+g+' бы ты мне помочь?', parse_mode='markdown')
         sendstick(lena,'CAADAgADaQADgi0zD9ZBO-mNcLuBAg')
             
             
