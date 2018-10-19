@@ -1085,7 +1085,7 @@ def findindex(x):
 def randomact():
     t=threading.Timer(random.randint(3600,15000),randomact)
     t.start()
-    lisst=['talk_uliana+olgadmitrievna','talk_electronic+alisa']
+    lisst=['talk_uliana+olgadmitrievna','talk_uliana+alisa']
     x=random.choice(lisst)
     if x=='talk_uliana+olgadmitrievna':
         bot.send_chat_action(-1001351496983,'typing')
