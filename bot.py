@@ -1029,10 +1029,14 @@ def electronichandler(m):
 
 @lena.message_handler()
 def lenamessages(m):
+    print('1')
     yes=['да!','конечно!','да','да, могу.','могу','могу.','конечно могу!']
     if lenastats['whohelps']!=None:
+        print('2')
         if m.from_user.id==lenastats['whohelps']:
+          print('3')
           if m.text.lower() in yes:
+            print('4')
             allhelps=['Спасибо! Тогда пошли, мне нужно отсортировать лекарства в медпункте.']
             lenastats['whohelps']=None
             helpp=random.choice(allhelps)
