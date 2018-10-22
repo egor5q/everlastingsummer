@@ -1037,7 +1037,8 @@ alisastats={
 lenastats={
     'strenght':2,
     'agility':2,
-    'intelligence':2
+    'intelligence':2,
+    'whohelps':None
 }
 mikustats={
     'strenght':2,
@@ -1108,6 +1109,7 @@ def helpto(pioner,x):
         lena.send_chat_action(-1001351496983,'typing')
         time.sleep(4)
         lena.send_message(-1001351496983,'['+pioner['pionername']+'](tg://user?id='+str(pioner['id'])+'), привет. Не мог'+g+' бы ты мне помочь?', parse_mode='markdown')
+        lenastats['whohelps']=pioner['id']
         sendstick(lena,'CAADAgADaQADgi0zD9ZBO-mNcLuBAg')
             
             
@@ -1164,6 +1166,9 @@ def randomact():
         uliana.send_message(-1001351496983, 'Тогда пошли в домик!')
 
 
+        
+        
+        
 if True:
     checktime()
                    
