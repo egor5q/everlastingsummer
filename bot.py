@@ -1053,7 +1053,7 @@ def helpend(id):
     lena.send_chat_action(id,'typing')
     time.sleep(4)
     lena.send_message(-1001351496983, 'Спасибо за помощь, ['+x['pionername']+'](tg://user?id='+str(x['id'])+')! '+\
-                     'Без тебя ушло бы гораздо больше времени. Ну, я пойду...)
+                     'Без тебя ушло бы гораздо больше времени. Ну, я пойду...')
     
 
 
