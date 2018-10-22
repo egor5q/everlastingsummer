@@ -1144,7 +1144,8 @@ def helpto(pioner,x):
         lenastats['whohelps']=pioner['id']
         sendstick(lena,'CAADAgADaQADgi0zD9ZBO-mNcLuBAg')
             
-            
+        
+                      
 
 def randomact():
     t=threading.Timer(random.randint(3600,15000),randomact)
