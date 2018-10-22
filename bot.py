@@ -1040,7 +1040,7 @@ def lenamessages(m):
             allhelps=['Спасибо! Тогда пошли, мне нужно отсортировать лекарства в медпункте.']
             lenastats['whohelps']=None
             helpp=random.choice(allhelps)
-            lena.send_chat_action(id,'typing')
+            lena.send_chat_action(m.chat.id,'typing')
             time.sleep(4)
             lena.send_message(m.chat.id, helpp)
             t=threading.Timer(1800,helpend,args=[m.from_user.id])
