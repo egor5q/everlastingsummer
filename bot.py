@@ -476,7 +476,8 @@ def createuser(id, name, username):
            'Lena_respect':50,
            'Electronic_respect':50,
            'Miku_respect':50,
-           'Zhenya_respect':50
+           'Zhenya_respect':50,
+           'helping':0
            
           }
     
@@ -1026,6 +1027,33 @@ def electronichandler(m):
                                     'собираю участников для вечернего турнира. Не хочешь принять участие?', parse_mode='markdown', reply_to_message_id=reply_to_message_id)
 
 
+@lena.message_handler()
+def lenamessages(m):
+    yes=['да!','конечно!','да','да, могу.','могу','могу.','конечно могу!']
+    if lenastats['whohelps']!=None:
+        if m.from_user.id==lenastats['whohelps']:
+          if m.text.lower() in yes:
+            allhelps=['Спасибо! Тогда пошли, мне нужно отсортировать лекарства в медпункте.']
+            lenastats['whohelps']=None
+            helpp=random.choice(allhelps)
+            lena.send_chat_action(id,'typing')
+            time.sleep(4)
+            lena.send_message(m.chat.id, helpp)
+            t=threading.Timer(1800,helpend,args=[m.from_user.id])
+            users.update_one({'id':m.from_user.id},{'$set':{'helping':1}})
+            
+            
+def helpend(id):
+    x=users.find_one({'id':id})
+    users.update_one({'id':id},{'$set':{'helping':0}})
+    lena.send_chat_action(id,'typing')
+    time.sleep(4)
+    lena.send_message(-1001351496983, 'Спасибо за помощь, ['+x['pionername']+'](tg://user?id='+str(x['id'])+')! '+\
+                     'Без тебя ушло бы гораздо больше времени. Ну, я пойду...)
+    
+
+
+            
 cardplayers=[]
         
         
@@ -1189,6 +1217,8 @@ if True:
    users.update_many({},{'$set':{'waitforwork':0}})
    users.update_many({},{'$set':{'relaxing':0}})
    t=threading.Timer(3, polling, args=[bot])
+   t.start()
+   t=threading.Timer(3, polling, args=[lena])
    t.start()
    t=threading.Timer(3, polling, args=[electronic])
    t.start()
