@@ -1043,7 +1043,7 @@ def lenamessages(m):
             lena.send_chat_action(m.chat.id,'typing')
             time.sleep(4)
             lena.send_message(m.chat.id, helpp)
-            t=threading.Timer(1800,helpend,args=[m.from_user.id])
+            t=threading.Timer(18,helpend,args=[m.from_user.id])
             users.update_one({'id':m.from_user.id},{'$set':{'helping':1}})
             
             
