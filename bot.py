@@ -315,6 +315,15 @@ def messag(m):
                  dowork(m.from_user.id)
                  users.update_one({'id':m.from_user.id},{'$set':{'prepareto':None}})
                  bot.send_message(m.chat.id,'Молодец, пионер! Как закончишь - сообщи мне.',reply_to_message_id=m.message_id )
+        lineykatexts=['Я здесь, Ольга Дмитриевна!', 'Я пришёл','Я пришла','Я пришёл!', 'Я пришла!', 'Я здесь!','Я здесь','Я пришел','Я пришел!']        
+        if odstats['waitforlineyka']==1:
+                if m.text.lower() in lineykatexts:
+                    if x['gender']=='male':
+                        g='шёл'
+                    else:
+                        g='шла'
+                    odstats['lineyka'].append('['+x['pionername']+'](tg://user?id='+str(id)+')')
+                    bot.send_message(m.chat.id,'А вот и ['+x['pionername']+'](tg://user?id='+str(id)+') при'+g+' на линейку!')
     
 def reloadquest(index):
     works[index]['value']=0
@@ -515,7 +524,23 @@ def checktime():
     if(hour==19 and minute==0):
         cardplayers=[]
         eveninggames()
-        
+    if(hour==7 and minute==0):
+        bot.send_chat_action(-1001351496983,'typing')
+        time.sleep(3)
+        bot.send_message(-1001351496983, 'Доброе утро, пионеры! В 7:30 жду всех на линейке!')
+    if(hour==7 and minute==30):
+        odstats['waitforlineyka']=0
+        bot.send_chat_action(-1001351496983,'typing')
+        time.sleep(3)
+        bot.send_message(-1001351496983, 'Здраствуйте, пионеры! Сейчас проведём перекличку...')
+        bot.send_chat_action(-1001351496983,'typing')
+        time.sleep(4)
+        text=''
+        for ids in odstats['lineyka']:
+            text+=ids+'\n'
+        bot.send_message(-1001351496983,text+'\nВот все, кто сегодня пришёл. Молодцы, пионеры! Так держать!'+\
+                         'Сейчас расскажу о планах на день.',parse_mode='markdown')
+            
         
     
 def eveninggames():
@@ -1044,6 +1069,7 @@ def lenamessages(m):
             time.sleep(4)
             lena.send_message(m.chat.id, helpp)
             t=threading.Timer(18,helpend,args=[m.from_user.id])
+            t.start()
             users.update_one({'id':m.from_user.id},{'$set':{'helping':1}})
             
             
@@ -1101,6 +1127,11 @@ zhenyastats={
     'agility':1,
     'intelligence':3
            
+}
+
+odstats={
+    'lineyka':[],
+    'waitforlineyka':0
 }
 
 
