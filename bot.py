@@ -79,6 +79,26 @@ works=[
              }
 ]
 
+def worktoquest(work):
+    if work=='concertready':
+        return 'Подготовиться к вечернему концерту'
+    if work=='sortmedicaments':
+        return 'Отсортировать лекарства в медпункте'
+    if work=='checkpionerssleeping':
+        return 'На вечер - проследить за тем, чтобы в 10 часов все были в домиках'
+    if work=='pickberrys':
+        return 'Собрать ягоды для торта'
+    if work=='bringfoodtokitchen':
+        return 'Принести на кухню нужные ингридиенты'
+    if work=='helpinmedpunkt':
+        return 'Последить за медпунктом, пока медсестры не будет'
+    if work=='helpinkitchen':
+        return 'Помочь с приготовлением еды на кухне'
+    if work=='cleanterritory':
+        return 'Подмести территорию лагеря'
+    if work=='washgenda':
+        return 'Помыть памятник на главной площади'
+
 def lvlsort(x):
    finallist=[]
    for ids in works:
@@ -581,7 +601,7 @@ def eveninggames():
                                               'Регистрация заканчивается через 20 минут!', 'markdown'])
         t.start()
         electronicstats['waitingplayers']=1
-        t=threading.Timer(30, starttournier, args=['cards'])
+        t=threading.Timer(1200, starttournier, args=['cards'])
         t.start()
 
     elif x=='football':
@@ -674,7 +694,7 @@ def starttournier(game):
           electronic.send_message(-1001351496983, 'А теперь прошу к столам! Каждый садится со своим соперником. Через 2 минуты начинается '+
                                 'первый этап!')
           electronicstats['cardsturn']=1
-          t=threading.Timer(5, cards_nextturn)
+          t=threading.Timer(120, cards_nextturn)
           t.start()
           for ids in setka:
             i=0
@@ -885,7 +905,7 @@ def cards_nextturn():
             lst=[player1, player2]
             setka.append(lst)
             i+=1
-        t=threading.Timer(10, cards_nextturn)
+        t=threading.Timer(120, cards_nextturn)
         t.start()
     else:
         time.sleep(2)
@@ -1068,7 +1088,8 @@ def lenamessages(m):
             lena.send_chat_action(m.chat.id,'typing')
             time.sleep(4)
             lena.send_message(m.chat.id, helpp)
-            t=threading.Timer(18,helpend,args=[m.from_user.id])
+            sendstick(lena,'CAADAgADZwADgi0zD-vRcG90IHeAAg')
+            t=threading.Timer(300,helpend,args=[m.from_user.id])
             t.start()
             users.update_one({'id':m.from_user.id},{'$set':{'helping':1}})
             
@@ -1079,7 +1100,7 @@ def helpend(id):
     lena.send_chat_action(id,'typing')
     time.sleep(4)
     lena.send_message(-1001351496983, 'Спасибо за помощь, ['+x['pionername']+'](tg://user?id='+str(x['id'])+')! '+\
-                     'Без тебя ушло бы гораздо больше времени. Ну, я пойду...')
+                     'Без тебя ушло бы гораздо больше времени. Ну, я пойду...',parse_mode='markdown')
     
 
 
@@ -1171,12 +1192,22 @@ def helpto(pioner,x):
     if x=='lena':
         lena.send_chat_action(-1001351496983,'typing')
         time.sleep(4)
-        lena.send_message(-1001351496983,'['+pioner['pionername']+'](tg://user?id='+str(pioner['id'])+'), привет. Не мог'+g+' бы ты мне помочь?', parse_mode='markdown')
+        m=lena.send_message(-1001351496983,'['+pioner['pionername']+'](tg://user?id='+str(pioner['id'])+'), привет. Не мог'+g+' бы ты мне помочь?', parse_mode='markdown')
         lenastats['whohelps']=pioner['id']
+        t=threading.Timer(300,helpcancel,args=['lena',m])
+        t.start()
         sendstick(lena,'CAADAgADaQADgi0zD9ZBO-mNcLuBAg')
             
         
-                      
+def helpcancel(pioner,m):
+    if pioner=='lena':
+        lenastats['whohelps']=None
+        lena.send_chat_action(-1001351496983,'typing')
+        time.sleep(4)
+        lena.send_message(-1001351496983,'Ты, наверное, сейчас занят... Прости, что побеспокоила.',reply_to_message_id=m.message_id)
+        
+    
+    
 
 def randomact():
     t=threading.Timer(random.randint(3600,15000),randomact)
