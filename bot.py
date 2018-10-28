@@ -498,6 +498,7 @@ def createuser(id, name, username):
            'working':0,
            'relaxing':0,
            'answering':0,
+           'busy':[],
            'OlgaDmitrievna_respect':50,
            'Slavya_respect':50,
            'Uliana_respect':50,
@@ -1081,7 +1082,12 @@ def lenamessages(m):
         if m.from_user.id==lenastats['whohelps']:
           print('3')
           if m.text.lower() in yes:
+            pioner=users.find_one({'id':m.from_user.id})
             print('4')
+            try:
+                lenastats['timer'].cancel()
+            except:
+                pass
             allhelps=['Спасибо! Тогда пошли, мне нужно отсортировать лекарства в медпункте.']
             lenastats['whohelps']=None
             helpp=random.choice(allhelps)
@@ -1117,7 +1123,8 @@ lenastats={
     'strenght':2,
     'agility':2,
     'intelligence':2,
-    'whohelps':None
+    'whohelps':None,
+    'timer':None
 }
 mikustats={
     'strenght':2,
@@ -1196,6 +1203,7 @@ def helpto(pioner,x):
         lenastats['whohelps']=pioner['id']
         t=threading.Timer(300,helpcancel,args=['lena',m])
         t.start()
+        lenastats['timer']=t
         sendstick(lena,'CAADAgADaQADgi0zD9ZBO-mNcLuBAg')
             
         
