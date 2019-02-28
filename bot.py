@@ -30,8 +30,8 @@ client=MongoClient(client1)
 db=client.everlastingsummer
 users=db.users
 
-yestexts=['Хорошо, Ольга Дмитриевна!','Хорошо!','Я этим займусь!','Я готов!','Я готова!']
-notexts=['Простите, но у меня уже появились дела.']
+yestexts=['хорошо, ольга дмитриевна!','хорошо!','я этим займусь!','я готов!','я готова!']
+notexts=['простите, но у меня уже появились дела.']
 
 
 symbollist=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
@@ -335,9 +335,13 @@ def messag(m):
                  dowork(m.from_user.id)
                  users.update_one({'id':m.from_user.id},{'$set':{'prepareto':None}})
                  bot.send_message(m.chat.id,'Молодец, пионер! Как закончишь - сообщи мне.',reply_to_message_id=m.message_id )
-        lineykatexts=['Я здесь, Ольга Дмитриевна!', 'Я пришёл','Я пришла','Я пришёл!', 'Я пришла!', 'Я здесь!','Я здесь','Я пришел','Я пришел!']        
+        lineykatexts=['я здесь, ольга дмитриевна!', 'я пришёл','я пришла','я пришёл!', 'я пришла!', 'я здесь!','я здесь','я пришел','я пришел!']        
         if odstats['waitforlineyka']==1:
-                if m.text.lower() in lineykatexts:
+                yes=0
+                for ids in lineykatexts:
+                    if m.text.lower() in ids:
+                        yes=1
+                if yes==1:
                     if x['gender']=='male':
                         g='шёл'
                     else:
