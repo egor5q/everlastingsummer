@@ -1091,6 +1091,7 @@ def lenacontrol(m):
 def lenastopcontrol(m):
     if lenastats['controller']!=None:
         if lenastats['controller']['id']==m.from_user.id:
+            lenastats['controller']=None
             lena.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
             
 @lena.message_handler()
@@ -1133,7 +1134,7 @@ def lenamessages(m):
                             if i>1:
                                 t+=ids
                             i+=1
-                        lena.send_message(int(m.text.split(' ')[1]), m.text)
+                        lena.send_message(int(m.text.split(' ')[1]), t)
                     except:
                         lena.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
                                           '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
