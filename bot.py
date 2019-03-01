@@ -33,6 +33,7 @@ users=db.users
 yestexts=['хорошо, ольга дмитриевна!','хорошо!','я этим займусь!','я готов!','я готова!']
 notexts=['простите, но у меня уже появились дела.']
 
+botadmins=[441399484, 534947399, 574865060]
 
 symbollist=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
            'а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ъ','ы','ь','э','ю','я', ' ']
@@ -1076,7 +1077,22 @@ def electronichandler(m):
             electronic.send_message(m.chat.id, 'Привет, ['+x['pionername']+'](tg://user?id='+str(x['id'])+')! А я тут '+\
                                     'собираю участников для вечернего турнира. Не хочешь принять участие?', parse_mode='markdown', reply_to_message_id=reply_to_message_id)
 
-
+@lena.message_handler(commands=['control'])
+def lenacontrol(m):
+    if m.from_user.id in botadmins:
+        if lenastats['controller']==None:
+            lenastats['controller']={'id':m.from_user.id,
+                                     'name':m.from_user.first_name}
+            lena.send_message(m.from_user.id, 'Теперь ты управляешь мной! Я буду присылать тебе все сообщения, которые вижу!')
+        else:
+            lena.send_message(m.from_user.id, 'Мной уже управляет '+lenastats['controller']['name']+'!')
+            
+@lena.message_handler(commands=['stopcontrol'])
+def lenastopcontrol(m):
+    if lenastats['controller']!=None:
+        if lenastats['controller']['id']==m.from_user.id:
+            lena.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+            
 @lena.message_handler()
 def lenamessages(m):
     print('1')
@@ -1102,7 +1118,26 @@ def lenamessages(m):
             t=threading.Timer(300,helpend,args=[m.from_user.id])
             t.start()
             users.update_one({'id':m.from_user.id},{'$set':{'helping':1}})
-            
+    if lenastats['controller']!=None:
+        controller=lenastats['controller']
+        if m.chat.id==controller['id']:
+            if m.reply_to_message==None:
+                if m.text.split(' ')[0]!='/pm':
+                    lena.send_message(-1001351496983, m.text)
+                else:
+                    try:
+                        lena.send_message(int(m.text.split(' ')[1]), m.text)
+                    except:
+                        lena.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
+                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
+                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.', parse_mode='markdown')
+        
+        else:
+            if m.chat.id==-1001351496983:
+                x='(Общий чат)'
+            else:
+                x='(ЛС)'
+            lena.send_message(controller['id'], x+'\n'+m.from_user.first_name+' (`'+str(m.from_user.id)+'`):\n'+m.text, parse_mode='markdown')
             
 def helpend(id):
     x=users.find_one({'id':id})
@@ -1121,29 +1156,34 @@ cardplayers=[]
 alisastats={
     'strenght':1,
     'agility':2,
-    'intelligence':3
+    'intelligence':3,
+    'controller':None
 }
 lenastats={
     'strenght':2,
     'agility':2,
     'intelligence':2,
     'whohelps':None,
-    'timer':None
+    'timer':None,
+    'controller':None
 }
 mikustats={
     'strenght':2,
     'agility':2,
-    'intelligence':2
+    'intelligence':2,
+    'controller':None
 }
 ulianastats={
     'strenght':1,
     'agility':4,
-    'intelligence':1
+    'intelligence':1,
+    'controller':None
 }
 slavyastats={
     'strenght':1,
     'agility':1,
-    'intelligence':4
+    'intelligence':4,
+    'controller':None
 }
 electronicstats={
     'strenght':3,
@@ -1151,19 +1191,22 @@ electronicstats={
     'intelligence':4,
     'waitingplayers':0,
     'playingcards':0,
-    'cardsturn':0
+    'cardsturn':0,
+    'controller':None
            
 }
 zhenyastats={
     'strenght':2,
     'agility':1,
-    'intelligence':3
+    'intelligence':3,
+    'controller':None
            
 }
 
 odstats={
     'lineyka':[],
-    'waitforlineyka':0
+    'waitforlineyka':0,
+    'controller':None
 }
 
 
@@ -1295,10 +1338,23 @@ if True:
    users.update_many({},{'$set':{'working':0}})
    users.update_many({},{'$set':{'waitforwork':0}})
    users.update_many({},{'$set':{'relaxing':0}})
-   t=threading.Timer(3, polling, args=[bot])
+   t=threading.Timer(1, polling, args=[bot])
    t.start()
-   t=threading.Timer(3, polling, args=[lena])
+   t=threading.Timer(1, polling, args=[lena])
    t.start()
-   t=threading.Timer(3, polling, args=[electronic])
+   t=threading.Timer(1, polling, args=[electronic])
    t.start()
+   t=threading.Timer(1, polling, args=[zhenya])
+   t.start()
+   t=threading.Timer(1, polling, args=[alisa])
+   t.start()
+   t=threading.Timer(1, polling, args=[slavya])
+   t.start()
+   t=threading.Timer(1, polling, args=[miku])
+   t.start()
+   t=threading.Timer(1, polling, args=[slavya])
+   t.start()
+   t=threading.Timer(1, polling, args=[shurik])
+   t.start()
+   
 
