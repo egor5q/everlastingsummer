@@ -1126,6 +1126,13 @@ def lenamessages(m):
                     lena.send_message(-1001351496983, m.text)
                 else:
                     try:
+                        text=m.text.split(' ')
+                        t=''
+                        i=0
+                        for ids in text:
+                            if i>1:
+                                t+=ids
+                            i+=1
                         lena.send_message(int(m.text.split(' ')[1]), m.text)
                     except:
                         lena.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
