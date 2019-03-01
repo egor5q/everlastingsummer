@@ -1132,7 +1132,7 @@ def lenamessages(m):
                         i=0
                         for ids in text:
                             if i>1:
-                                t+=ids
+                                t+=ids+' '
                             i+=1
                         lena.send_message(int(m.text.split(' ')[1]), t)
                     except:
