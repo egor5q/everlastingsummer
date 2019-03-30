@@ -1420,7 +1420,7 @@ def ulianastopcontrol(m):
             
 @uliana.message_handler()
 def ulianamessages(m):
-    
+    print('uliana')
     if ulianastats['controller']!=None:
         controller=ulianastats['controller']
         if m.chat.id==controller['id']:
@@ -1676,99 +1676,7 @@ def stickercatchmiku(m):
            
            
 
-           
-####################################### ELECTRONIC ##############################################
-@electronic.message_handler(commands=['control'])
-def electroniccontrol(m):
-    if m.from_user.id in botadmins or m.from_user.id in el_admins:
-        if electronicstats['controller']==None:
-            electronicstats['controller']={'id':m.from_user.id,
-                                     'name':m.from_user.first_name}
-            electronic.send_message(m.from_user.id, 'Привет! надеюсь ты знаешь, как управлять мной.')
-        else:
-            electronic.send_message(m.from_user.id, 'Мной уже управляет '+electronicstats['controller']['name']+'!')
-            
-@electronic.message_handler(commands=['stopcontrol'])
-def electronicstopcontrol(m):
-    if electronicstats['controller']!=None:
-        if electronicstats['controller']['id']==m.from_user.id:
-            electronicstats['controller']=None
-            electronic.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
-            
-@electronic.message_handler()
-def electronicmessages(m):
-    
-    if electronicstats['controller']!=None:
-        controller=electronicstats['controller']
-        if m.chat.id==controller['id']:
-            if m.reply_to_message==None:
-                if m.text.split(' ')[0]!='/pm' and m.text.split(' ')[0]!='/r':
-                    electronic.send_message(-1001351496983, m.text)
-                elif m.text.split(' ')[0]=='/pm':
-                    try:
-                        text=m.text.split(' ')
-                        t=''
-                        i=0
-                        for ids in text:
-                            if i>1:
-                                t+=ids+' '
-                            i+=1
-                        electronic.send_message(int(m.text.split(' ')[1]), t)
-                    except:
-                        electronic.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
-                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
-                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
 
-            else:
-                try:
-                    i=0
-                    cid=None
-                    eid=None
-                    for ids in m.reply_to_message.text:
-                        print(ids)
-                        if ids=='❓':
-                            cid=i+1
-                        if ids=='⏹':
-                            eid=i
-                        i+=1
-                    print('cid')
-                    print(cid)
-                    print('eid')
-                    print(eid)
-                    msgid=m.reply_to_message.text[cid:eid]
-                    electronic.send_message(-1001351496983, m.text, reply_to_message_id=int(msgid))
-                    
-                except Exception as E:
-                    bot.send_message(441399484, traceback.format_exc())
-                    electronic.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
-                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
-                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
-                    
-                                          
-        
-        else:
-            if m.chat.id==-1001351496983:
-                x='(Общий чат)'
-            else:
-                x='(ЛС)'
-            try:
-                electronic.send_message(controller['id'], x+'\n'+m.from_user.first_name+' (`'+str(m.from_user.id)+'`) (❓'+str(m.message_id)+'⏹):\n'+m.text, parse_mode='markdown')
-           
-            except Exception as E:
-                    bot.send_message(441399484, traceback.format_exc())
-                      
-                      
-@electronic.message_handler(content_types=['sticker'])
-def stickercatchelectronic(m):  
-    if electronicstats['controller']!=None:
-        controller=electronicstats['controller']
-        if m.chat.id==controller['id']:
-            if m.reply_to_message==None:
-                electronic.send_sticker(-1001351496983, m.sticker.file_id)
-           
-                 
-           
-           
 
 
            
@@ -1859,18 +1767,19 @@ def findindex(x):
             
  
 def randomhelp():
-    t=threading.Timer(random.randint(7200,17000),randomhelp)
-    t.start()
-    spisok=[]
-    pioners=['lena']
-    x=users.find({})
-    for ids in x:
-        spisok.append(ids)
-    if len(spisok)>0:
-        pioner=random.choice(spisok)
-        z=random.choice(pioners)
-        if z=='lena':
-            helpto(pioner,'lena')
+           pass
+   #t=threading.Timer(random.randint(7200,17000),randomhelp)
+   #t.start()
+   #spisok=[]
+   #pioners=['lena']
+   #x=users.find({})
+   #for ids in x:
+   #    spisok.append(ids)
+   #if len(spisok)>0:
+   #    pioner=random.choice(spisok)
+   #    z=random.choice(pioners)
+   #    if z=='lena':
+   #        helpto(pioner,'lena')
 
 def helpto(pioner,x):
     if pioner['gender']=='male':
@@ -1902,55 +1811,56 @@ def helpcancel(pioner,m):
     
 
 def randomact():
-    t=threading.Timer(random.randint(4900,18000),randomact)
-    t.start()
-    lisst=['talk_uliana+olgadmitrievna','talk_uliana+alisa']
-    x=random.choice(lisst)
-    if x=='talk_uliana+olgadmitrievna':
-        bot.send_chat_action(-1001351496983,'typing')
-        time.sleep(4)
-        bot.send_message(-1001351496983,nametopioner('uliana')+', а ну стой! Ты эти конфеты где взяла?', parse_mode='markdown')
-        sendstick(bot,'CAADAgADtwADgi0zD-9trZ_s35yQAg')
-        time.sleep(1)
-        uliana.send_chat_action(-1001351496983,'typing')
-        time.sleep(2)
-        uliana.send_message(-1001351496983, 'Какие конфеты?')
-        sendstick(uliana,'CAADAgADHQADgi0zD1aFI93sTseZAg')
-        time.sleep(2)
-        bot.send_chat_action(-1001351496983,'typing')
-        time.sleep(3)
-        bot.send_message(-1001351496983,'Те, что ты за спиной держишь! Быстро верни их в столовую!')
-        time.sleep(1)
-        uliana.send_chat_action(-1001351496983,'typing')
-        time.sleep(2)
-        uliana.send_message(-1001351496983, 'Хорошо, Ольга Дмитриевна...')
-        sendstick(uliana,'CAADAgADJQADgi0zD1PW7dDuU5hCAg')
-    if x=='talk_uliana+alisa':
-        alisa.send_chat_action(-1001351496983,'typing')
-        time.sleep(3)
-        alisa.send_message(-1001351496983,nametopioner('uliana')+', не боишься, что Ольга Дмитриевна спалит?', parse_mode='markdown')
-        time.sleep(1)
-        uliana.send_chat_action(-1001351496983,'typing')
-        time.sleep(2)
-        uliana.send_message(-1001351496983, 'Ты о чём?')
-        time.sleep(2)
-        alisa.send_chat_action(-1001351496983,'typing')
-        time.sleep(2)
-        alisa.send_message(-1001351496983,'О конфетах, которые ты украла!')
-        sendstick(alisa,'CAADAgADOwADgi0zDzD8ZNZXu5LHAg')
-        time.sleep(1)
-        uliana.send_chat_action(-1001351496983,'typing')
-        time.sleep(2)
-        uliana.send_message(-1001351496983, 'Да не, не спалит! Я так уже много раз делала!')
-        sendstick(uliana,'CAADAgADKQADgi0zD_inNy0pZyh0Ag')
-        time.sleep(2)
-        alisa.send_chat_action(-1001351496983,'typing')
-        time.sleep(2)
-        alisa.send_message(-1001351496983,'Тогда делись!')
-        time.sleep(1)
-        uliana.send_chat_action(-1001351496983,'typing')
-        time.sleep(2)
-        uliana.send_message(-1001351496983, 'Тогда пошли в домик!')
+    pass
+    #t=threading.Timer(random.randint(4900,18000),randomact)
+    #t.start()
+    #lisst=['talk_uliana+olgadmitrievna','talk_uliana+alisa']
+    #x=random.choice(lisst)
+    #if x=='talk_uliana+olgadmitrievna':
+    #    bot.send_chat_action(-1001351496983,'typing')
+    #    time.sleep(4)
+    #    bot.send_message(-1001351496983,nametopioner('uliana')+', а ну стой! Ты эти конфеты где взяла?', parse_mode='markdown')
+    #    sendstick(bot,'CAADAgADtwADgi0zD-9trZ_s35yQAg')
+    #    time.sleep(1)
+    #    uliana.send_chat_action(-1001351496983,'typing')
+    #    time.sleep(2)
+    #    uliana.send_message(-1001351496983, 'Какие конфеты?')
+    #    sendstick(uliana,'CAADAgADHQADgi0zD1aFI93sTseZAg')
+    #    time.sleep(2)
+    #    bot.send_chat_action(-1001351496983,'typing')
+    #    time.sleep(3)
+    #    bot.send_message(-1001351496983,'Те, что ты за спиной держишь! Быстро верни их в столовую!')
+    #    time.sleep(1)
+    #    uliana.send_chat_action(-1001351496983,'typing')
+    #    time.sleep(2)
+    #    uliana.send_message(-1001351496983, 'Хорошо, Ольга Дмитриевна...')
+    #    sendstick(uliana,'CAADAgADJQADgi0zD1PW7dDuU5hCAg')
+    #if x=='talk_uliana+alisa':
+    #    alisa.send_chat_action(-1001351496983,'typing')
+    #    time.sleep(3)
+    #    alisa.send_message(-1001351496983,nametopioner('uliana')+', не боишься, что Ольга Дмитриевна спалит?', parse_mode='markdown')
+    #    time.sleep(1)
+    #    uliana.send_chat_action(-1001351496983,'typing')
+    #    time.sleep(2)
+    #    uliana.send_message(-1001351496983, 'Ты о чём?')
+    #    time.sleep(2)
+    #    alisa.send_chat_action(-1001351496983,'typing')
+    #    time.sleep(2)
+    #    alisa.send_message(-1001351496983,'О конфетах, которые ты украла!')
+    #    sendstick(alisa,'CAADAgADOwADgi0zDzD8ZNZXu5LHAg')
+    #    time.sleep(1)
+    #    uliana.send_chat_action(-1001351496983,'typing')
+    #    time.sleep(2)
+    #    uliana.send_message(-1001351496983, 'Да не, не спалит! Я так уже много раз делала!')
+    #    sendstick(uliana,'CAADAgADKQADgi0zD_inNy0pZyh0Ag')
+    #    time.sleep(2)
+    #    alisa.send_chat_action(-1001351496983,'typing')
+    #    time.sleep(2)
+    #    alisa.send_message(-1001351496983,'Тогда делись!')
+    #    time.sleep(1)
+    #    uliana.send_chat_action(-1001351496983,'typing')
+    #    time.sleep(2)
+    #    uliana.send_message(-1001351496983, 'Тогда пошли в домик!')
 
 
         
@@ -1975,6 +1885,9 @@ if True:
    users.update_many({},{'$set':{'working':0}})
    users.update_many({},{'$set':{'waitforwork':0}})
    users.update_many({},{'$set':{'relaxing':0}})
+   t=threading.Timer(1, polling, args=[uliana])
+   t.start()
+   uliana.send_message(441399484, 'Я могу принимать сообщения!')
    t=threading.Timer(1, polling, args=[bot])
    t.start()
    t=threading.Timer(1, polling, args=[lena])
@@ -1991,7 +1904,6 @@ if True:
    t.start()
    t=threading.Timer(1, polling, args=[shurik])
    t.start()
-   t=threading.Timer(1, polling, args=[uliana])
-   t.start()
+   bot.send_message(-1001351496983, 'Все пионеры в норме!')
    
 
