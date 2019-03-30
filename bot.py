@@ -1166,7 +1166,7 @@ def lenamessages(m):
                     eid=None
                     for ids in m.reply_to_message.text:
                         print(ids)
-                        if ids=='Ⓜ️':
+                        if ids=='❓':
                             cid=i+1
                         if ids=='⏹':
                             eid=i-1
@@ -1192,7 +1192,7 @@ def lenamessages(m):
             else:
                 x='(ЛС)'
             try:
-                lena.send_message(controller['id'], x+'\n'+m.from_user.first_name+' (`'+str(m.from_user.id)+'`) (Ⓜ️'+str(m.message_id)+'⏹):\n'+m.text, parse_mode='markdown')
+                lena.send_message(controller['id'], x+'\n'+m.from_user.first_name+' (`'+str(m.from_user.id)+'`) (❓'+str(m.message_id)+'⏹):\n'+m.text, parse_mode='markdown')
            
             except Exception as E:
                     bot.send_message(441399484, traceback.format_exc())
