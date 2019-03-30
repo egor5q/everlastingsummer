@@ -1161,6 +1161,7 @@ def lenamessages(m):
                     cid=None
                     eid=None
                     for ids in m.reply_to_message.text:
+                        print(ids)
                         if ids=='Ⓜ️':
                             cid=i+1
                         if ids=='⏹':
