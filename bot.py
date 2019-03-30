@@ -1098,19 +1098,23 @@ def lenastopcontrol(m):
 @lena.message_handler()
 def lenamessages(m):
     print('1')
-    yes=['да!','конечно!','да','да, могу.','могу','могу.','конечно могу!']
+    yes=['да!','конечно!','да','да, могу.','могу','могу.','конечно могу!','да']
     if lenastats['whohelps']!=None:
         print('2')
+        y=0
         if m.from_user.id==lenastats['whohelps']:
           print('3')
-          if m.text.lower() in yes:
+          for ids in yes:
+              if ids in m.text.lower():
+                  y=1
+          if y==1:
             pioner=users.find_one({'id':m.from_user.id})
             print('4')
             try:
                 lenastats['timer'].cancel()
             except:
                 pass
-            allhelps=['Спасибо! Тогда пошли, мне нужно отсортировать лекарства в медпункте.']
+            allhelps=['Спасибо! Тогда пошли, мне нужно отсортировать лекарства в медпункте.', 'Спасибо! Пойдём, надо разобрать склад и принести несколько комплектов пионерской формы для Слави.']
             lenastats['whohelps']=None
             helpp=random.choice(allhelps)
             lena.send_chat_action(m.chat.id,'typing')
