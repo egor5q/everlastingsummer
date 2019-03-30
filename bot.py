@@ -41,6 +41,7 @@ ul_admins=[652585389]
 mi_admins=[268486177]
 le_admins=[]
 sl_admins=[]
+od_admins=[629070350]
 
 
 symbollist=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
@@ -296,9 +297,38 @@ def gamestest(m):
     eveninggames()
 
   
+####################################### OLGA ##############################################
+@bot.message_handler(commands=['control'])
+def odcontrol(m):
+    if m.from_user.id in botadmins or m.from_user.id in od_admins:
+        if odstats['controller']==None:
+            odstats['controller']={'id':m.from_user.id,
+                                     'name':m.from_user.first_name}
+            bot.send_message(m.from_user.id, 'Здравствуй, пионер. Быть вожатым - большая ответственность! Не опозорь меня!')
+        else:
+            bot.send_message(m.from_user.id, 'Мной уже управляет '+odstats['controller']['name']+'!')
+            
+@bot.message_handler(commands=['stopcontrol'])
+def odstopcontrol(m):
+    if odstats['controller']!=None:
+        if odstats['controller']['id']==m.from_user.id:
+            odstats['controller']=None
+            bot.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+            
+                      
+                      
+@bot.message_handler(content_types=['sticker'])
+def stickercatchod(m):  
+    if odstats['controller']!=None:
+        controller=odstats['controller']
+        if m.chat.id==controller['id']:
+            if m.reply_to_message==None:
+                bot.send_sticker(-1001351496983, m.sticker.file_id)
+
+
+
 @bot.message_handler()
 def messag(m):
-  print(str(m.chat.id))
   if m.from_user.id==m.chat.id:
     x=users.find_one({'id':m.from_user.id})
     if x!=None:
@@ -357,7 +387,83 @@ def messag(m):
                         g='шла'
                     odstats['lineyka'].append('['+x['pionername']+'](tg://user?id='+str(id)+')')
                     bot.send_message(m.chat.id,'А вот и ['+x['pionername']+'](tg://user?id='+str(id)+') при'+g+' на линейку!')
-    
+                    
+                    
+                    
+  if odstats['controller']!=None:
+        controller=odstats['controller']
+        if m.chat.id==controller['id']:
+            if m.reply_to_message==None:
+                if m.text.split(' ')[0]!='/pm' and m.text.split(' ')[0]!='/r':
+                    msg=bot.send_message(-1001351496983, m.text)
+                    for ids in ctrls:
+                        if ids['controller']!=None and ids['bot']!=bot:
+                            if m.chat.id==-1001351496983:
+                                x='(Общий чат)'
+                            else:
+                                x='(ЛС)'
+                            try:
+                                ids['bot'].send_message(ids['controller'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
+                            except Exception as E:
+                                bot.send_message(441399484, traceback.format_exc())   
+                elif m.text.split(' ')[0]=='/pm':
+                    try:
+                        text=m.text.split(' ')
+                        t=''
+                        i=0
+                        for ids in text:
+                            if i>1:
+                                t+=ids+' '
+                            i+=1
+                        bot.send_message(int(m.text.split(' ')[1]), t)
+                    except:
+                        bot.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
+                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
+                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
+
+            else:
+                try:
+                    i=0
+                    cid=None
+                    eid=None
+                    for ids in m.reply_to_message.text:
+                        print(ids)
+                        if ids=='❓':
+                            cid=i+1
+                        if ids=='⏹':
+                            eid=i
+                        i+=1
+                    print('cid')
+                    print(cid)
+                    print('eid')
+                    print(eid)
+                    msgid=m.reply_to_message.text[cid:eid]
+                    bot.send_message(-1001351496983, m.text, reply_to_message_id=int(msgid))
+                    
+                except Exception as E:
+                    bot.send_message(441399484, traceback.format_exc())
+                    bot.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
+                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
+                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
+                    
+                                          
+        
+        else:
+            if m.chat.id==-1001351496983:
+                x='(Общий чат)'
+            else:
+                x='(ЛС)'
+            try:
+                bot.send_message(controller['id'], x+'\n'+m.from_user.first_name+' (`'+str(m.from_user.id)+'`) (❓'+str(m.message_id)+'⏹):\n'+m.text, parse_mode='markdown')
+           
+            except Exception as E:
+                    bot.send_message(441399484, traceback.format_exc())
+
+
+
+
+
+
 def reloadquest(index):
     works[index]['value']=0
     print('Квест '+works[index]['name']+' обновлён!')
@@ -1120,7 +1226,17 @@ def electronichandler(m):
         if m.chat.id==controller['id']:
             if m.reply_to_message==None:
                 if m.text.split(' ')[0]!='/pm' and m.text.split(' ')[0]!='/r':
-                    electronic.send_message(-1001351496983, m.text)
+                    msg=electronic.send_message(-1001351496983, m.text)
+                    for ids in ctrls:
+                        if ids['controller']!=None and ids['bot']!=electronic:
+                            if m.chat.id==-1001351496983:
+                                x='(Общий чат)'
+                            else:
+                                x='(ЛС)'
+                            try:
+                                ids['bot'].send_message(ids['controller'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
+                            except Exception as E:
+                                bot.send_message(441399484, traceback.format_exc())   
                 elif m.text.split(' ')[0]=='/pm':
                     try:
                         text=m.text.split(' ')
@@ -1228,7 +1344,17 @@ def lenamessages(m):
         if m.chat.id==controller['id']:
             if m.reply_to_message==None:
                 if m.text.split(' ')[0]!='/pm' and m.text.split(' ')[0]!='/r':
-                    lena.send_message(-1001351496983, m.text)
+                    msg=lena.send_message(-1001351496983, m.text)
+                    for ids in ctrls:
+                        if ids['controller']!=None and ids['bot']!=lena:
+                            if m.chat.id==-1001351496983:
+                                x='(Общий чат)'
+                            else:
+                                x='(ЛС)'
+                            try:
+                                ids['bot'].send_message(ids['controller'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
+                            except Exception as E:
+                                bot.send_message(441399484, traceback.format_exc())   
                 elif m.text.split(' ')[0]=='/pm':
                     try:
                         text=m.text.split(' ')
@@ -1334,7 +1460,17 @@ def alisamessages(m):
         if m.chat.id==controller['id']:
             if m.reply_to_message==None:
                 if m.text.split(' ')[0]!='/pm' and m.text.split(' ')[0]!='/r':
-                    alisa.send_message(-1001351496983, m.text)
+                    msg=alisa.send_message(-1001351496983, m.text)
+                    for ids in ctrls:
+                        if ids['controller']!=None and ids['bot']!=alisa:
+                            if m.chat.id==-1001351496983:
+                                x='(Общий чат)'
+                            else:
+                                x='(ЛС)'
+                            try:
+                                ids['bot'].send_message(ids['controller'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
+                            except Exception as E:
+                                bot.send_message(441399484, traceback.format_exc())   
                 elif m.text.split(' ')[0]=='/pm':
                     try:
                         text=m.text.split(' ')
@@ -1426,7 +1562,17 @@ def ulianamessages(m):
         if m.chat.id==controller['id']:
             if m.reply_to_message==None:
                 if m.text.split(' ')[0]!='/pm' and m.text.split(' ')[0]!='/r':
-                    uliana.send_message(-1001351496983, m.text)
+                    msg=uliana.send_message(-1001351496983, m.text)
+                    for ids in ctrls:
+                        if ids['controller']!=None and ids['bot']!=uliana:
+                            if m.chat.id==-1001351496983:
+                                x='(Общий чат)'
+                            else:
+                                x='(ЛС)'
+                            try:
+                                ids['bot'].send_message(ids['controller'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
+                            except Exception as E:
+                                bot.send_message(441399484, traceback.format_exc())   
                 elif m.text.split(' ')[0]=='/pm':
                     try:
                         text=m.text.split(' ')
@@ -1518,7 +1664,17 @@ def slavyamessages(m):
         if m.chat.id==controller['id']:
             if m.reply_to_message==None:
                 if m.text.split(' ')[0]!='/pm' and m.text.split(' ')[0]!='/r':
-                    slavya.send_message(-1001351496983, m.text)
+                    msg=slavya.send_message(-1001351496983, m.text)
+                    for ids in ctrls:
+                        if ids['controller']!=None and ids['bot']!=slavya:
+                            if m.chat.id==-1001351496983:
+                                x='(Общий чат)'
+                            else:
+                                x='(ЛС)'
+                            try:
+                                ids['bot'].send_message(ids['controller'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
+                            except Exception as E:
+                                bot.send_message(441399484, traceback.format_exc())   
                 elif m.text.split(' ')[0]=='/pm':
                     try:
                         text=m.text.split(' ')
@@ -1611,7 +1767,17 @@ def mikumessages(m):
         if m.chat.id==controller['id']:
             if m.reply_to_message==None:
                 if m.text.split(' ')[0]!='/pm' and m.text.split(' ')[0]!='/r':
-                    miku.send_message(-1001351496983, m.text)
+                    msg=miku.send_message(-1001351496983, m.text)
+                    for ids in ctrls:
+                        if ids['controller']!=None and ids['bot']!=miku:
+                            if m.chat.id==-1001351496983:
+                                x='(Общий чат)'
+                            else:
+                                x='(ЛС)'
+                            try:
+                                ids['bot'].send_message(ids['controller'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
+                            except Exception as E:
+                                bot.send_message(441399484, traceback.format_exc())   
                 elif m.text.split(' ')[0]=='/pm':
                     try:
                         text=m.text.split(' ')
@@ -1699,7 +1865,8 @@ alisastats={
     'strenght':1,
     'agility':2,
     'intelligence':3,
-    'controller':None
+    'controller':None,
+    'bot':alisa
 }
 lenastats={
     'strenght':2,
@@ -1707,25 +1874,29 @@ lenastats={
     'intelligence':2,
     'whohelps':None,
     'timer':None,
-    'controller':None
+    'controller':None,
+    'bot':lena
 }
 mikustats={
     'strenght':2,
     'agility':2,
     'intelligence':2,
-    'controller':None
+    'controller':None,
+    'bot':miku
 }
 ulianastats={
     'strenght':1,
     'agility':4,
     'intelligence':1,
-    'controller':None
+    'controller':None,
+    'bot':uliana
 }
 slavyastats={
     'strenght':1,
     'agility':1,
     'intelligence':4,
-    'controller':None
+    'controller':None,
+    'bot':slavya
 }
 electronicstats={
     'strenght':3,
@@ -1734,23 +1905,36 @@ electronicstats={
     'waitingplayers':0,
     'playingcards':0,
     'cardsturn':0,
-    'controller':None
+    'controller':None,
+    'bot':electronic
            
 }
 zhenyastats={
     'strenght':2,
     'agility':1,
     'intelligence':3,
-    'controller':None
+    'controller':None,
+    'bot':zhenya
            
 }
 
 odstats={
     'lineyka':[],
     'waitforlineyka':0,
-    'controller':None
+    'controller':None,
+    'bot':bot
 }
 
+
+ctrls=[]
+ctrls.append(odstats)
+ctrls.append(electronicstats)
+ctrls.append(slavyastats)
+ctrls.append(zhenyastats)
+ctrls.append(ulianastats)
+ctrls.append(mikustats)
+ctrls.append(lenastats)
+ctrls.append(alisastats)
 
 
 zavtrak='9:00'
@@ -1767,19 +1951,18 @@ def findindex(x):
             
  
 def randomhelp():
-           pass
-   #t=threading.Timer(random.randint(7200,17000),randomhelp)
-   #t.start()
-   #spisok=[]
-   #pioners=['lena']
-   #x=users.find({})
-   #for ids in x:
-   #    spisok.append(ids)
-   #if len(spisok)>0:
-   #    pioner=random.choice(spisok)
-   #    z=random.choice(pioners)
-   #    if z=='lena':
-   #        helpto(pioner,'lena')
+   t=threading.Timer(random.randint(7200,17000),randomhelp)
+   t.start()
+   spisok=[]
+   pioners=['lena']
+   x=users.find({})
+   for ids in x:
+       spisok.append(ids)
+   if len(spisok)>0:
+       pioner=random.choice(spisok)
+       z=random.choice(pioners)
+       if z=='lena':
+           helpto(pioner,'lena')
 
 def helpto(pioner,x):
     if pioner['gender']=='male':
@@ -1811,56 +1994,55 @@ def helpcancel(pioner,m):
     
 
 def randomact():
-    pass
-    #t=threading.Timer(random.randint(4900,18000),randomact)
-    #t.start()
-    #lisst=['talk_uliana+olgadmitrievna','talk_uliana+alisa']
-    #x=random.choice(lisst)
-    #if x=='talk_uliana+olgadmitrievna':
-    #    bot.send_chat_action(-1001351496983,'typing')
-    #    time.sleep(4)
-    #    bot.send_message(-1001351496983,nametopioner('uliana')+', а ну стой! Ты эти конфеты где взяла?', parse_mode='markdown')
-    #    sendstick(bot,'CAADAgADtwADgi0zD-9trZ_s35yQAg')
-    #    time.sleep(1)
-    #    uliana.send_chat_action(-1001351496983,'typing')
-    #    time.sleep(2)
-    #    uliana.send_message(-1001351496983, 'Какие конфеты?')
-    #    sendstick(uliana,'CAADAgADHQADgi0zD1aFI93sTseZAg')
-    #    time.sleep(2)
-    #    bot.send_chat_action(-1001351496983,'typing')
-    #    time.sleep(3)
-    #    bot.send_message(-1001351496983,'Те, что ты за спиной держишь! Быстро верни их в столовую!')
-    #    time.sleep(1)
-    #    uliana.send_chat_action(-1001351496983,'typing')
-    #    time.sleep(2)
-    #    uliana.send_message(-1001351496983, 'Хорошо, Ольга Дмитриевна...')
-    #    sendstick(uliana,'CAADAgADJQADgi0zD1PW7dDuU5hCAg')
-    #if x=='talk_uliana+alisa':
-    #    alisa.send_chat_action(-1001351496983,'typing')
-    #    time.sleep(3)
-    #    alisa.send_message(-1001351496983,nametopioner('uliana')+', не боишься, что Ольга Дмитриевна спалит?', parse_mode='markdown')
-    #    time.sleep(1)
-    #    uliana.send_chat_action(-1001351496983,'typing')
-    #    time.sleep(2)
-    #    uliana.send_message(-1001351496983, 'Ты о чём?')
-    #    time.sleep(2)
-    #    alisa.send_chat_action(-1001351496983,'typing')
-    #    time.sleep(2)
-    #    alisa.send_message(-1001351496983,'О конфетах, которые ты украла!')
-    #    sendstick(alisa,'CAADAgADOwADgi0zDzD8ZNZXu5LHAg')
-    #    time.sleep(1)
-    #    uliana.send_chat_action(-1001351496983,'typing')
-    #    time.sleep(2)
-    #    uliana.send_message(-1001351496983, 'Да не, не спалит! Я так уже много раз делала!')
-    #    sendstick(uliana,'CAADAgADKQADgi0zD_inNy0pZyh0Ag')
-    #    time.sleep(2)
-    #    alisa.send_chat_action(-1001351496983,'typing')
-    #    time.sleep(2)
-    #    alisa.send_message(-1001351496983,'Тогда делись!')
-    #    time.sleep(1)
-    #    uliana.send_chat_action(-1001351496983,'typing')
-    #    time.sleep(2)
-    #    uliana.send_message(-1001351496983, 'Тогда пошли в домик!')
+    t=threading.Timer(random.randint(4900,18000),randomact)
+    t.start()
+    lisst=['talk_uliana+olgadmitrievna','talk_uliana+alisa']
+    x=random.choice(lisst)
+    if x=='talk_uliana+olgadmitrievna':
+        bot.send_chat_action(-1001351496983,'typing')
+        time.sleep(4)
+        bot.send_message(-1001351496983,nametopioner('uliana')+', а ну стой! Ты эти конфеты где взяла?', parse_mode='markdown')
+        sendstick(bot,'CAADAgADtwADgi0zD-9trZ_s35yQAg')
+        time.sleep(1)
+        uliana.send_chat_action(-1001351496983,'typing')
+        time.sleep(2)
+        uliana.send_message(-1001351496983, 'Какие конфеты?')
+        sendstick(uliana,'CAADAgADHQADgi0zD1aFI93sTseZAg')
+        time.sleep(2)
+        bot.send_chat_action(-1001351496983,'typing')
+        time.sleep(3)
+        bot.send_message(-1001351496983,'Те, что ты за спиной держишь! Быстро верни их в столовую!')
+        time.sleep(1)
+        uliana.send_chat_action(-1001351496983,'typing')
+        time.sleep(2)
+        uliana.send_message(-1001351496983, 'Хорошо, Ольга Дмитриевна...')
+        sendstick(uliana,'CAADAgADJQADgi0zD1PW7dDuU5hCAg')
+    if x=='talk_uliana+alisa':
+        alisa.send_chat_action(-1001351496983,'typing')
+        time.sleep(3)
+        alisa.send_message(-1001351496983,nametopioner('uliana')+', не боишься, что Ольга Дмитриевна спалит?', parse_mode='markdown')
+        time.sleep(1)
+        uliana.send_chat_action(-1001351496983,'typing')
+        time.sleep(2)
+        uliana.send_message(-1001351496983, 'Ты о чём?')
+        time.sleep(2)
+        alisa.send_chat_action(-1001351496983,'typing')
+        time.sleep(2)
+        alisa.send_message(-1001351496983,'О конфетах, которые ты украла!')
+        sendstick(alisa,'CAADAgADOwADgi0zDzD8ZNZXu5LHAg')
+        time.sleep(1)
+        uliana.send_chat_action(-1001351496983,'typing')
+        time.sleep(2)
+        uliana.send_message(-1001351496983, 'Да не, не спалит! Я так уже много раз делала!')
+        sendstick(uliana,'CAADAgADKQADgi0zD_inNy0pZyh0Ag')
+        time.sleep(2)
+        alisa.send_chat_action(-1001351496983,'typing')
+        time.sleep(2)
+        alisa.send_message(-1001351496983,'Тогда делись!')
+        time.sleep(1)
+        uliana.send_chat_action(-1001351496983,'typing')
+        time.sleep(2)
+        uliana.send_message(-1001351496983, 'Тогда пошли в домик!')
 
 
         
