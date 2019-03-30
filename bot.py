@@ -1166,6 +1166,10 @@ def lenamessages(m):
                         if ids=='⏹':
                             eid=i-1
                         i+=1
+                    print('cid')
+                    print(cid)
+                    print('eid')
+                    print(eid)
                     msgid=m.reply_to_message.text[cid:eid]
                     lena.send_message(-1001351496983, m.text, reply_to_message_id=int(msgid))
                     
@@ -1182,8 +1186,13 @@ def lenamessages(m):
                 x='(Общий чат)'
             else:
                 x='(ЛС)'
-            lena.send_message(controller['id'], x+'\n'+m.from_user.first_name+' (`'+str(m.from_user.id)+'`) (Ⓜ️'+str(m.message_id)+'⏹):\n'+m.text, parse_mode='markdown')
+            try:
+                lena.send_message(controller['id'], x+'\n'+m.from_user.first_name+' (`'+str(m.from_user.id)+'`) (Ⓜ️'+str(m.message_id)+'⏹):\n'+m.text, parse_mode='markdown')
            
+            except Exception as E:
+                    bot.send_message(441399484, traceback.format_exc())
+                      
+                      
 @lena.message_handler(content_types=['sticker'])
 def stickercatchlena(m):  
     if lenastats['controller']!=None:
