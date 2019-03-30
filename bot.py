@@ -1402,7 +1402,7 @@ def stickercatchalisa(m):
            
 ####################################### ULIANA ##############################################
 @uliana.message_handler(commands=['control'])
-def ulianacontrol(m):
+def ulianaacontrol(m):
     if m.from_user.id in botadmins or m.from_user.id in ul_admins:
         if ulianastats['controller']==None:
             ulianastats['controller']={'id':m.from_user.id,
