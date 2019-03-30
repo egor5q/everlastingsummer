@@ -293,8 +293,8 @@ worktexts=['Ну что, пионер, скучаешь? Ничего, сейч�
   'Бездельничаешь? Сейчас я это исправлю! Подожди пару минут, найду тебе занятие.']
 
 
-@bot.message_handler(commands=['gamestest'])
-def gamestest(m):
+@bot.message_handler(commands=['cards'])
+def gamestestdsdfsdgd(m):
     eveninggames()
 
   
@@ -685,7 +685,7 @@ def checktime():
         
     
 def eveninggames():
-    egames=['cards','football']#,'ropepulling']
+    egames=['cards']#,'ropepulling']
     x=random.choice(egames)
     if x=='cards':
         leader='electronic'
@@ -1183,6 +1183,7 @@ def stickercatchelectronic(m):
 
 @electronic.message_handler()
 def electronichandler(m):
+ try:
     if electronicstats['waitingplayers']==1:
         if m.text.lower()=='хочу принять участие в турнире!':
             x=users.find_one({'id':m.from_user.id})
@@ -1291,7 +1292,8 @@ def electronichandler(m):
             except Exception as E:
                     bot.send_message(441399484, traceback.format_exc())                  
                       
-                      
+ except:
+           pass
                       
                       
 @lena.message_handler(commands=['control'])
@@ -2186,8 +2188,6 @@ if True:
    t=threading.Timer(1, polling, args=[slavya])
    t.start()
    t=threading.Timer(1, polling, args=[miku])
-   t.start()
-   t=threading.Timer(1, polling, args=[shurik])
    t.start()
    bot.send_message(-1001351496983, 'Все пионеры в норме!')
    
