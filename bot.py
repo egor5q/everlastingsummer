@@ -1176,7 +1176,7 @@ def lenamessages(m):
                     print('eid')
                     print(eid)
                     msgid=m.reply_to_message.text[cid:eid]
-                    lena.send_message(-1001351496983, m.text, reply_to_message_id=int(msgid))
+                    lena.send_message(-1001351496983, m.text, reply_to_message_id=msgid)
                     
                 except Exception as E:
                     bot.send_message(441399484, traceback.format_exc())
