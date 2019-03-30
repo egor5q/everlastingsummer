@@ -399,7 +399,7 @@ def messag(m):
                     msg=bot.send_message(-1001351496983, m.text)
                     for ids in ctrls:
                         if ids['controller']!=None and ids['bot']!=bot:
-                            if m.chat.id==-1001351496983:
+                            if msg.chat.id==-1001351496983:
                                 x='(Общий чат)'
                             else:
                                 x='(ЛС)'
@@ -1230,7 +1230,7 @@ def electronichandler(m):
                     msg=electronic.send_message(-1001351496983, m.text)
                     for ids in ctrls:
                         if ids['controller']!=None and ids['bot']!=electronic:
-                            if m.chat.id==-1001351496983:
+                            if msg.chat.id==-1001351496983:
                                 x='(Общий чат)'
                             else:
                                 x='(ЛС)'
@@ -1348,7 +1348,7 @@ def lenamessages(m):
                     msg=lena.send_message(-1001351496983, m.text)
                     for ids in ctrls:
                         if ids['controller']!=None and ids['bot']!=lena:
-                            if m.chat.id==-1001351496983:
+                            if msg.chat.id==-1001351496983:
                                 x='(Общий чат)'
                             else:
                                 x='(ЛС)'
@@ -1464,7 +1464,7 @@ def alisamessages(m):
                     msg=alisa.send_message(-1001351496983, m.text)
                     for ids in ctrls:
                         if ids['controller']!=None and ids['bot']!=alisa:
-                            if m.chat.id==-1001351496983:
+                            if msg.chat.id==-1001351496983:
                                 x='(Общий чат)'
                             else:
                                 x='(ЛС)'
@@ -1566,7 +1566,7 @@ def ulianamessages(m):
                     msg=uliana.send_message(-1001351496983, m.text)
                     for ids in ctrls:
                         if ids['controller']!=None and ids['bot']!=uliana:
-                            if m.chat.id==-1001351496983:
+                            if msg.chat.id==-1001351496983:
                                 x='(Общий чат)'
                             else:
                                 x='(ЛС)'
@@ -1668,7 +1668,7 @@ def slavyamessages(m):
                     msg=slavya.send_message(-1001351496983, m.text)
                     for ids in ctrls:
                         if ids['controller']!=None and ids['bot']!=slavya:
-                            if m.chat.id==-1001351496983:
+                            if msg.chat.id==-1001351496983:
                                 x='(Общий чат)'
                             else:
                                 x='(ЛС)'
@@ -1771,7 +1771,7 @@ def mikumessages(m):
                     msg=miku.send_message(-1001351496983, m.text)
                     for ids in ctrls:
                         if ids['controller']!=None and ids['bot']!=miku:
-                            if m.chat.id==-1001351496983:
+                            if msg.chat.id==-1001351496983:
                                 x='(Общий чат)'
                             else:
                                 x='(ЛС)'
@@ -1875,7 +1875,7 @@ def zhenyamessages(m):
                     msg=zhenya.send_message(-1001351496983, m.text)
                     for ids in ctrls:
                         if ids['controller']!=None and ids['bot']!=zhenya:
-                            if m.chat.id==-1001351496983:
+                            if msg.chat.id==-1001351496983:
                                 x='(Общий чат)'
                             else:
                                 x='(ЛС)'
