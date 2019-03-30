@@ -1043,7 +1043,37 @@ def sendmes(sender, text, parse_mode):
 def sendstick(sender, stick):
     sender.send_sticker(-1001351496983,stick)
            
-           
+      
+
+####################################### ELECTRONIC ##############################################
+@electronic.message_handler(commands=['control'])
+def electroniccontrol(m):
+    if m.from_user.id in botadmins or m.from_user.id in el_admins:
+        if electronicstats['controller']==None:
+            electronicstats['controller']={'id':m.from_user.id,
+                                     'name':m.from_user.first_name}
+            electronic.send_message(m.from_user.id, 'Привет! надеюсь ты знаешь, как управлять мной.')
+        else:
+            electronic.send_message(m.from_user.id, 'Мной уже управляет '+electronicstats['controller']['name']+'!')
+            
+@electronic.message_handler(commands=['stopcontrol'])
+def electronicstopcontrol(m):
+    if electronicstats['controller']!=None:
+        if electronicstats['controller']['id']==m.from_user.id:
+            electronicstats['controller']=None
+            electronic.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+            
+                      
+                      
+@electronic.message_handler(content_types=['sticker'])
+def stickercatchelectronic(m):  
+    if electronicstats['controller']!=None:
+        controller=electronicstats['controller']
+        if m.chat.id==controller['id']:
+            if m.reply_to_message==None:
+                electronic.send_sticker(-1001351496983, m.sticker.file_id)
+
+
 @electronic.message_handler()
 def electronichandler(m):
     if electronicstats['waitingplayers']==1:
@@ -1085,6 +1115,68 @@ def electronichandler(m):
             electronic.send_message(m.chat.id, 'Привет, ['+x['pionername']+'](tg://user?id='+str(x['id'])+')! А я тут '+\
                                     'собираю участников для вечернего турнира. Не хочешь принять участие?', parse_mode='markdown', reply_to_message_id=reply_to_message_id)
 
+    if electronicstats['controller']!=None:
+        controller=electronicstats['controller']
+        if m.chat.id==controller['id']:
+            if m.reply_to_message==None:
+                if m.text.split(' ')[0]!='/pm' and m.text.split(' ')[0]!='/r':
+                    electronic.send_message(-1001351496983, m.text)
+                elif m.text.split(' ')[0]=='/pm':
+                    try:
+                        text=m.text.split(' ')
+                        t=''
+                        i=0
+                        for ids in text:
+                            if i>1:
+                                t+=ids+' '
+                            i+=1
+                        electronic.send_message(int(m.text.split(' ')[1]), t)
+                    except:
+                        electronic.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
+                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
+                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
+
+            else:
+                try:
+                    i=0
+                    cid=None
+                    eid=None
+                    for ids in m.reply_to_message.text:
+                        print(ids)
+                        if ids=='❓':
+                            cid=i+1
+                        if ids=='⏹':
+                            eid=i
+                        i+=1
+                    print('cid')
+                    print(cid)
+                    print('eid')
+                    print(eid)
+                    msgid=m.reply_to_message.text[cid:eid]
+                    electronic.send_message(-1001351496983, m.text, reply_to_message_id=int(msgid))
+                    
+                except Exception as E:
+                    bot.send_message(441399484, traceback.format_exc())
+                    electronic.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
+                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
+                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
+                    
+                                          
+        
+        else:
+            if m.chat.id==-1001351496983:
+                x='(Общий чат)'
+            else:
+                x='(ЛС)'
+            try:
+                electronic.send_message(controller['id'], x+'\n'+m.from_user.first_name+' (`'+str(m.from_user.id)+'`) (❓'+str(m.message_id)+'⏹):\n'+m.text, parse_mode='markdown')
+           
+            except Exception as E:
+                    bot.send_message(441399484, traceback.format_exc())                  
+                      
+                      
+                      
+                      
 @lena.message_handler(commands=['control'])
 def lenacontrol(m):
     if m.from_user.id in botadmins or m.from_user.id in le_admins:
@@ -1897,9 +1989,9 @@ if True:
    t.start()
    t=threading.Timer(1, polling, args=[miku])
    t.start()
-   t=threading.Timer(1, polling, args=[slavya])
-   t.start()
    t=threading.Timer(1, polling, args=[shurik])
+   t.start()
+   t=threading.Timer(1, polling, args=[uliana])
    t.start()
    
 
