@@ -1169,14 +1169,14 @@ def lenamessages(m):
                         if ids=='❓':
                             cid=i+1
                         if ids=='⏹':
-                            eid=i-1
+                            eid=i
                         i+=1
                     print('cid')
                     print(cid)
                     print('eid')
                     print(eid)
                     msgid=m.reply_to_message.text[cid:eid]
-                    lena.send_message(-1001351496983, m.text, reply_to_message_id=msgid)
+                    lena.send_message(-1001351496983, m.text, reply_to_message_id=int(msgid))
                     
                 except Exception as E:
                     bot.send_message(441399484, traceback.format_exc())
