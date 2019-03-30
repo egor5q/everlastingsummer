@@ -1123,9 +1123,9 @@ def lenamessages(m):
         controller=lenastats['controller']
         if m.chat.id==controller['id']:
             if m.reply_to_message==None:
-                if m.text.split(' ')[0]!='/pm':
+                if m.text.split(' ')[0]!='/pm' and m.text.split(' ')[0]!='/r':
                     lena.send_message(-1001351496983, m.text)
-                else:
+                elif m.text.split(' ')[0]=='/pm':
                     try:
                         text=m.text.split(' ')
                         t=''
@@ -1138,15 +1138,58 @@ def lenamessages(m):
                     except:
                         lena.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
                                           '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
-                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.', parse_mode='markdown')
+                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
+                        
+                elif m.text.split(' ')[0]=='/r':
+                    try:
+                        text=m.text.split(' ')
+                        t=''
+                        i=0
+                        for ids in text:
+                            if i>1:
+                                t+=ids+' '
+                            i+=1
+                        lena.send_message(-1001351496983, t, reply_to_message_id=int(m.text.split(' ')[1]))
+                    except:
+                        lena.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
+                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
+                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
+            else:
+                try:
+                    i=0
+                    cid=None
+                    eid=None
+                    for ids in m.reply_to_message.text:
+                        if ids=='Ⓜ️':
+                            cid=i+1
+                        if ids=='⏹':
+                            eid=i-1
+                        i+=1
+                    msgid=m.reply_to_message.text[cid:eid]
+                    lena.send_message(-1001351496983, m.text, reply_to_message_id=int(msgid))
+                    
+                except:
+                    lena.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
+                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
+                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
+                    
+                                          
         
         else:
             if m.chat.id==-1001351496983:
                 x='(Общий чат)'
             else:
                 x='(ЛС)'
-            lena.send_message(controller['id'], x+'\n'+m.from_user.first_name+' (`'+str(m.from_user.id)+'`):\n'+m.text, parse_mode='markdown')
-            
+            lena.send_message(controller['id'], x+'\n'+m.from_user.first_name+' (`'+str(m.from_user.id)+'`) (Ⓜ️'+str(m.message_id)+'⏹):\n'+m.text, parse_mode='markdown')
+           
+@lena.message_handler(content_types=['sticker'])
+def stickercatchlena(m):  
+    if lenastats['controller']!=None:
+        controller=lenastats['controller']
+        if m.chat.id==controller['id']:
+            if m.reply_to_message==None:
+                lena.send_sticker(-1001351496983, m.sticker.file_id)
+        
 def helpend(id):
     x=users.find_one({'id':id})
     users.update_one({'id':id},{'$set':{'helping':0}})
@@ -1252,14 +1295,17 @@ def helpto(pioner,x):
     else:
         g='ла'
     if x=='lena':
-        lena.send_chat_action(-1001351496983,'typing')
-        time.sleep(4)
-        m=lena.send_message(-1001351496983,'['+pioner['pionername']+'](tg://user?id='+str(pioner['id'])+'), привет. Не мог'+g+' бы ты мне помочь?', parse_mode='markdown')
-        lenastats['whohelps']=pioner['id']
-        t=threading.Timer(300,helpcancel,args=['lena',m])
-        t.start()
-        lenastats['timer']=t
-        sendstick(lena,'CAADAgADaQADgi0zD9ZBO-mNcLuBAg')
+        try:
+            lena.send_chat_action(-1001351496983,'typing')
+            time.sleep(4)
+            m=lena.send_message(-1001351496983,'['+pioner['pionername']+'](tg://user?id='+str(pioner['id'])+'), привет. Не мог'+g+' бы ты мне помочь?', parse_mode='markdown')
+            lenastats['whohelps']=pioner['id']
+            t=threading.Timer(300,helpcancel,args=['lena',m])
+            t.start()
+            lenastats['timer']=t
+            sendstick(lena,'CAADAgADaQADgi0zD9ZBO-mNcLuBAg')
+        except:
+            pass
             
         
 def helpcancel(pioner,m):
