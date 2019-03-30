@@ -42,6 +42,7 @@ mi_admins=[268486177]
 le_admins=[]
 sl_admins=[]
 od_admins=[629070350]
+zh_admins=[390362465]
 
 
 symbollist=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
@@ -403,7 +404,7 @@ def messag(m):
                             else:
                                 x='(ЛС)'
                             try:
-                                ids['bot'].send_message(ids['controller'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
+                                ids['bot'].send_message(ids['controller']['id'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
                             except Exception as E:
                                 bot.send_message(441399484, traceback.format_exc())   
                 elif m.text.split(' ')[0]=='/pm':
@@ -1234,7 +1235,7 @@ def electronichandler(m):
                             else:
                                 x='(ЛС)'
                             try:
-                                ids['bot'].send_message(ids['controller'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
+                                ids['bot'].send_message(ids['controller']['id'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
                             except Exception as E:
                                 bot.send_message(441399484, traceback.format_exc())   
                 elif m.text.split(' ')[0]=='/pm':
@@ -1352,7 +1353,7 @@ def lenamessages(m):
                             else:
                                 x='(ЛС)'
                             try:
-                                ids['bot'].send_message(ids['controller'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
+                                ids['bot'].send_message(ids['controller']['id'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
                             except Exception as E:
                                 bot.send_message(441399484, traceback.format_exc())   
                 elif m.text.split(' ')[0]=='/pm':
@@ -1468,7 +1469,7 @@ def alisamessages(m):
                             else:
                                 x='(ЛС)'
                             try:
-                                ids['bot'].send_message(ids['controller'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
+                                ids['bot'].send_message(ids['controller']['id'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
                             except Exception as E:
                                 bot.send_message(441399484, traceback.format_exc())   
                 elif m.text.split(' ')[0]=='/pm':
@@ -1570,7 +1571,7 @@ def ulianamessages(m):
                             else:
                                 x='(ЛС)'
                             try:
-                                ids['bot'].send_message(ids['controller'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
+                                ids['bot'].send_message(ids['controller']['id'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
                             except Exception as E:
                                 bot.send_message(441399484, traceback.format_exc())   
                 elif m.text.split(' ')[0]=='/pm':
@@ -1672,7 +1673,7 @@ def slavyamessages(m):
                             else:
                                 x='(ЛС)'
                             try:
-                                ids['bot'].send_message(ids['controller'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
+                                ids['bot'].send_message(ids['controller']['id'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
                             except Exception as E:
                                 bot.send_message(441399484, traceback.format_exc())   
                 elif m.text.split(' ')[0]=='/pm':
@@ -1775,7 +1776,7 @@ def mikumessages(m):
                             else:
                                 x='(ЛС)'
                             try:
-                                ids['bot'].send_message(ids['controller'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
+                                ids['bot'].send_message(ids['controller']['id'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
                             except Exception as E:
                                 bot.send_message(441399484, traceback.format_exc())   
                 elif m.text.split(' ')[0]=='/pm':
@@ -1839,8 +1840,110 @@ def stickercatchmiku(m):
         if m.chat.id==controller['id']:
             if m.reply_to_message==None:
                 miku.send_sticker(-1001351496983, m.sticker.file_id)
+                
+                
+                
+                
+                
            
+####################################### ZHENYA ##############################################
+@zhenya.message_handler(commands=['control'])
+def zhenyacontrol(m):
+    if m.from_user.id in botadmins or m.from_user.id in zh_admins:
+        if zhenyastats['controller']==None:
+            zhenyastats['controller']={'id':m.from_user.id,
+                                     'name':m.from_user.first_name}
+            zhenya.send_message(m.from_user.id, 'Привет, ты теперь управляешь мной... А я пока пойду почитаю.')
+        else:
+            zhenya.send_message(m.from_user.id, 'Мной уже управляет '+zhenyastats['controller']['name']+'!')
+            
+@zhenya.message_handler(commands=['stopcontrol'])
+def zhenyastopcontrol(m):
+    if zhenyastats['controller']!=None:
+        if zhenyastats['controller']['id']==m.from_user.id:
+            zhenyastats['controller']=None
+            zhenya.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+            
+@zhenya.message_handler()
+def zhenyamessages(m):
+    
+    if zhenyastats['controller']!=None:
+        controller=zhenyastats['controller']
+        if m.chat.id==controller['id']:
+            if m.reply_to_message==None:
+                if m.text.split(' ')[0]!='/pm' and m.text.split(' ')[0]!='/r':
+                    msg=zhenya.send_message(-1001351496983, m.text)
+                    for ids in ctrls:
+                        if ids['controller']!=None and ids['bot']!=zhenya:
+                            if m.chat.id==-1001351496983:
+                                x='(Общий чат)'
+                            else:
+                                x='(ЛС)'
+                            try:
+                                ids['bot'].send_message(ids['controller']['id'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
+                            except Exception as E:
+                                bot.send_message(441399484, traceback.format_exc())   
+                elif m.text.split(' ')[0]=='/pm':
+                    try:
+                        text=m.text.split(' ')
+                        t=''
+                        i=0
+                        for ids in text:
+                            if i>1:
+                                t+=ids+' '
+                            i+=1
+                        zhenya.send_message(int(m.text.split(' ')[1]), t)
+                    except:
+                        zhenya.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
+                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
+                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
+
+            else:
+                try:
+                    i=0
+                    cid=None
+                    eid=None
+                    for ids in m.reply_to_message.text:
+                        print(ids)
+                        if ids=='❓':
+                            cid=i+1
+                        if ids=='⏹':
+                            eid=i
+                        i+=1
+                    print('cid')
+                    print(cid)
+                    print('eid')
+                    print(eid)
+                    msgid=m.reply_to_message.text[cid:eid]
+                    zhenya.send_message(-1001351496983, m.text, reply_to_message_id=int(msgid))
+                    
+                except Exception as E:
+                    bot.send_message(441399484, traceback.format_exc())
+                    zhenya.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
+                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
+                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
+                    
+                                          
+        
+        else:
+            if m.chat.id==-1001351496983:
+                x='(Общий чат)'
+            else:
+                x='(ЛС)'
+            try:
+                zhenya.send_message(controller['id'], x+'\n'+m.from_user.first_name+' (`'+str(m.from_user.id)+'`) (❓'+str(m.message_id)+'⏹):\n'+m.text, parse_mode='markdown')
            
+            except Exception as E:
+                    bot.send_message(441399484, traceback.format_exc())
+                      
+                      
+@zhenya.message_handler(content_types=['sticker'])
+def stickercatchzhenya(m):  
+    if zhenyastats['controller']!=None:
+        controller=zhenyastats['controller']
+        if m.chat.id==controller['id']:
+            if m.reply_to_message==None:
+                zhenya.send_sticker(-1001351496983, m.sticker.file_id)
 
 
 
