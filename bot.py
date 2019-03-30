@@ -8,6 +8,7 @@ import threading
 from emoji import emojize
 from telebot import types
 from pymongo import MongoClient
+import traceback
 
 from requests.exceptions import ReadTimeout
 from requests.exceptions import ConnectionError
@@ -1168,7 +1169,8 @@ def lenamessages(m):
                     msgid=m.reply_to_message.text[cid:eid]
                     lena.send_message(-1001351496983, m.text, reply_to_message_id=int(msgid))
                     
-                except:
+                except Exception as E:
+                    bot.send_message(441399484, traceback.format_exc())
                     lena.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
                                           '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
                                           '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
