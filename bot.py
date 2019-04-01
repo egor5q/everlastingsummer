@@ -25,6 +25,7 @@ slavya=telebot.TeleBot(os.environ['slavya'])
 uliana=telebot.TeleBot(os.environ['uliana'])
 electronic=telebot.TeleBot(os.environ['electronic'])
 zhenya=telebot.TeleBot(os.environ['zhenya'])
+tolik=telebot.TeleBot(os.environ['tolik'])
 
 client1=os.environ['database']
 client=MongoClient(client1)
@@ -43,6 +44,7 @@ le_admins=[60727377]
 sl_admins=[]
 od_admins=[629070350]
 zh_admins=[390362465]
+to_admins=[414374606]
 
 
 symbollist=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
@@ -1942,8 +1944,110 @@ def stickercatchzhenya(m):
         if m.chat.id==controller['id']:
             if m.reply_to_message==None:
                 zhenya.send_sticker(-1001351496983, m.sticker.file_id)
+                
+                
+                
+                
+                
 
+####################################### TOLIK ##############################################
+@tolik.message_handler(commands=['control'])
+def tolikcontrol(m):
+    if m.from_user.id in botadmins or m.from_user.id in to_admins:
+        if tolikstats['controller']==None:
+            tolikstats['controller']={'id':m.from_user.id,
+                                     'name':m.from_user.first_name}
+            tolik.send_message(m.from_user.id, 'Привет, ты теперь управляешь мной... А я пока пойду почитаю.')
+        else:
+            tolik.send_message(m.from_user.id, 'Мной уже управляет '+tolikstats['controller']['name']+'!')
+            
+@ztolik.message_handler(commands=['stopcontrol'])
+def tolikstopcontrol(m):
+    if tolikstats['controller']!=None:
+        if tolikstats['controller']['id']==m.from_user.id:
+            tolikstats['controller']=None
+            tolik.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+            
+@tolik.message_handler()
+def tolikmessages(m):
+    
+    if tolikstats['controller']!=None:
+        controller=tolikstats['controller']
+        if m.chat.id==controller['id']:
+            if m.reply_to_message==None:
+                if m.text.split(' ')[0]!='/pm' and m.text.split(' ')[0]!='/r':
+                    msg=tolik.send_message(-1001351496983, m.text)
+                    for ids in ctrls:
+                        if ids['controller']!=None and ids['bot']!=tolik:
+                            if msg.chat.id==-1001351496983:
+                                x='(Общий чат)'
+                            else:
+                                x='(ЛС)'
+                            try:
+                                ids['bot'].send_message(ids['controller']['id'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
+                            except Exception as E:
+                                bot.send_message(441399484, traceback.format_exc())   
+                elif m.text.split(' ')[0]=='/pm':
+                    try:
+                        text=m.text.split(' ')
+                        t=''
+                        i=0
+                        for ids in text:
+                            if i>1:
+                                t+=ids+' '
+                            i+=1
+                        tolik.send_message(int(m.text.split(' ')[1]), t)
+                    except:
+                        tolik.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
+                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
+                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
 
+            else:
+                try:
+                    i=0
+                    cid=None
+                    eid=None
+                    for ids in m.reply_to_message.text:
+                        print(ids)
+                        if ids=='❓':
+                            cid=i+1
+                        if ids=='⏹':
+                            eid=i
+                        i+=1
+                    print('cid')
+                    print(cid)
+                    print('eid')
+                    print(eid)
+                    msgid=m.reply_to_message.text[cid:eid]
+                    tolik.send_message(-1001351496983, m.text, reply_to_message_id=int(msgid))
+                    
+                except Exception as E:
+                    bot.send_message(441399484, traceback.format_exc())
+                    tolik.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
+                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
+                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
+                    
+                                          
+        
+        else:
+            if m.chat.id==-1001351496983:
+                x='(Общий чат)'
+            else:
+                x='(ЛС)'
+            try:
+                tolik.send_message(controller['id'], x+'\n'+m.from_user.first_name+' (`'+str(m.from_user.id)+'`) (❓'+str(m.message_id)+'⏹):\n'+m.text, parse_mode='markdown')
+           
+            except Exception as E:
+                    bot.send_message(441399484, traceback.format_exc())
+                      
+                      
+@tolik.message_handler(content_types=['sticker'])
+def stickercatchtolik(m):  
+    if tolikstats['controller']!=None:
+        controller=tolikstats['controller']
+        if m.chat.id==controller['id']:
+            if m.reply_to_message==None:
+                tolik.send_sticker(-1001351496983, m.sticker.file_id)
 
 
            
@@ -2016,6 +2120,15 @@ zhenyastats={
     'intelligence':3,
     'controller':None,
     'bot':zhenya
+           
+}
+
+tolikstats={
+    'strenght':2,
+    'agility':2,
+    'intelligence':2,
+    'controller':None,
+    'bot':tolik
            
 }
 
