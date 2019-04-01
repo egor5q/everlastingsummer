@@ -1961,7 +1961,7 @@ def tolikcontrol(m):
         else:
             tolik.send_message(m.from_user.id, 'Мной уже управляет '+tolikstats['controller']['name']+'!')
             
-@ztolik.message_handler(commands=['stopcontrol'])
+@tolik.message_handler(commands=['stopcontrol'])
 def tolikstopcontrol(m):
     if tolikstats['controller']!=None:
         if tolikstats['controller']['id']==m.from_user.id:
