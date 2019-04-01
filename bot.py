@@ -293,7 +293,8 @@ worktexts=['Ну что, пионер, скучаешь? Ничего, сейч�
 
 @bot.message_handler(commands=['cards'])
 def gamestestdsdfsdgd(m):
-    eveninggames()
+    if electronicstats['waitingplayers']!=1:
+        eveninggames()
 
   
 ####################################### OLGA ##############################################
@@ -686,6 +687,7 @@ def eveninggames():
     egames=['cards']#,'ropepulling']
     x=random.choice(egames)
     if x=='cards':
+        electronicstats['waitingplayers']=1
         leader='electronic'
         bot.send_chat_action(-1001351496983,'typing')
         t=threading.Timer(3.5, sendmes, args=[bot, 'Уже 7 вечера, а это значит, что пора начинать наши вечерние игры! На сегодня '+\
@@ -719,7 +721,6 @@ def eveninggames():
                                               'регистрации в турнире нужно подойти ко мне, и сказать: "`Хочу принять участие в турнире!`". '+\
                                               'Регистрация заканчивается через 20 минут!', 'markdown'])
         t.start()
-        electronicstats['waitingplayers']=1
         t=threading.Timer(1200, starttournier, args=['cards'])
         t.start()
 
@@ -876,6 +877,10 @@ def cards_nextturn():
                     print('try2complete')
                 
                 except:
+                    coef=0
+                    user=users.find_one({'id':ids[1]})
+                    if user!=None:
+                        coef+=user['intelligence']
                     if ids[index]=='miku':
                         intelligence=mikustats['intelligence']
                     if ids[index]=='alisa':
@@ -889,13 +894,15 @@ def cards_nextturn():
                     if ids[index]=='uliana':
                         intelligence=ulianastats['intelligence']
                     if intelligence==1:
-                        x=80
+                        x=80+coef
                     if intelligence==2:
-                        x=60
+                        x=60+coef
                     if intelligence==3:
-                        x=40
+                        x=40+coef
                     if intelligence==4:
-                        x=20
+                        x=20+coef
+                    if x>=90:
+                        x=90
                     if random.randint(1,100)<=x:
                         cardplayers.remove(ids[1])
                     else:
@@ -907,6 +914,10 @@ def cards_nextturn():
                     print('try3')
                     int(ids[1])
                     index=0
+                    coef=0
+                    user=users.find_one({'id':ids[1]})
+                    if user!=None:
+                        coef+=user['intelligence']
                     if ids[index]=='miku':
                         intelligence=mikustats['intelligence']
                     if ids[index]=='alisa':
@@ -920,13 +931,15 @@ def cards_nextturn():
                     if ids[index]=='uliana':
                         intelligence=ulianastats['intelligence']
                     if intelligence==1:
-                        x=80
+                        x=75+coef
                     if intelligence==2:
-                        x=60
+                        x=60+coef
                     if intelligence==3:
-                        x=40
+                        x=40+coef
                     if intelligence==4:
-                        x=20
+                        x=20+coef
+                    if x>=90:
+                        x=90
                     if random.randint(1,100)<=x:
                         cardplayers.remove(ids[0])
                     else:
