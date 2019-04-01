@@ -2298,6 +2298,8 @@ if True:
    t.start()
    t=threading.Timer(1, polling, args=[miku])
    t.start()
+   t=threading.Timer(1, polling, args=[tolik])
+   t.start()
    bot.send_message(-1001351496983, 'Все пионеры в норме!')
    
 
