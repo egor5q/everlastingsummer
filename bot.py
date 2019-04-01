@@ -1957,7 +1957,7 @@ def tolikcontrol(m):
         if tolikstats['controller']==None:
             tolikstats['controller']={'id':m.from_user.id,
                                      'name':m.from_user.first_name}
-            tolik.send_message(m.from_user.id, 'Привет, ты теперь управляешь мной... А я пока пойду почитаю.')
+            tolik.send_message(m.from_user.id, 'Я - Толик.')
         else:
             tolik.send_message(m.from_user.id, 'Мной уже управляет '+tolikstats['controller']['name']+'!')
             
