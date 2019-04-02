@@ -2078,14 +2078,14 @@ def shurikcontrol(m):
         else:
             shurik.send_message(m.from_user.id, 'Мной уже управляет '+shurikstats['controller']['name']+'!')
             
-@zhenya.message_handler(commands=['stopcontrol'])
+@shurik.message_handler(commands=['stopcontrol'])
 def shuriktopcontrol(m):
     if shurikstats['controller']!=None:
         if shurikstats['controller']['id']==m.from_user.id:
             shurikstats['controller']=None
             shurik.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
             
-@zhenya.message_handler()
+@shurik.message_handler()
 def shurikmessages(m):
     
     if shurikstats['controller']!=None:
