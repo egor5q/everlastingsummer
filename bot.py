@@ -2335,7 +2335,7 @@ def helpto(pioner,x):
             t=threading.Timer(300,helpcancel,args=['alisa', m])
             t.start()
             alisastats['timer']=t
-            sendstick(alisa,'CAADAgADaQADgi0zD9ZBO-mNcLuBAg')
+            sendstick(alisa,'CAADAgADOQADgi0zDztSbkeWq3BEAg')
         except:
             pass
             
