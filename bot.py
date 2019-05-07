@@ -322,7 +322,7 @@ def odstopcontrol(m):
 @bot.message_handler(content_types=['sticker'])
 def stickercatchod(m):  
     if m.from_user.id==441399484:
-        bot.send_sticker(441399484, m.sticker.file_id)
+        bot.send_message(441399484, m.sticker.file_id)
     if odstats['controller']!=None:
         controller=odstats['controller']
         if m.chat.id==controller['id']:
