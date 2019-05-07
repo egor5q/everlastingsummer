@@ -321,6 +321,8 @@ def odstopcontrol(m):
                       
 @bot.message_handler(content_types=['sticker'])
 def stickercatchod(m):  
+    if m.from_user.id==441399484:
+        bot.send_sticker(441399484, m.sticker.file_id)
     if odstats['controller']!=None:
         controller=odstats['controller']
         if m.chat.id==controller['id']:
@@ -2296,15 +2298,15 @@ def randomhelp():
    t=threading.Timer(random.randint(7200,17000),randomhelp)
    t.start()
    spisok=[]
-   pioners=['lena']
+   pioners=['lena', 'alisa']
    x=users.find({})
    for ids in x:
        spisok.append(ids)
    if len(spisok)>0:
        pioner=random.choice(spisok)
        z=random.choice(pioners)
-       if z=='lena':
-           helpto(pioner,'lena')
+       helpto(pioner,z)
+           
 
 def helpto(pioner,x):
     if pioner['gender']=='male':
@@ -2323,6 +2325,19 @@ def helpto(pioner,x):
             sendstick(lena,'CAADAgADaQADgi0zD9ZBO-mNcLuBAg')
         except:
             pass
+        
+    if x=='alisa':
+        try:
+            alisa.send_chat_action(-1001351496983,'typing')
+            time.sleep(4)
+            m=alisa.send_message(-1001351496983,'['+pioner['pionername']+'](tg://user?id='+str(pioner['id'])+'), смотри, куда идёшь! Должен будешь, и долг отработаешь прямо сейчас. Мне тут помощь нужна в одном деле...', parse_mode='markdown')
+            alisastats['whohelps']=pioner['id']
+            t=threading.Timer(300,helpcancel,args=['alisa', m])
+            t.start()
+            alisastats['timer']=t
+            sendstick(alisa,'CAADAgADaQADgi0zD9ZBO-mNcLuBAg')
+        except:
+            pass
             
         
 def helpcancel(pioner,m):
@@ -2331,6 +2346,11 @@ def helpcancel(pioner,m):
         lena.send_chat_action(-1001351496983,'typing')
         time.sleep(4)
         lena.send_message(-1001351496983,'Ты, наверное, сейчас занят... Прости, что побеспокоила.',reply_to_message_id=m.message_id)
+    if pioner=='alisa':
+        alisastats['whohelps']=None
+        alisa.send_chat_action(-1001351496983,'typing')
+        time.sleep(4)
+        alisa.send_message(-1001351496983,'Ну и пожалуйста!',reply_to_message_id=m.message_id)
         
     
     
@@ -2390,19 +2410,18 @@ def randomact():
         
         
         
-if True:
-    checktime()
-                   
-if True:
-    randomhelp()
+checktime()
+        
+t=threading.Timer(180, randomhelp)
+t.start()
 
 
 def polling(pollingbot):
     pollingbot.polling(none_stop=True,timeout=600)
 
 
-if True:
-    randomact()
+t=threading.Timer(120, randomact)
+t.start()
     
 if True:
    print('7777')
@@ -2430,6 +2449,5 @@ if True:
    t.start()
    t=threading.Timer(1, polling, args=[shurik])
    t.start()
-   bot.send_message(-1001351496983, 'Все пионеры в норме!')
    
 
