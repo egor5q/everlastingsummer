@@ -2337,9 +2337,11 @@ def randomhelp():
    for ids in x:
        spisok.append(ids)
    if len(spisok)>0:
-       pioner=random.choice(spisok)
-       z=random.choice(pioners)
-       helpto(pioner,z)
+       hour=gettime('h')
+       if hour>=7 and hour<=23:
+           pioner=random.choice(spisok)
+           z=random.choice(pioners)
+           helpto(pioner,z)
            
 
 def helpto(pioner,x):
