@@ -285,12 +285,13 @@ def cancelquest(id):
             users.update_one({'id':id},{'$set':{'answering':0}})
             users.update_one({'id':id},{'$set':{'waitforwork':0}})
             bot.send_message(-1001351496983, '['+x['pionername']+'](tg://user?id='+str(id)+')! Почему не отвечаешь? Неприлично, знаешь ли. Ну, раз не хочешь, найду другого пионера для этой работы.',parse_mode='markdown')
+            users.update_one({'id':id},{'$inc':{'OlgaDmitrievna_respect':-4}})
             
             
 
 
 worktexts=['Ну что, пионер, скучаешь? Ничего, сейчас найду для тебя подходящее занятие! Подожди немного.',
-  'Бездельничаешь? Сейчас я это исправлю! Подожди пару минут, найду тебе занятие.']
+  'Бездельничаешь? Сейчас я это исправлю! Подожди пару минут, найду тебе занятие.', 'Здравствуй, пионер! Сейчас найду, чем тебя занять.']
 
 
 @bot.message_handler(commands=['cards'])
@@ -362,7 +363,7 @@ def messag(m):
                         da=1
                   if da==1:
                       bot.send_message(m.chat.id, 'Добро пожаловать в лагерь, '+x['pionername']+'! Заходи в '+
-                                 '@(Ссылка на лагерь пока неизвестна, подождите немного), и знакомься с остальными пионерами!')
+                                 '@everlastingsummerchat, и знакомься с остальными пионерами!')
       
   else:
     x=users.find_one({'id':m.from_user.id})
@@ -378,11 +379,11 @@ def messag(m):
                  dowork(m.from_user.id)
                  users.update_one({'id':m.from_user.id},{'$set':{'prepareto':None}})
                  bot.send_message(m.chat.id,'Молодец, пионер! Как закончишь - сообщи мне.',reply_to_message_id=m.message_id )
-        lineykatexts=['я здесь, ольга дмитриевна!', 'я пришёл','я пришла','я пришёл!', 'я пришла!', 'я здесь!','я здесь','я пришел','я пришел!']        
+        lineykatexts=['я здесь','я тута', 'я пришёл','я пришла','я пришёл!', 'я пришла!', 'я здесь!','я здесь','я пришел','я пришел!']        
         if odstats['waitforlineyka']==1:
                 yes=0
                 for ids in lineykatexts:
-                    if m.text.lower() in ids:
+                    if ids in m.text.lower():
                         yes=1
                 if yes==1:
                     if x['gender']=='male':
@@ -517,7 +518,7 @@ def endwork(id, work):
         gndr='а'
     else:
         gndr=''
-    text='Ты хорошо поработал'+gndr+'! А как известно - всё, что нас не убивает, делает нас сильнее. Улучшенные характеристики:\n'
+    text='Ты хорошо поработал'+gndr+'! Улучшенные характеристики:\n'
     if work=='sortmedicaments':
         agility=random.randint(0,2)
         strenght=random.randint(1,100)
@@ -545,7 +546,7 @@ def endwork(id, work):
         else:
             agility=0
     if work=='helpmedpunkt':
-        intelligence=random.randint(1,2)
+        intelligence=random.randint(2,3)
         strenght=random.randint(1,100)
         if strenght<=35:
             strenght=random.randint(1,2)
@@ -576,17 +577,18 @@ def endwork(id, work):
         text+='*Сила*\n'
     if intelligence>0:
         text+='*Интеллект*\n'
-    if text=='':
+    if text=='Ты хорошо поработал'+gndr+'! Улучшенные характеристики:\n':
         text='Физических улучшений не заметно, но ты заслужил'+gndr+' уважение вожатой!'
     users.update_one({'id':id},{'$inc':{'strenght':strenght}})
     users.update_one({'id':id},{'$inc':{'agility':agility}})
     users.update_one({'id':id},{'$inc':{'intelligence':intelligence}})
     bot.send_message(-1001351496983, 'Отличная работа, ['+x['pionername']+'](tg://user?id='+str(id)+')! Теперь можешь отдохнуть.', parse_mode='markdown')
+    users.update_one({'id':id},{'$inc':{'OlgaDmitrievna_respect':1}})
     try:
         world.send_message(id, text,parse_mode='markdown')
     except:
         world.send_message(-1001351496983, '['+x['pionername']+'](tg://user?id='+str(id)+')'+random.choice(worldtexts)+text, parse_mode='markdown')
-    t=threading.Timer(6,relax,args=[id])
+    t=threading.Timer(180,relax,args=[id])
     t.start()
     
 
@@ -1354,7 +1356,7 @@ def lenamessages(m):
             time.sleep(4)
             lena.send_message(m.chat.id, helpp)
             sendstick(lena,'CAADAgADZwADgi0zD-vRcG90IHeAAg')
-            t=threading.Timer(300,helpend,args=[m.from_user.id])
+            t=threading.Timer(300,helpend,args=[m.from_user.id, 'lena'])
             t.start()
             users.update_one({'id':m.from_user.id},{'$set':{'helping':1}})
     if lenastats['controller']!=None:
@@ -1473,6 +1475,30 @@ def alisastopcontrol(m):
 @alisa.message_handler()
 def alisamessages(m):
     
+    yes=['да','я готов', 'го', 'ну го', 'я в деле']
+    if alisastats['whohelps']!=None:
+        y=0
+        if m.from_user.id==alisastats['whohelps']:
+          for ids in yes:
+              if ids in m.text.lower():
+                  y=1
+          if y==1:
+            pioner=users.find_one({'id':m.from_user.id})
+            try:
+                alisastats['timer'].cancel()
+            except:
+                pass
+            allhelps=['Ну пошли, там нужно один прикол с Электроником намутить...', 'Отлично! Значит так, нам с Ульяной нужен отвлекающий на кухню...']
+            alisastats['whohelps']=None
+            helpp=random.choice(allhelps)
+            alisa.send_chat_action(m.chat.id,'typing')
+            time.sleep(4)
+            alisa.send_message(m.chat.id, helpp)
+            sendstick(alisa,'CAADAgADOwADgi0zDzD8ZNZXu5LHAg')
+            t=threading.Timer(300,helpend,args=[m.from_user.id, 'alisa'])
+            t.start()
+            users.update_one({'id':m.from_user.id},{'$set':{'helping':1}})
+
     if alisastats['controller']!=None:
         controller=alisastats['controller']
         if m.chat.id==controller['id']:
@@ -2171,13 +2197,21 @@ def stickercatchzshurik(m):
            
            
         
-def helpend(id):
+def helpend(id, pioner):
     x=users.find_one({'id':id})
     users.update_one({'id':id},{'$set':{'helping':0}})
-    lena.send_chat_action(id,'typing')
-    time.sleep(4)
-    lena.send_message(-1001351496983, 'Спасибо за помощь, ['+x['pionername']+'](tg://user?id='+str(x['id'])+')! '+\
+    if pioner=='lena':
+        lena.send_chat_action(id,'typing')
+        time.sleep(4)
+        lena.send_message(-1001351496983, 'Спасибо за помощь, ['+x['pionername']+'](tg://user?id='+str(x['id'])+')! '+\
                      'Без тебя ушло бы гораздо больше времени. Ну, я пойду...',parse_mode='markdown')
+        users.update_one({'id':x['id']},{'$inc':{'Lena_respect':random.randint(2,3)}})
+    if pioner=='alisa':
+        alisa.send_chat_action(id,'typing')
+        time.sleep(4)
+        lena.send_message(-1001351496983, 'Ну спасибо за помощь, ['+x['pionername']+'](tg://user?id='+str(x['id'])+')! '+\
+                     'Неплохо получилось!',parse_mode='markdown')
+        users.update_one({'id':x['id']},{'$inc':{'Alisa_respect':random.randint(2,3)}})
     
 
 
@@ -2295,7 +2329,7 @@ def findindex(x):
             
  
 def randomhelp():
-   t=threading.Timer(random.randint(7200,17000),randomhelp)
+   t=threading.Timer(random.randint(4200,10000),randomhelp)
    t.start()
    spisok=[]
    pioners=['lena', 'alisa']
@@ -2315,11 +2349,15 @@ def helpto(pioner,x):
         g='ла'
     if x=='lena':
         try:
+            if pioner['Lena_respect']>=85:
+                text='['+pioner['pionername']+'](tg://user?id='+str(pioner['id'])+'), привет! Ты мне часто помогаешь, поэтому хотелось бы попросить тебя о помощи еще раз... Не откажешь?'
+            else:
+                text='['+pioner['pionername']+'](tg://user?id='+str(pioner['id'])+'), привет. Не мог'+g+' бы ты мне помочь?'
             lena.send_chat_action(-1001351496983,'typing')
             time.sleep(4)
-            m=lena.send_message(-1001351496983,'['+pioner['pionername']+'](tg://user?id='+str(pioner['id'])+'), привет. Не мог'+g+' бы ты мне помочь?', parse_mode='markdown')
+            m=lena.send_message(-1001351496983,text, parse_mode='markdown')
             lenastats['whohelps']=pioner['id']
-            t=threading.Timer(300,helpcancel,args=['lena',m])
+            t=threading.Timer(300,helpcancel,args=['lena',m, pioner['id']])
             t.start()
             lenastats['timer']=t
             sendstick(lena,'CAADAgADaQADgi0zD9ZBO-mNcLuBAg')
@@ -2328,11 +2366,15 @@ def helpto(pioner,x):
         
     if x=='alisa':
         try:
+            if pioner['Alisa_respect']>=85:
+                text='['+pioner['pionername']+'](tg://user?id='+str(pioner['id'])+'), привет, я же знаю, что ты любишь повеселиться! Готов на этот раз?'
+            else:
+                text='['+pioner['pionername']+'](tg://user?id='+str(pioner['id'])+'), смотри, куда идёшь! Должен будешь, и долг отработаешь прямо сейчас. Мне тут помощь нужна в одном деле...'
             alisa.send_chat_action(-1001351496983,'typing')
             time.sleep(4)
-            m=alisa.send_message(-1001351496983,'['+pioner['pionername']+'](tg://user?id='+str(pioner['id'])+'), смотри, куда идёшь! Должен будешь, и долг отработаешь прямо сейчас. Мне тут помощь нужна в одном деле...', parse_mode='markdown')
+            m=alisa.send_message(-1001351496983,text, parse_mode='markdown')
             alisastats['whohelps']=pioner['id']
-            t=threading.Timer(300,helpcancel,args=['alisa', m])
+            t=threading.Timer(300,helpcancel,args=['alisa', m, pioner['id']])
             t.start()
             alisastats['timer']=t
             sendstick(alisa,'CAADAgADOQADgi0zDztSbkeWq3BEAg')
@@ -2340,17 +2382,25 @@ def helpto(pioner,x):
             pass
             
         
-def helpcancel(pioner,m):
+def helpcancel(pioner,m, userid):
+    user=users.find_one({'id':userid})
     if pioner=='lena':
         lenastats['whohelps']=None
         lena.send_chat_action(-1001351496983,'typing')
         time.sleep(4)
         lena.send_message(-1001351496983,'Ты, наверное, сейчас занят... Прости, что побеспокоила.',reply_to_message_id=m.message_id)
+        if user['Lena_respect']>0:
+            users.update_one({'id':user['id']},{'$inc':{'Lena_respect':-1}})
     if pioner=='alisa':
         alisastats['whohelps']=None
         alisa.send_chat_action(-1001351496983,'typing')
         time.sleep(4)
-        alisa.send_message(-1001351496983,'Ну и пожалуйста!',reply_to_message_id=m.message_id)
+        if user['Alisa_respect']<85:
+            alisa.send_message(-1001351496983,'Ну и пожалуйста!',reply_to_message_id=m.message_id)
+        else:
+            alisa.send_message(-1001351496983,'Ну как хочешь! Сама справлюсь.',reply_to_message_id=m.message_id)
+        if user['Alisa_respect']>0:
+            users.update_one({'id':user['id']},{'$inc':{'Alisa_respect':-1}})
         
     
     
