@@ -2340,7 +2340,8 @@ def randomhelp():
    pioners=['lena', 'alisa']
    x=users.find({})
    for ids in x:
-       spisok.append(ids)
+       if ids['pionername']!=None:
+           spisok.append(ids)
    if len(spisok)>0:
        hour=gettime('h')
        if hour>=7 and hour<=23:
