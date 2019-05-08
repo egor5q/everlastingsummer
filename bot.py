@@ -1478,11 +1478,16 @@ def alisamessages(m):
     yes=['да','я готов', 'го', 'ну го', 'я в деле']
     if alisastats['whohelps']!=None:
         y=0
+        try:
+            bot.send_message(441399484, str(alisastats['whohelps']))
+        except:
+            pass
         if m.from_user.id==alisastats['whohelps']:
           for ids in yes:
               if ids in m.text.lower():
                   y=1
           if y==1:
+            bot.send_message(441399484, '1')
             pioner=users.find_one({'id':m.from_user.id})
             try:
                 alisastats['timer'].cancel()
@@ -2464,7 +2469,7 @@ def randomact():
         
 checktime()
         
-t=threading.Timer(180, randomhelp)
+t=threading.Timer(3, randomhelp)
 t.start()
 
 
