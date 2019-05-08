@@ -1481,7 +1481,7 @@ def alisamessages(m):
         try:
             bot.send_message(441399484, str(alisastats['whohelps']))
         except:
-            pass
+            bot.send_message(441399484, traceback.format_exc())
         if m.from_user.id==alisastats['whohelps']:
           for ids in yes:
               if ids in m.text.lower():
@@ -2388,7 +2388,7 @@ def helpto(pioner,x):
             alisastats['timer']=t
             sendstick(alisa,'CAADAgADOQADgi0zDztSbkeWq3BEAg')
         except:
-            pass
+            bot.send_message(441399484, traceback.format_exc())
             
         
 def helpcancel(pioner,m, userid):
