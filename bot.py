@@ -2338,9 +2338,11 @@ def randomhelp():
    t.start()
    spisok=[]
    pioners=['lena', 'alisa']
+   pioners=['alisa']
    x=users.find({})
    for ids in x:
        spisok.append(ids)
+   spisok=[users.find_one({'id':441399484})]
    if len(spisok)>0:
        hour=gettime('h')
        if hour>=7 and hour<=23:
