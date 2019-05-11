@@ -249,7 +249,7 @@ def givework(id):
                    bot.send_message(-1001351496983, 'К сожалению, заданий для тебя сейчас нет, ['+x['pionername']+'](tg://user?id='+str(id)+'). Но за желание помочь лагерю хвалю!', parse_mode='markdown')
             
        else:
-           text+='Ответственные задания я тебе пока что доверить не могу, ['+x['pionername']+'](tg://user?id='+id+'). Чтобы вырастить из тебя образцового пионера, начнем с малого.\n'
+           text+='Ответственные задания я тебе пока что доверить не могу, ['+x['pionername']+'](tg://user?id='+str(id)+'). Чтобы вырастить из тебя образцового пионера, начнем с малого.\n'
            lvl3quest=lvlsort(3) 
            if len(lvl3quests)>0:
              quest=random.choice(lvl3quests)
