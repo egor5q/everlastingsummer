@@ -146,6 +146,18 @@ def start(m):
        bot.send_message(m.chat.id, 'Здраствуй, пионер! Отдыхаешь? Могу найти для тебя занятие!')
   
 
+@bot.message_handler(commands=['pioner'])
+def pinfo(m):
+    if m.from_user.id==441399484:
+        try:
+            x=users.find_one({'id':m.reply_to_message.from_user.id})
+            if x!=None:
+                text=''
+                for ids in x:
+                    text+=ids+': '+str(x[ids])+'\n'
+                bot.send_message(441399484, text)
+        except:
+            bot.send_message(441399484, traceback.format_exc())
 
 @bot.message_handler(commands=['work'])
 def work(m):
