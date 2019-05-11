@@ -250,7 +250,7 @@ def givework(id):
             
        else:
            text+='Ответственные задания я тебе пока что доверить не могу, ['+x['pionername']+'](tg://user?id='+str(id)+'). Чтобы вырастить из тебя образцового пионера, начнем с малого.\n'
-           lvl3quest=lvlsort(3) 
+           lvl3quests=lvlsort(3) 
            if len(lvl3quests)>0:
              quest=random.choice(lvl3quests)
              sendto=types.ForceReply(selective=False)
