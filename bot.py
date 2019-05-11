@@ -184,6 +184,7 @@ def givework(id):
     nosend=0
     x=users.find_one({'id':id})
     if x!=None:
+     try:
        text=''
        if x['gender']=='male':
           gndr=''
@@ -288,7 +289,10 @@ def givework(id):
        if nosend==0:
            users.update_one({'id':id},{'$set':{'answering':1}})
            bot.send_message(-1001351496983, text, parse_mode='markdown')
-           
+     except:
+         bot.send_message(441399484, traceback.format_exc())
+
+
 def cancelquest(id):
     x=users.find_one({'id':id})
     if x!=None:
@@ -2226,7 +2230,7 @@ def helpend(id, pioner):
     if pioner=='alisa':
         alisa.send_chat_action(id,'typing')
         time.sleep(4)
-        lena.send_message(-1001351496983, 'Ну спасибо за помощь, ['+x['pionername']+'](tg://user?id='+str(x['id'])+')! '+\
+        alisa.send_message(-1001351496983, 'Ну спасибо за помощь, ['+x['pionername']+'](tg://user?id='+str(x['id'])+')! '+\
                      'Неплохо получилось!',parse_mode='markdown')
         users.update_one({'id':x['id']},{'$inc':{'Alisa_respect':random.randint(2,3)}})
     
