@@ -2248,7 +2248,8 @@ alisastats={
     'agility':2,
     'intelligence':3,
     'controller':None,
-    'bot':alisa
+    'bot':alisa,
+    'whohelps':None
 }
 lenastats={
     'strenght':2,
