@@ -1491,7 +1491,7 @@ def alisastopcontrol(m):
             
 @alisa.message_handler()
 def alisamessages(m):
-    
+ try:   
     yes=['да','я готов', 'го', 'ну го', 'я в деле']
     if alisastats['whohelps']!=None:
         y=0
@@ -1590,6 +1590,8 @@ def alisamessages(m):
             except Exception as E:
                     bot.send_message(441399484, traceback.format_exc())
                       
+ except:
+     alisa.send_message(441399484, traceback.format_exc())
                       
 @alisa.message_handler(content_types=['sticker'])
 def stickercatchalisa(m):  
