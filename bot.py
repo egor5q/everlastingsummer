@@ -230,9 +230,9 @@ def givework(id):
        bot.send_chat_action(id,'typing')
        time.sleep(4)
        if x['OlgaDmitrievna_respect']>=75:
-           quests=lvlsort(1) 
+           lvl1quests=lvlsort(1) 
            text+='Так как ты у нас ответственный пионер, ['+x['pionername']+'](tg://user?id='+str(id)+'), у меня для тебя есть важное задание!\n'
-           if len(quests)>0:
+           if len(lvl1quests)>0:
                quest=random.choice(lvl1quests)
                users.update_one({'id':id},{'$set':{'prepareto':quest}})
                print('Юзер готовится к квесту: '+quest)
@@ -256,6 +256,7 @@ def givework(id):
                else:
                    nosend=1
                    bot.send_message(-1001351496983, 'К сожалению, заданий для тебя сейчас нет, ['+x['pionername']+'](tg://user?id='+str(id)+'). Но за желание помочь лагерю хвалю!', parse_mode='markdown')
+                   users.update_one({'id':id},{'$set':{'waitforwork':0}})
        elif x['OlgaDmitrievna_respect']>=40:
            text+='Нашла для тебя занятие, ['+x['pionername']+'](tg://user?id='+str(id)+')!\n'
            lvl2quests=lvlsort(2) 
