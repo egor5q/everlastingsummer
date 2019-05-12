@@ -135,18 +135,27 @@ def leftpioneeer(m):
         
 @bot.message_handler(commands=['allinfo'])
 def allinfoaboutp(m):
-    x=users.find({})
-    text=''
-    text2=''
-    text3=''
-    for ids in x:
-        if len(text)<=1000:
-            text+=ids['pionername']+' '+'('+ids['name']+')'+' `'+str(ids['id'])+'`\n'
-        elif len(text2)<=1000:
-            text2+=ids['pionername']+' '+'('+ids['name']+')'+' `'+str(ids['id'])+'`\n'
-    bot.send_message(441399484, text, parse_mode='markdown')
-    if text2!='':
-        bot.send_message(441399484, text2, parse_mode='markdown')
+    try:
+        x=users.find({})
+        text=''
+        text2=''
+        text3=''
+        for ids in x:
+            if len(text)<=1000:
+                try:
+                    text+=ids['pionername']+' '+'('+ids['name']+')'+' `'+str(ids['id'])+'`\n'
+                except:
+                    text+='('+ids['name']+')'+' `'+str(ids['id'])+'`\n'
+            elif len(text2)<=1000:
+                try:
+                    text2+=ids['pionername']+' '+'('+ids['name']+')'+' `'+str(ids['id'])+'`\n'
+                except:
+                    text2+='('+ids['name']+')'+' `'+str(ids['id'])+'`\n'
+        bot.send_message(441399484, text, parse_mode='markdown')
+        if text2!='':
+            bot.send_message(441399484, text2, parse_mode='markdown')
+    except:
+        bot.send_message(441399484, traceback.format_exc())
         
         
 @bot.message_handler(commands=['start'])
