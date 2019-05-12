@@ -120,11 +120,35 @@ def lvlsort(x):
       if ids['lvl']==x and ids['value']==0:
          finallist.append(ids['name'])
    return finallist
-           
+                      
+   
+@bot.message_handler(commands=['pioner_left'])
+def leftpioneeer(m):
+    if m.from_user.id==441399484:
+        try:
+            user=users.find_one({'id':int(m.text.split(' ')[1])})
+            users.remove({'id':user['id']})
+            bot.send_message(-1001351496983, user['name']+' покинул лагерь. Ждём тебя в следующем году!')
+        except:
+            bot.send_message(441399484, traceback.format_exc())
 
-           
-           
-           
+        
+@bot.message_handler(commands=['allinfo'])
+def allinfoaboutp(m):
+    x=users.find({})
+    text=''
+    text2=''
+    text3=''
+    for ids in x:
+        if len(text)<=1000:
+            text+=ids['pionername']+' '+'('+ids['name']+')'+' `'+str(ids['id'])+'`\n'
+        elif len(text2)<=1000:
+            text2+=ids['pionername']+' '+'('+ids['name']+')'+' `'+str(ids['id'])+'`\n'
+    bot.send_message(441399484, text, parse_mode='markdown')
+    if text2!='':
+        bot.send_message(441399484, text2, parse_mode='markdown')
+        
+        
 @bot.message_handler(commands=['start'])
 def start(m):
  if m.chat.id==m.from_user.id:
