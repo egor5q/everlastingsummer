@@ -167,10 +167,10 @@ def work(m):
         if x['working']==0:
           if x['waitforwork']==0:
            if x['relaxing']==0:
+            users.update_one({'id':m.from_user.id},{'$set':{'waitforwork':1}})
             bot.send_chat_action(m.chat.id,'typing')
             time.sleep(4)
             bot.send_message(m.chat.id, random.choice(worktexts), reply_to_message_id=m.message_id)
-            users.update_one({'id':m.from_user.id},{'$set':{'waitforwork':1}})
             t=threading.Timer(random.randint(60,120),givework, args=[m.from_user.id])
             t.start()
            else:
@@ -247,6 +247,7 @@ def givework(id):
                else:
                    nosend=1
                    bot.send_message(-1001351496983, 'К сожалению, заданий для тебя сейчас нет, ['+x['pionername']+'](tg://user?id='+str(id)+'). Но за желание помочь лагерю хвалю!', parse_mode='markdown')
+                   users.update_one({'id':id},{'$set':{'waitforwork':0}})
             
        else:
            text+='Ответственные задания я тебе пока что доверить не могу, ['+x['pionername']+'](tg://user?id='+str(id)+'). Чтобы вырастить из тебя образцового пионера, начнем с малого.\n'
@@ -2502,6 +2503,7 @@ if True:
    users.update_many({},{'$set':{'working':0}})
    users.update_many({},{'$set':{'waitforwork':0}})
    users.update_many({},{'$set':{'relaxing':0}})
+   users.update_many({},{'$set':{'answering':0}})
    t=threading.Timer(1, polling, args=[uliana])
    t.start()
    uliana.send_message(441399484, 'Я могу принимать сообщения!')
