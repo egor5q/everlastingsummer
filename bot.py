@@ -1201,6 +1201,8 @@ def nametopioner(pioner):
         return '[Лена](https://t.me/ES_LenaBot)'
     if pioner=='electronic':
         return '[Электроник](https://t.me/ES_ElectronicBot)'
+    if pioner=='shurik':
+        return '[Шурик](https://t.me/Shurgen_bot)'
 
 def addtogame(name,game):
     game.append(name)
