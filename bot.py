@@ -2229,13 +2229,13 @@ def helpend(id, pioner):
         time.sleep(4)
         lena.send_message(-1001351496983, 'Спасибо за помощь, ['+x['pionername']+'](tg://user?id='+str(x['id'])+')! '+\
                      'Без тебя ушло бы гораздо больше времени. Ну, я пойду...',parse_mode='markdown')
-        users.update_one({'id':x['id']},{'$inc':{'Lena_respect':random.randint(2,3)}})
+        users.update_one({'id':x['id']},{'$inc':{'Lena_respect':random.randint(4,5)}})
     if pioner=='alisa':
         alisa.send_chat_action(id,'typing')
         time.sleep(4)
         alisa.send_message(-1001351496983, 'Ну спасибо за помощь, ['+x['pionername']+'](tg://user?id='+str(x['id'])+')! '+\
                      'Неплохо получилось!',parse_mode='markdown')
-        users.update_one({'id':x['id']},{'$inc':{'Alisa_respect':random.randint(2,3)}})
+        users.update_one({'id':x['id']},{'$inc':{'Alisa_respect':random.randint(4,5)}})
     
 
 
