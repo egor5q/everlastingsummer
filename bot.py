@@ -785,7 +785,7 @@ def eveninggames():
         leader='uliana'
         bot.send_chat_action(-1001351496983,'typing')
         t=threading.Timer(3.5, sendmes, args=[bot, 'Уже 7 вечера, а это значит, что пора начинать наши вечерние игры! На сегодня '+\
-                         'у нас по плану футбол! [Ульяна](https://t.me/ES_ElectronicBot), '+\
+                         'у нас по плану футбол! [Ульяна](https://t.me/ES_UlianaBot), '+\
                          'расскажет вам про правила проведения турнира.', 'markdown'])
         t.start()
         time.sleep(4.5)
@@ -796,15 +796,9 @@ def eveninggames():
         t.start()
         time.sleep(4)
         uliana.send_chat_action(-1001351496983,'typing') 
-        t=threading.Timer(10, sendmes, args=[uliana, 'Правила просты - не жульничать! Для записи на турнир '+\
+        t=threading.Timer(5, sendmes, args=[uliana, 'Правила просты - не жульничать! Для записи на турнир '+\
                                              'подойдите ко мне и скажите "`Хочу участвовать!`". Вроде бы всё... Жду всех!', 'markdown'])
         t.start()
-        time.sleep(4)
-        uliana.send_chat_action(-1001351496983,'typing') 
-        time.sleep(4)
-        uliana.send_chat_action(-1001351496983,'typing') 
-        time.sleep(4)
-        uliana.send_chat_action(-1001351496983,'typing') 
     elif x=='ropepulling':
         leader='alisa'
  
@@ -2517,6 +2511,20 @@ def randomact():
         uliana.send_chat_action(-1001351496983,'typing')
         time.sleep(2)
         uliana.send_message(-1001351496983, 'Тогда пошли в домик!')
+    if x=='talk_el+shurik':
+        electronic.send_chat_action(-1001351496983,'typing')
+        time.sleep(3)
+        electronic.send_message(-1001351496983,nametopioner('shurik')+', как думаешь, возможно ли перемещение во времени?', parse_mode='markdown')
+        sendstick(electronic, 'CAADAgAD0wADgi0zD1LBx9yoFTBiAg')
+        time.sleep(1)
+        shurik.send_chat_action(-1001351496983,'typing')
+        time.sleep(2)
+        shurik.send_message(-1001351496983, 'В теории... Хотя нет, это антинаучно.')
+        sendstick(shurik, 'CAADAgAD5QADgi0zDwyDLbq7ZQ4vAg')
+        time.sleep(2)
+        electronic.send_chat_action(-1001351496983,'typing')
+        time.sleep(2)
+        electronic.send_message(-1001351496983,'А мне вот кажется, что когда-нибудь прогресс дойдёт и до такого...')
 
 
         
