@@ -2464,7 +2464,7 @@ def helpcancel(pioner,m, userid):
 def randomact():
     t=threading.Timer(random.randint(4900,18000),randomact)
     t.start()
-    lisst=['talk_uliana+olgadmitrievna','talk_uliana+alisa']
+    lisst=['talk_uliana+olgadmitrievna','talk_uliana+alisa', 'talk_el+shurik']
     x=random.choice(lisst)
     if x=='talk_uliana+olgadmitrievna':
         bot.send_chat_action(-1001351496983,'typing')
