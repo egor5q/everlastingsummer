@@ -620,7 +620,7 @@ def endwork(id, work):
             intelligence=random.randint(0,2)
         else:
             intelligence=0
-    if work=='concertready' or work=='checkpionerssleeping':
+    if work=='concertready' or work=='checkpionerssleeping' or work=='helpinmedpunkt':
         agility=3
         intelligence=4
         strenght=3
@@ -782,7 +782,7 @@ def eveninggames():
                                               'регистрации в турнире нужно подойти ко мне, и сказать: "`Хочу принять участие в турнире!`". '+\
                                               'Регистрация заканчивается через 20 минут!', 'markdown'])
         t.start()
-        t=threading.Timer(1200, starttournier, args=['cards'])
+        t=threading.Timer(300, starttournier, args=['cards'])
         t.start()
 
     elif x=='football':
