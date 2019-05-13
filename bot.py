@@ -559,6 +559,8 @@ def dowork(id):
        
            
 def endwork(id, work):
+    t=threading.Timer(180,relax,args=[id])
+    t.start()
     x=users.find_one({'id':id})
     users.update_one({'id':id},{'$set':{'working':0}})
     users.update_one({'id':id},{'$set':{'relaxing':1}})
@@ -618,6 +620,10 @@ def endwork(id, work):
             intelligence=random.randint(0,2)
         else:
             intelligence=0
+    if work=='concertready' or work=='checkpionerssleeping':
+        agility=3
+        intelligence=4
+        strenght=3
     if work=='helpinkitchen':
         agility=random.randint(1,2)
         intelligence=1
@@ -639,8 +645,6 @@ def endwork(id, work):
         world.send_message(id, text,parse_mode='markdown')
     except:
         world.send_message(-1001351496983, '['+x['pionername']+'](tg://user?id='+str(id)+')'+random.choice(worldtexts)+text, parse_mode='markdown')
-    t=threading.Timer(180,relax,args=[id])
-    t.start()
     
 
 worldtexts=[', чтобы знать, что происходит в лагере (в том числе и с вами), советую отписаться мне в личку. Можете считать меня своим внутренним голосом, потому что забивать себе голову тем, кто я на самом деле, не имеет смысла... Но а теперь к делу.\n\n',
