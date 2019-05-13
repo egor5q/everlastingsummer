@@ -891,8 +891,6 @@ def starttournier(game):
             else:
                electronic.send_message(-1001351496983,'К сожалению, игроков для турнира сегодня не набралось. Ну ничего, в следующий раз попробуем!')
     except:
-        global setka
-        global cardplayers
         setka=[]
         cardplayers=[]
         electronicstats['waitingplayers']=0
