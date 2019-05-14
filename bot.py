@@ -901,6 +901,7 @@ def starttournier(game):
 
 
 def cards_nextturn():
+ try:
   global setka
   global cardplayers
   for ab in setka:
@@ -1124,7 +1125,13 @@ def cards_nextturn():
       electronicstats['playingcards']=0
       electronicstats['cardsturn']=0
                 
-    
+ except:
+        setka=[]
+        cardplayers=[]
+        electronicstats['waitingplayers']=0
+        electronicstats['playingcards']=0
+        electronicstats['cardsturn']=0
+        electronic.send_message(-1001351496983, 'Непредвиденные обстоятельства! Турнир придётся отменить!')
 
 
                 
@@ -1368,8 +1375,7 @@ def electronichandler(m):
                     bot.send_message(441399484, traceback.format_exc())                  
                       
  except:
-           pass
-                      
+          electronic.send_message(441399484, traceback.format_exc())                      
                       
 @lena.message_handler(commands=['control'])
 def lenacontrol(m):
