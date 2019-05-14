@@ -1859,7 +1859,7 @@ def mikucontrol(m):
                                      'name':m.from_user.first_name}
             miku.send_message(m.from_user.id, 'Привет! Теперь ты управляешь мной, как здорово! Ой, а я однажды в школе пыталась управлять музыкальным клубом, но ничего не вышло... Надеюсь, у тебя получится лучше!')
         else:
-            miku.send_message(m.from_user.id, 'Мной уже управляет '+slavyastats['controller']['name']+'!')
+            miku.send_message(m.from_user.id, 'Мной уже управляет '+mikustats['controller']['name']+'!')
             
 @miku.message_handler(commands=['stopcontrol'])
 def mikustopcontrol(m):
