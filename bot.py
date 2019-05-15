@@ -141,7 +141,7 @@ def msghandler(m, pioner):
         stats=tolikstats
     if pioner==alisa:
         stats=alisastats
-    if pioner==od:
+    if pioner==bot:
         stats=odstats
     if pioner==zhenya:
         stats=zhenyastats
