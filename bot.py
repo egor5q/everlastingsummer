@@ -50,7 +50,7 @@ zh_admins=[390362465]
 to_admins=[414374606]
 sh_admins=[574865060]
 se_admins=[851513241]
-pi_admins=[]
+pi_admins=[512006137]
 
 
 symbollist=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
