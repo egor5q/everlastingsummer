@@ -2383,7 +2383,7 @@ def semencontrol(m):
         else:
             semen.send_message(m.from_user.id, 'Мной уже управляет '+semenstats['controller']['name']+'!')
             
-@lena.message_handler(commands=['stopcontrol'])
+@semen.message_handler(commands=['stopcontrol'])
 def semenstopcontrol(m):
     if semenstats['controller']!=None:
         if semenstats['controller']['id']==m.from_user.id:
@@ -2416,7 +2416,7 @@ def pioneercontrol(m):
         else:
             pioneer.send_message(m.from_user.id, 'Мной управляет '+pioneerstats['controller']['name']+'.')
             
-@lena.message_handler(commands=['stopcontrol'])
+@pioneer.message_handler(commands=['stopcontrol'])
 def pioneerstopcontrol(m):
     if pioneerstats['controller']!=None:
         if pioneerstats['controller']['id']==m.from_user.id:
