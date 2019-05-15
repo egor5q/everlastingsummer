@@ -153,6 +153,10 @@ def msghandler(m, pioner):
         stats=slavyastats
     if pioner==miku:
         stats=mikustats
+    if pioner==pioneer:
+        stats=pioneerstats
+    if pioner==semen:
+        stats=semenstats
         
     if stats['controller']!=None:
         controller=stats['controller']
@@ -2538,6 +2542,16 @@ odstats={
     'bot':bot
 }
 
+semenstats={
+    'controller':None,
+    'bot':semen
+}
+
+pioneerstats={
+    'controller':None,
+    'bot':pioneer
+}
+
 
 ctrls=[]
 ctrls.append(odstats)
@@ -2753,6 +2767,10 @@ if True:
    t=threading.Timer(1, polling, args=[tolik])
    t.start()
    t=threading.Timer(1, polling, args=[shurik])
+   t.start()
+   t=threading.Timer(1, polling, args=[semen])
+   t.start()
+   t=threading.Timer(1, polling, args=[pioneer])
    t.start()
    
 
