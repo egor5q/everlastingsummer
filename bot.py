@@ -27,6 +27,8 @@ electronic=telebot.TeleBot(os.environ['electronic'])
 zhenya=telebot.TeleBot(os.environ['zhenya'])
 tolik=telebot.TeleBot(os.environ['tolik'])
 shurik=telebot.TeleBot(os.environ['shurik'])
+semen=telebot.TeleBot(os.environ['semen'])
+pioneer=telebot.TeleBot(os.environ['pioneer'])
 
 client1=os.environ['database']
 client=MongoClient(client1)
@@ -47,6 +49,8 @@ od_admins=[629070350, 512006137]
 zh_admins=[390362465]
 to_admins=[414374606]
 sh_admins=[574865060]
+se_admins=[851513241]
+pi_admins=[]
 
 
 symbollist=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
@@ -121,7 +125,104 @@ def lvlsort(x):
          finallist.append(ids['name'])
    return finallist
                       
-   
+
+
+
+
+
+
+def msghandler(m, pioner):
+    stats=None
+    if pioner==uliana:
+        stats=ulianastats
+    if pioner==lena:
+        stats=lenastats
+    if pioner==tolik:
+        stats=tolikstats
+    if pioner==alisa:
+        stats=alisastats
+    if pioner==od:
+        stats=odstats
+    if pioner==zhenya:
+        stats=zhenyastats
+    if pioner==shurik:
+        stats=shurikstats
+    if pioner==electronic:
+        stats=electronicstats
+    if pioner==slavya:
+        stats=slavyastats
+    if pioner==miku:
+        stats=mikustats
+        
+    if stats['controller']!=None:
+        controller=stats['controller']
+        if m.chat.id==controller['id']:
+            if m.reply_to_message==None:
+                if m.text.split(' ')[0]!='/pm' and m.text.split(' ')[0]!='/r':
+                    msg=pioner.send_message(-1001351496983, m.text)
+                    for ids in ctrls:
+                        if ids['controller']!=None and ids['bot']!=pioner:
+                            if msg.chat.id==-1001351496983:
+                                x='(Общий чат)'
+                            else:
+                                x='(ЛС)'
+                            try:
+                                ids['bot'].send_message(ids['controller']['id'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
+                            except Exception as E:
+                                bot.send_message(441399484, traceback.format_exc())   
+                elif m.text.split(' ')[0]=='/pm':
+                    try:
+                        text=m.text.split(' ')
+                        t=''
+                        i=0
+                        for ids in text:
+                            if i>1:
+                                t+=ids+' '
+                            i+=1
+                        pioner.send_message(int(m.text.split(' ')[1]), t)
+                    except:
+                        pioner.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
+                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
+                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
+
+            else:
+                try:
+                    i=0
+                    cid=None
+                    eid=None
+                    for ids in m.reply_to_message.text:
+                        print(ids)
+                        if ids=='❓':
+                            cid=i+1
+                        if ids=='⏹':
+                            eid=i
+                        i+=1
+                    print('cid')
+                    print(cid)
+                    print('eid')
+                    print(eid)
+                    msgid=m.reply_to_message.text[cid:eid]
+                    pioner.send_message(-1001351496983, m.text, reply_to_message_id=int(msgid))
+                    
+                except Exception as E:
+                    bot.send_message(441399484, traceback.format_exc())
+                    pioner.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
+                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
+                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
+                    
+                                          
+        
+        else:
+            if m.chat.id==-1001351496983:
+                x='(Общий чат)'
+            else:
+                x='(ЛС)'
+            try:
+                pioner.send_message(controller['id'], x+'\n'+m.from_user.first_name+' (`'+str(m.from_user.id)+'`) (❓'+str(m.message_id)+'⏹):\n'+m.text, parse_mode='markdown')
+           
+            except Exception as E:
+                    bot.send_message(441399484, traceback.format_exc())
+    
 @bot.message_handler(commands=['pioner_left'])
 def leftpioneeer(m):
     if m.from_user.id==441399484:
@@ -2266,7 +2367,71 @@ def stickercatchzshurik(m):
                 shurik.send_sticker(-1001351496983, m.sticker.file_id)  
            
            
-           
+       
+###################################### SEMEN ###############################################
+@semen.message_handler(commands=['control'])
+def semencontrol(m):
+    if m.from_user.id in botadmins or m.from_user.id in se_admins:
+        if semenstats['controller']==None:
+            semenstats['controller']={'id':m.from_user.id,
+                                     'name':m.from_user.first_name}
+            semen.send_message(m.from_user.id, 'Ну ты типо мной управляешь.')
+        else:
+            semen.send_message(m.from_user.id, 'Мной уже управляет '+semenstats['controller']['name']+'!')
+            
+@lena.message_handler(commands=['stopcontrol'])
+def semenstopcontrol(m):
+    if semenstats['controller']!=None:
+        if semenstats['controller']['id']==m.from_user.id:
+            semenstats['controller']=None
+            semen.send_message(m.from_user.id, 'Ты больше не управляешь мной!')  
+
+@semen.message_handler()
+def semenmessages(m):
+    msghandler(m, semen)
+    
+    
+@semen.message_handler(content_types=['sticker'])
+def stickercatchsemen(m):  
+    if semenstats['controller']!=None:
+        controller=semenstats['controller']
+        if m.chat.id==controller['id']:
+            if m.reply_to_message==None:
+                semen.send_sticker(-1001351496983, m.sticker.file_id)  
+                
+                
+                
+###################################### PIONEER ###############################################
+@pioneer.message_handler(commands=['control'])
+def pioneercontrol(m):
+    if m.from_user.id in botadmins or m.from_user.id in pi_admins:
+        if pioneerstats['controller']==None:
+            pioneerstats['controller']={'id':m.from_user.id,
+                                     'name':m.from_user.first_name}
+            pioneer.send_message(m.from_user.id, 'Хех, посмотрим, что ты придумал.')
+        else:
+            pioneer.send_message(m.from_user.id, 'Мной управляет '+pioneerstats['controller']['name']+'.')
+            
+@lena.message_handler(commands=['stopcontrol'])
+def pioneerstopcontrol(m):
+    if pioneerstats['controller']!=None:
+        if pioneerstats['controller']['id']==m.from_user.id:
+            pioneerstats['controller']=None
+            pioneer.send_message(m.from_user.id, 'Ты больше не управляешь мной.')  
+
+@pioneer.message_handler()
+def pioneermessages(m):
+    msghandler(m, pioneer)
+    
+    
+@pioneer.message_handler(content_types=['sticker'])
+def stickercatchpioneer(m):  
+    if pioneerstats['controller']!=None:
+        controller=pioneerstats['controller']
+        if m.chat.id==controller['id']:
+            if m.reply_to_message==None:
+                pioneer.send_sticker(-1001351496983, m.sticker.file_id)  
+
         
 def helpend(id, pioner):
     x=users.find_one({'id':id})
