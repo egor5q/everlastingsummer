@@ -2094,5 +2094,7 @@ if True:
    t.start()
    t=threading.Timer(1, polling, args=[pioneer])
    t.start()
+   t=threading.Timer(1, polling, args=[world])
+   t.start()
    
 
