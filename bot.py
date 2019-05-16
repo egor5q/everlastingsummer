@@ -52,6 +52,7 @@ sh_admins=[574865060, 268486177]
 se_admins=[851513241]
 pi_admins=[512006137]
 
+rds=True
 
 symbollist=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
            'а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ъ','ы','ь','э','ю','я', ' ']
@@ -97,6 +98,16 @@ works=[
               'lvl':3
              }
 ]
+
+@world.message_handler(commands=['do'])
+def do(m):
+    if m.from_user.id==441399484:
+        cmd=m.text.split('/do ')[1]
+        try:
+            eval(cmd)
+            world.send_message(m.chat.id, 'Success')
+        except:
+            world.send_message(441399484, traceback.format_exc())
 
 def worktoquest(work):
     if work=='concertready':
@@ -551,74 +562,7 @@ def messag(m):
                     
                     
                     
-  if odstats['controller']!=None:
-        controller=odstats['controller']
-        if m.chat.id==controller['id']:
-            if m.reply_to_message==None:
-                if m.text.split(' ')[0]!='/pm' and m.text.split(' ')[0]!='/r':
-                    msg=bot.send_message(-1001351496983, m.text)
-                    for ids in ctrls:
-                        if ids['controller']!=None and ids['bot']!=bot:
-                            if msg.chat.id==-1001351496983:
-                                x='(Общий чат)'
-                            else:
-                                x='(ЛС)'
-                            try:
-                                ids['bot'].send_message(ids['controller']['id'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
-                            except Exception as E:
-                                bot.send_message(441399484, traceback.format_exc())   
-                elif m.text.split(' ')[0]=='/pm':
-                    try:
-                        text=m.text.split(' ')
-                        t=''
-                        i=0
-                        for ids in text:
-                            if i>1:
-                                t+=ids+' '
-                            i+=1
-                        bot.send_message(int(m.text.split(' ')[1]), t)
-                    except:
-                        bot.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
-                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
-                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
-
-            else:
-                try:
-                    i=0
-                    cid=None
-                    eid=None
-                    for ids in m.reply_to_message.text:
-                        print(ids)
-                        if ids=='❓':
-                            cid=i+1
-                        if ids=='⏹':
-                            eid=i
-                        i+=1
-                    print('cid')
-                    print(cid)
-                    print('eid')
-                    print(eid)
-                    msgid=m.reply_to_message.text[cid:eid]
-                    bot.send_message(-1001351496983, m.text, reply_to_message_id=int(msgid))
-                    
-                except Exception as E:
-                    bot.send_message(441399484, traceback.format_exc())
-                    bot.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
-                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
-                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
-                    
-                                          
-        
-        else:
-            if m.chat.id==-1001351496983:
-                x='(Общий чат)'
-            else:
-                x='(ЛС)'
-            try:
-                bot.send_message(controller['id'], x+'\n'+m.from_user.first_name+' (`'+str(m.from_user.id)+'`) (❓'+str(m.message_id)+'⏹):\n'+m.text, parse_mode='markdown')
-           
-            except Exception as E:
-                    bot.send_message(441399484, traceback.format_exc())
+  msghandler(m, bot)
 
 
 
@@ -1403,81 +1347,10 @@ def electronichandler(m):
                 electronic.send_message(m.chat.id, '['+x['pionername']+'](tg://user?id='+str(x['id'])+\
                                         '), ты уже записан'+gndr+' на турнир!', parse_mode='markdown', reply_to_message_id=reply_to_message_id)
         else:
-            if m.from_user.id==m.chat.id:
-                reply_to_message_id=None
-            else:
-                reply_to_message_id=m.message_id
-            electronic.send_message(m.chat.id, 'Привет, ['+x['pionername']+'](tg://user?id='+str(x['id'])+')! А я тут '+\
-                                    'собираю участников для вечернего турнира. Не хочешь принять участие?', parse_mode='markdown', reply_to_message_id=reply_to_message_id)
-
-    if electronicstats['controller']!=None:
-        controller=electronicstats['controller']
-        if m.chat.id==controller['id']:
-            if m.reply_to_message==None:
-                if m.text.split(' ')[0]!='/pm' and m.text.split(' ')[0]!='/r':
-                    msg=electronic.send_message(-1001351496983, m.text)
-                    for ids in ctrls:
-                        if ids['controller']!=None and ids['bot']!=electronic:
-                            if msg.chat.id==-1001351496983:
-                                x='(Общий чат)'
-                            else:
-                                x='(ЛС)'
-                            try:
-                                ids['bot'].send_message(ids['controller']['id'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
-                            except Exception as E:
-                                bot.send_message(441399484, traceback.format_exc())   
-                elif m.text.split(' ')[0]=='/pm':
-                    try:
-                        text=m.text.split(' ')
-                        t=''
-                        i=0
-                        for ids in text:
-                            if i>1:
-                                t+=ids+' '
-                            i+=1
-                        electronic.send_message(int(m.text.split(' ')[1]), t)
-                    except:
-                        electronic.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
-                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
-                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
-
-            else:
-                try:
-                    i=0
-                    cid=None
-                    eid=None
-                    for ids in m.reply_to_message.text:
-                        print(ids)
-                        if ids=='❓':
-                            cid=i+1
-                        if ids=='⏹':
-                            eid=i
-                        i+=1
-                    print('cid')
-                    print(cid)
-                    print('eid')
-                    print(eid)
-                    msgid=m.reply_to_message.text[cid:eid]
-                    electronic.send_message(-1001351496983, m.text, reply_to_message_id=int(msgid))
-                    
-                except Exception as E:
-                    bot.send_message(441399484, traceback.format_exc())
-                    electronic.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
-                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
-                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
-                    
-                                          
+            pass
         
-        else:
-            if m.chat.id==-1001351496983:
-                x='(Общий чат)'
-            else:
-                x='(ЛС)'
-            try:
-                electronic.send_message(controller['id'], x+'\n'+m.from_user.first_name+' (`'+str(m.from_user.id)+'`) (❓'+str(m.message_id)+'⏹):\n'+m.text, parse_mode='markdown')
-           
-            except Exception as E:
-                    bot.send_message(441399484, traceback.format_exc())                  
+        
+    msghandler(m, electronic)                
                       
  except:
           electronic.send_message(441399484, traceback.format_exc())                      
@@ -1528,88 +1401,7 @@ def lenamessages(m):
             t=threading.Timer(300,helpend,args=[m.from_user.id, 'lena'])
             t.start()
             users.update_one({'id':m.from_user.id},{'$set':{'helping':1}})
-    if lenastats['controller']!=None:
-        controller=lenastats['controller']
-        if m.chat.id==controller['id']:
-            if m.reply_to_message==None:
-                if m.text.split(' ')[0]!='/pm' and m.text.split(' ')[0]!='/r':
-                    msg=lena.send_message(-1001351496983, m.text)
-                    for ids in ctrls:
-                        if ids['controller']!=None and ids['bot']!=lena:
-                            if msg.chat.id==-1001351496983:
-                                x='(Общий чат)'
-                            else:
-                                x='(ЛС)'
-                            try:
-                                ids['bot'].send_message(ids['controller']['id'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
-                            except Exception as E:
-                                bot.send_message(441399484, traceback.format_exc())   
-                elif m.text.split(' ')[0]=='/pm':
-                    try:
-                        text=m.text.split(' ')
-                        t=''
-                        i=0
-                        for ids in text:
-                            if i>1:
-                                t+=ids+' '
-                            i+=1
-                        lena.send_message(int(m.text.split(' ')[1]), t)
-                    except:
-                        lena.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
-                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
-                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
-                        
-                elif m.text.split(' ')[0]=='/r':
-                    try:
-                        text=m.text.split(' ')
-                        t=''
-                        i=0
-                        for ids in text:
-                            if i>1:
-                                t+=ids+' '
-                            i+=1
-                        lena.send_message(-1001351496983, t, reply_to_message_id=int(m.text.split(' ')[1]))
-                    except:
-                        lena.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
-                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
-                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
-            else:
-                try:
-                    i=0
-                    cid=None
-                    eid=None
-                    for ids in m.reply_to_message.text:
-                        print(ids)
-                        if ids=='❓':
-                            cid=i+1
-                        if ids=='⏹':
-                            eid=i
-                        i+=1
-                    print('cid')
-                    print(cid)
-                    print('eid')
-                    print(eid)
-                    msgid=m.reply_to_message.text[cid:eid]
-                    lena.send_message(-1001351496983, m.text, reply_to_message_id=int(msgid))
-                    
-                except Exception as E:
-                    bot.send_message(441399484, traceback.format_exc())
-                    lena.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
-                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
-                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
-                    
-                                          
-        
-        else:
-            if m.chat.id==-1001351496983:
-                x='(Общий чат)'
-            else:
-                x='(ЛС)'
-            try:
-                lena.send_message(controller['id'], x+'\n'+m.from_user.first_name+' (`'+str(m.from_user.id)+'`) (❓'+str(m.message_id)+'⏹):\n'+m.text, parse_mode='markdown')
-           
-            except Exception as E:
-                    bot.send_message(441399484, traceback.format_exc())
+    msghandler(m, lena)
                       
                       
 @lena.message_handler(content_types=['sticker'])
@@ -1673,74 +1465,7 @@ def alisamessages(m):
             t.start()
             users.update_one({'id':m.from_user.id},{'$set':{'helping':1}})
 
-    if alisastats['controller']!=None:
-        controller=alisastats['controller']
-        if m.chat.id==controller['id']:
-            if m.reply_to_message==None:
-                if m.text.split(' ')[0]!='/pm' and m.text.split(' ')[0]!='/r':
-                    msg=alisa.send_message(-1001351496983, m.text)
-                    for ids in ctrls:
-                        if ids['controller']!=None and ids['bot']!=alisa:
-                            if msg.chat.id==-1001351496983:
-                                x='(Общий чат)'
-                            else:
-                                x='(ЛС)'
-                            try:
-                                ids['bot'].send_message(ids['controller']['id'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
-                            except Exception as E:
-                                bot.send_message(441399484, traceback.format_exc())   
-                elif m.text.split(' ')[0]=='/pm':
-                    try:
-                        text=m.text.split(' ')
-                        t=''
-                        i=0
-                        for ids in text:
-                            if i>1:
-                                t+=ids+' '
-                            i+=1
-                        alisa.send_message(int(m.text.split(' ')[1]), t)
-                    except:
-                        alisa.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
-                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
-                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
-
-            else:
-                try:
-                    i=0
-                    cid=None
-                    eid=None
-                    for ids in m.reply_to_message.text:
-                        print(ids)
-                        if ids=='❓':
-                            cid=i+1
-                        if ids=='⏹':
-                            eid=i
-                        i+=1
-                    print('cid')
-                    print(cid)
-                    print('eid')
-                    print(eid)
-                    msgid=m.reply_to_message.text[cid:eid]
-                    alisa.send_message(-1001351496983, m.text, reply_to_message_id=int(msgid))
-                    
-                except Exception as E:
-                    bot.send_message(441399484, traceback.format_exc())
-                    alisa.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
-                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
-                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
-                    
-                                          
-        
-        else:
-            if m.chat.id==-1001351496983:
-                x='(Общий чат)'
-            else:
-                x='(ЛС)'
-            try:
-                alisa.send_message(controller['id'], x+'\n'+m.from_user.first_name+' (`'+str(m.from_user.id)+'`) (❓'+str(m.message_id)+'⏹):\n'+m.text, parse_mode='markdown')
-           
-            except Exception as E:
-                    bot.send_message(441399484, traceback.format_exc())
+    msghandler(m, alisa)
                       
  except:
      alisa.send_message(441399484, traceback.format_exc())
@@ -1776,75 +1501,7 @@ def ulianastopcontrol(m):
             
 @uliana.message_handler()
 def ulianamessages(m):
-    print('uliana')
-    if ulianastats['controller']!=None:
-        controller=ulianastats['controller']
-        if m.chat.id==controller['id']:
-            if m.reply_to_message==None:
-                if m.text.split(' ')[0]!='/pm' and m.text.split(' ')[0]!='/r':
-                    msg=uliana.send_message(-1001351496983, m.text)
-                    for ids in ctrls:
-                        if ids['controller']!=None and ids['bot']!=uliana:
-                            if msg.chat.id==-1001351496983:
-                                x='(Общий чат)'
-                            else:
-                                x='(ЛС)'
-                            try:
-                                ids['bot'].send_message(ids['controller']['id'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
-                            except Exception as E:
-                                bot.send_message(441399484, traceback.format_exc())   
-                elif m.text.split(' ')[0]=='/pm':
-                    try:
-                        text=m.text.split(' ')
-                        t=''
-                        i=0
-                        for ids in text:
-                            if i>1:
-                                t+=ids+' '
-                            i+=1
-                        uliana.send_message(int(m.text.split(' ')[1]), t)
-                    except:
-                        uliana.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
-                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
-                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
-
-            else:
-                try:
-                    i=0
-                    cid=None
-                    eid=None
-                    for ids in m.reply_to_message.text:
-                        print(ids)
-                        if ids=='❓':
-                            cid=i+1
-                        if ids=='⏹':
-                            eid=i
-                        i+=1
-                    print('cid')
-                    print(cid)
-                    print('eid')
-                    print(eid)
-                    msgid=m.reply_to_message.text[cid:eid]
-                    uliana.send_message(-1001351496983, m.text, reply_to_message_id=int(msgid))
-                    
-                except Exception as E:
-                    bot.send_message(441399484, traceback.format_exc())
-                    uliana.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
-                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
-                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
-                    
-                                          
-        
-        else:
-            if m.chat.id==-1001351496983:
-                x='(Общий чат)'
-            else:
-                x='(ЛС)'
-            try:
-                uliana.send_message(controller['id'], x+'\n'+m.from_user.first_name+' (`'+str(m.from_user.id)+'`) (❓'+str(m.message_id)+'⏹):\n'+m.text, parse_mode='markdown')
-           
-            except Exception as E:
-                    bot.send_message(441399484, traceback.format_exc())
+    msghandler(m, uliana)
                       
                       
 @uliana.message_handler(content_types=['sticker'])
@@ -1878,75 +1535,7 @@ def slavyastopcontrol(m):
             
 @slavya.message_handler()
 def slavyamessages(m):
-    
-    if slavyastats['controller']!=None:
-        controller=slavyastats['controller']
-        if m.chat.id==controller['id']:
-            if m.reply_to_message==None:
-                if m.text.split(' ')[0]!='/pm' and m.text.split(' ')[0]!='/r':
-                    msg=slavya.send_message(-1001351496983, m.text)
-                    for ids in ctrls:
-                        if ids['controller']!=None and ids['bot']!=slavya:
-                            if msg.chat.id==-1001351496983:
-                                x='(Общий чат)'
-                            else:
-                                x='(ЛС)'
-                            try:
-                                ids['bot'].send_message(ids['controller']['id'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
-                            except Exception as E:
-                                bot.send_message(441399484, traceback.format_exc())   
-                elif m.text.split(' ')[0]=='/pm':
-                    try:
-                        text=m.text.split(' ')
-                        t=''
-                        i=0
-                        for ids in text:
-                            if i>1:
-                                t+=ids+' '
-                            i+=1
-                        slavya.send_message(int(m.text.split(' ')[1]), t)
-                    except:
-                        slavya.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
-                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
-                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
-
-            else:
-                try:
-                    i=0
-                    cid=None
-                    eid=None
-                    for ids in m.reply_to_message.text:
-                        print(ids)
-                        if ids=='❓':
-                            cid=i+1
-                        if ids=='⏹':
-                            eid=i
-                        i+=1
-                    print('cid')
-                    print(cid)
-                    print('eid')
-                    print(eid)
-                    msgid=m.reply_to_message.text[cid:eid]
-                    slavya.send_message(-1001351496983, m.text, reply_to_message_id=int(msgid))
-                    
-                except Exception as E:
-                    bot.send_message(441399484, traceback.format_exc())
-                    slavya.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
-                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
-                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
-                    
-                                          
-        
-        else:
-            if m.chat.id==-1001351496983:
-                x='(Общий чат)'
-            else:
-                x='(ЛС)'
-            try:
-                slavya.send_message(controller['id'], x+'\n'+m.from_user.first_name+' (`'+str(m.from_user.id)+'`) (❓'+str(m.message_id)+'⏹):\n'+m.text, parse_mode='markdown')
-           
-            except Exception as E:
-                    bot.send_message(441399484, traceback.format_exc())
+    msghandler(m, slavya)
                       
                       
 @slavya.message_handler(content_types=['sticker'])
@@ -1981,75 +1570,7 @@ def mikustopcontrol(m):
             
 @miku.message_handler()
 def mikumessages(m):
-    
-    if mikustats['controller']!=None:
-        controller=mikustats['controller']
-        if m.chat.id==controller['id']:
-            if m.reply_to_message==None:
-                if m.text.split(' ')[0]!='/pm' and m.text.split(' ')[0]!='/r':
-                    msg=miku.send_message(-1001351496983, m.text)
-                    for ids in ctrls:
-                        if ids['controller']!=None and ids['bot']!=miku:
-                            if msg.chat.id==-1001351496983:
-                                x='(Общий чат)'
-                            else:
-                                x='(ЛС)'
-                            try:
-                                ids['bot'].send_message(ids['controller']['id'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
-                            except Exception as E:
-                                bot.send_message(441399484, traceback.format_exc())   
-                elif m.text.split(' ')[0]=='/pm':
-                    try:
-                        text=m.text.split(' ')
-                        t=''
-                        i=0
-                        for ids in text:
-                            if i>1:
-                                t+=ids+' '
-                            i+=1
-                        miku.send_message(int(m.text.split(' ')[1]), t)
-                    except:
-                        miku.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
-                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
-                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
-
-            else:
-                try:
-                    i=0
-                    cid=None
-                    eid=None
-                    for ids in m.reply_to_message.text:
-                        print(ids)
-                        if ids=='❓':
-                            cid=i+1
-                        if ids=='⏹':
-                            eid=i
-                        i+=1
-                    print('cid')
-                    print(cid)
-                    print('eid')
-                    print(eid)
-                    msgid=m.reply_to_message.text[cid:eid]
-                    miku.send_message(-1001351496983, m.text, reply_to_message_id=int(msgid))
-                    
-                except Exception as E:
-                    bot.send_message(441399484, traceback.format_exc())
-                    miku.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
-                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
-                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
-                    
-                                          
-        
-        else:
-            if m.chat.id==-1001351496983:
-                x='(Общий чат)'
-            else:
-                x='(ЛС)'
-            try:
-                miku.send_message(controller['id'], x+'\n'+m.from_user.first_name+' (`'+str(m.from_user.id)+'`) (❓'+str(m.message_id)+'⏹):\n'+m.text, parse_mode='markdown')
-           
-            except Exception as E:
-                    bot.send_message(441399484, traceback.format_exc())
+    msghandler(m, miku)
                       
                       
 @miku.message_handler(content_types=['sticker'])
@@ -2085,75 +1606,7 @@ def zhenyastopcontrol(m):
             
 @zhenya.message_handler()
 def zhenyamessages(m):
-    
-    if zhenyastats['controller']!=None:
-        controller=zhenyastats['controller']
-        if m.chat.id==controller['id']:
-            if m.reply_to_message==None:
-                if m.text.split(' ')[0]!='/pm' and m.text.split(' ')[0]!='/r':
-                    msg=zhenya.send_message(-1001351496983, m.text)
-                    for ids in ctrls:
-                        if ids['controller']!=None and ids['bot']!=zhenya:
-                            if msg.chat.id==-1001351496983:
-                                x='(Общий чат)'
-                            else:
-                                x='(ЛС)'
-                            try:
-                                ids['bot'].send_message(ids['controller']['id'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
-                            except Exception as E:
-                                bot.send_message(441399484, traceback.format_exc())   
-                elif m.text.split(' ')[0]=='/pm':
-                    try:
-                        text=m.text.split(' ')
-                        t=''
-                        i=0
-                        for ids in text:
-                            if i>1:
-                                t+=ids+' '
-                            i+=1
-                        zhenya.send_message(int(m.text.split(' ')[1]), t)
-                    except:
-                        zhenya.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
-                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
-                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
-
-            else:
-                try:
-                    i=0
-                    cid=None
-                    eid=None
-                    for ids in m.reply_to_message.text:
-                        print(ids)
-                        if ids=='❓':
-                            cid=i+1
-                        if ids=='⏹':
-                            eid=i
-                        i+=1
-                    print('cid')
-                    print(cid)
-                    print('eid')
-                    print(eid)
-                    msgid=m.reply_to_message.text[cid:eid]
-                    zhenya.send_message(-1001351496983, m.text, reply_to_message_id=int(msgid))
-                    
-                except Exception as E:
-                    bot.send_message(441399484, traceback.format_exc())
-                    zhenya.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
-                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
-                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
-                    
-                                          
-        
-        else:
-            if m.chat.id==-1001351496983:
-                x='(Общий чат)'
-            else:
-                x='(ЛС)'
-            try:
-                zhenya.send_message(controller['id'], x+'\n'+m.from_user.first_name+' (`'+str(m.from_user.id)+'`) (❓'+str(m.message_id)+'⏹):\n'+m.text, parse_mode='markdown')
-           
-            except Exception as E:
-                    bot.send_message(441399484, traceback.format_exc())
+    msghandler(m, zhenya)
                       
                       
 @zhenya.message_handler(content_types=['sticker'])
@@ -2189,75 +1642,7 @@ def tolikstopcontrol(m):
             
 @tolik.message_handler()
 def tolikmessages(m):
-    
-    if tolikstats['controller']!=None:
-        controller=tolikstats['controller']
-        if m.chat.id==controller['id']:
-            if m.reply_to_message==None:
-                if m.text.split(' ')[0]!='/pm' and m.text.split(' ')[0]!='/r':
-                    msg=tolik.send_message(-1001351496983, m.text)
-                    for ids in ctrls:
-                        if ids['controller']!=None and ids['bot']!=tolik:
-                            if msg.chat.id==-1001351496983:
-                                x='(Общий чат)'
-                            else:
-                                x='(ЛС)'
-                            try:
-                                ids['bot'].send_message(ids['controller']['id'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
-                            except Exception as E:
-                                bot.send_message(441399484, traceback.format_exc())   
-                elif m.text.split(' ')[0]=='/pm':
-                    try:
-                        text=m.text.split(' ')
-                        t=''
-                        i=0
-                        for ids in text:
-                            if i>1:
-                                t+=ids+' '
-                            i+=1
-                        tolik.send_message(int(m.text.split(' ')[1]), t)
-                    except:
-                        tolik.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
-                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
-                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
-
-            else:
-                try:
-                    i=0
-                    cid=None
-                    eid=None
-                    for ids in m.reply_to_message.text:
-                        print(ids)
-                        if ids=='❓':
-                            cid=i+1
-                        if ids=='⏹':
-                            eid=i
-                        i+=1
-                    print('cid')
-                    print(cid)
-                    print('eid')
-                    print(eid)
-                    msgid=m.reply_to_message.text[cid:eid]
-                    tolik.send_message(-1001351496983, m.text, reply_to_message_id=int(msgid))
-                    
-                except Exception as E:
-                    bot.send_message(441399484, traceback.format_exc())
-                    tolik.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
-                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
-                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
-                    
-                                          
-        
-        else:
-            if m.chat.id==-1001351496983:
-                x='(Общий чат)'
-            else:
-                x='(ЛС)'
-            try:
-                tolik.send_message(controller['id'], x+'\n'+m.from_user.first_name+' (`'+str(m.from_user.id)+'`) (❓'+str(m.message_id)+'⏹):\n'+m.text, parse_mode='markdown')
-           
-            except Exception as E:
-                    bot.send_message(441399484, traceback.format_exc())
+    msghandler(m, tolik)
                       
                       
 @tolik.message_handler(content_types=['sticker'])
@@ -2292,74 +1677,7 @@ def shuriktopcontrol(m):
 @shurik.message_handler()
 def shurikmessages(m):
     
-    if shurikstats['controller']!=None:
-        controller=shurikstats['controller']
-        if m.chat.id==controller['id']:
-            if m.reply_to_message==None:
-                if m.text.split(' ')[0]!='/pm' and m.text.split(' ')[0]!='/r':
-                    msg=shurik.send_message(-1001351496983, m.text)
-                    for ids in ctrls:
-                        if ids['controller']!=None and ids['bot']!=shurik:
-                            if msg.chat.id==-1001351496983:
-                                x='(Общий чат)'
-                            else:
-                                x='(ЛС)'
-                            try:
-                                ids['bot'].send_message(ids['controller']['id'], x+'\n'+msg.from_user.first_name+' (`'+str(msg.from_user.id)+'`) (❓'+str(msg.message_id)+'⏹):\n'+msg.text, parse_mode='markdown')
-                            except Exception as E:
-                                bot.send_message(441399484, traceback.format_exc())   
-                elif m.text.split(' ')[0]=='/pm':
-                    try:
-                        text=m.text.split(' ')
-                        t=''
-                        i=0
-                        for ids in text:
-                            if i>1:
-                                t+=ids+' '
-                            i+=1
-                        shurik.send_message(int(m.text.split(' ')[1]), t)
-                    except:
-                        shurik.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
-                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
-                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
-
-            else:
-                try:
-                    i=0
-                    cid=None
-                    eid=None
-                    for ids in m.reply_to_message.text:
-                        print(ids)
-                        if ids=='❓':
-                            cid=i+1
-                        if ids=='⏹':
-                            eid=i
-                        i+=1
-                    print('cid')
-                    print(cid)
-                    print('eid')
-                    print(eid)
-                    msgid=m.reply_to_message.text[cid:eid]
-                    shurik.send_message(-1001351496983, m.text, reply_to_message_id=int(msgid))
-                    
-                except Exception as E:
-                    bot.send_message(441399484, traceback.format_exc())
-                    shurik.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n'+
-                                          '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n'+
-                                          '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!', parse_mode='markdown')
-                    
-                                          
-        
-        else:
-            if m.chat.id==-1001351496983:
-                x='(Общий чат)'
-            else:
-                x='(ЛС)'
-            try:
-                shurik.send_message(controller['id'], x+'\n'+m.from_user.first_name+' (`'+str(m.from_user.id)+'`) (❓'+str(m.message_id)+'⏹):\n'+m.text, parse_mode='markdown')
-           
-            except Exception as E:
-                    bot.send_message(441399484, traceback.format_exc())
+    msghandler(m, shurik)
                       
                       
 @shurik.message_handler(content_types=['sticker'])
@@ -2582,18 +1900,20 @@ def findindex(x):
 def randomhelp():
    t=threading.Timer(random.randint(4200,10000),randomhelp)
    t.start()
-   spisok=[]
-   pioners=['lena', 'alisa']
-   x=users.find({})
-   for ids in x:
-       if ids['pionername']!=None:
-           spisok.append(ids)
-   if len(spisok)>0:
-       hour=gettime('h')
-       if hour>=7 and hour<=23:
-           pioner=random.choice(spisok)
-           z=random.choice(pioners)
-           helpto(pioner,z)
+   global rds 
+   if rds==True:
+       spisok=[]
+       pioners=['lena', 'alisa']
+       x=users.find({})
+       for ids in x:
+           if ids['pionername']!=None:
+               spisok.append(ids)
+       if len(spisok)>0:
+           hour=gettime('h')
+           if hour>=7 and hour<=23:
+               pioner=random.choice(spisok)
+               z=random.choice(pioners)
+               helpto(pioner,z)
            
 
 def helpto(pioner,x):
@@ -2662,67 +1982,69 @@ def helpcancel(pioner,m, userid):
 def randomact():
     t=threading.Timer(random.randint(4900,18000),randomact)
     t.start()
-    lisst=['talk_uliana+olgadmitrievna','talk_uliana+alisa', 'talk_el+shurik']
-    x=random.choice(lisst)
-    if x=='talk_uliana+olgadmitrievna':
-        bot.send_chat_action(-1001351496983,'typing')
-        time.sleep(4)
-        bot.send_message(-1001351496983,nametopioner('uliana')+', а ну стой! Ты эти конфеты где взяла?', parse_mode='markdown')
-        sendstick(bot,'CAADAgADtwADgi0zD-9trZ_s35yQAg')
-        time.sleep(1)
-        uliana.send_chat_action(-1001351496983,'typing')
-        time.sleep(2)
-        uliana.send_message(-1001351496983, 'Какие конфеты?')
-        sendstick(uliana,'CAADAgADHQADgi0zD1aFI93sTseZAg')
-        time.sleep(2)
-        bot.send_chat_action(-1001351496983,'typing')
-        time.sleep(3)
-        bot.send_message(-1001351496983,'Те, что ты за спиной держишь! Быстро верни их в столовую!')
-        time.sleep(1)
-        uliana.send_chat_action(-1001351496983,'typing')
-        time.sleep(2)
-        uliana.send_message(-1001351496983, 'Хорошо, Ольга Дмитриевна...')
-        sendstick(uliana,'CAADAgADJQADgi0zD1PW7dDuU5hCAg')
-    if x=='talk_uliana+alisa':
-        alisa.send_chat_action(-1001351496983,'typing')
-        time.sleep(3)
-        alisa.send_message(-1001351496983,nametopioner('uliana')+', не боишься, что Ольга Дмитриевна спалит?', parse_mode='markdown')
-        time.sleep(1)
-        uliana.send_chat_action(-1001351496983,'typing')
-        time.sleep(2)
-        uliana.send_message(-1001351496983, 'Ты о чём?')
-        time.sleep(2)
-        alisa.send_chat_action(-1001351496983,'typing')
-        time.sleep(2)
-        alisa.send_message(-1001351496983,'О конфетах, которые ты украла!')
-        sendstick(alisa,'CAADAgADOwADgi0zDzD8ZNZXu5LHAg')
-        time.sleep(1)
-        uliana.send_chat_action(-1001351496983,'typing')
-        time.sleep(2)
-        uliana.send_message(-1001351496983, 'Да не, не спалит! Я так уже много раз делала!')
-        sendstick(uliana,'CAADAgADKQADgi0zD_inNy0pZyh0Ag')
-        time.sleep(2)
-        alisa.send_chat_action(-1001351496983,'typing')
-        time.sleep(2)
-        alisa.send_message(-1001351496983,'Тогда делись!')
-        time.sleep(1)
-        uliana.send_chat_action(-1001351496983,'typing')
-        time.sleep(2)
-        uliana.send_message(-1001351496983, 'Тогда пошли в домик!')
-    if x=='talk_el+shurik':
-        electronic.send_chat_action(-1001351496983,'typing')
-        time.sleep(3)
-        electronic.send_message(-1001351496983,nametopioner('shurik')+', как думаешь, возможно ли перемещение во времени?', parse_mode='markdown')
-        sendstick(electronic, 'CAADAgAD0wADgi0zD1LBx9yoFTBiAg')
-        time.sleep(1)
-        shurik.send_chat_action(-1001351496983,'typing')
-        time.sleep(2)
-        shurik.send_message(-1001351496983, 'В теории... Хотя нет, это антинаучно.')
-        sendstick(shurik, 'CAADAgAD5QADgi0zDwyDLbq7ZQ4vAg')
-        time.sleep(2)
-        electronic.send_chat_action(-1001351496983,'typing')
-        time.sleep(2)
-        electronic.send_message(-1001351496983,'А мне вот кажется, что когда-нибудь прогресс дойдёт и до такого...')
+    global rds
+    if rds==True:
+        lisst=['talk_uliana+olgadmitrievna','talk_uliana+alisa', 'talk_el+shurik']
+        x=random.choice(lisst)
+        if x=='talk_uliana+olgadmitrievna':
+            bot.send_chat_action(-1001351496983,'typing')
+            time.sleep(4)
+            bot.send_message(-1001351496983,nametopioner('uliana')+', а ну стой! Ты эти конфеты где взяла?', parse_mode='markdown')
+            sendstick(bot,'CAADAgADtwADgi0zD-9trZ_s35yQAg')
+            time.sleep(1)
+            uliana.send_chat_action(-1001351496983,'typing')
+            time.sleep(2)
+            uliana.send_message(-1001351496983, 'Какие конфеты?')
+            sendstick(uliana,'CAADAgADHQADgi0zD1aFI93sTseZAg')
+            time.sleep(2)
+            bot.send_chat_action(-1001351496983,'typing')
+            time.sleep(3)
+            bot.send_message(-1001351496983,'Те, что ты за спиной держишь! Быстро верни их в столовую!')
+            time.sleep(1)
+            uliana.send_chat_action(-1001351496983,'typing')
+            time.sleep(2)
+            uliana.send_message(-1001351496983, 'Хорошо, Ольга Дмитриевна...')
+            sendstick(uliana,'CAADAgADJQADgi0zD1PW7dDuU5hCAg')
+        if x=='talk_uliana+alisa':
+            alisa.send_chat_action(-1001351496983,'typing')
+            time.sleep(3)
+            alisa.send_message(-1001351496983,nametopioner('uliana')+', не боишься, что Ольга Дмитриевна спалит?', parse_mode='markdown')
+            time.sleep(1)
+            uliana.send_chat_action(-1001351496983,'typing')
+            time.sleep(2)
+            uliana.send_message(-1001351496983, 'Ты о чём?')
+            time.sleep(2)
+            alisa.send_chat_action(-1001351496983,'typing')
+            time.sleep(2)
+            alisa.send_message(-1001351496983,'О конфетах, которые ты украла!')
+            sendstick(alisa,'CAADAgADOwADgi0zDzD8ZNZXu5LHAg')
+            time.sleep(1)
+            uliana.send_chat_action(-1001351496983,'typing')
+            time.sleep(2)
+            uliana.send_message(-1001351496983, 'Да не, не спалит! Я так уже много раз делала!')
+            sendstick(uliana,'CAADAgADKQADgi0zD_inNy0pZyh0Ag')
+            time.sleep(2)
+            alisa.send_chat_action(-1001351496983,'typing')
+            time.sleep(2)
+            alisa.send_message(-1001351496983,'Тогда делись!')
+            time.sleep(1)
+            uliana.send_chat_action(-1001351496983,'typing')
+            time.sleep(2)
+            uliana.send_message(-1001351496983, 'Тогда пошли в домик!')
+        if x=='talk_el+shurik':
+            electronic.send_chat_action(-1001351496983,'typing')
+            time.sleep(3)
+            electronic.send_message(-1001351496983,nametopioner('shurik')+', как думаешь, возможно ли перемещение во времени?', parse_mode='markdown')
+            sendstick(electronic, 'CAADAgAD0wADgi0zD1LBx9yoFTBiAg')
+            time.sleep(1)
+            shurik.send_chat_action(-1001351496983,'typing')
+            time.sleep(2)
+            shurik.send_message(-1001351496983, 'В теории... Хотя нет, это антинаучно.')
+            sendstick(shurik, 'CAADAgAD5QADgi0zDwyDLbq7ZQ4vAg')
+            time.sleep(2)
+            electronic.send_chat_action(-1001351496983,'typing')
+            time.sleep(2)
+            electronic.send_message(-1001351496983,'А мне вот кажется, что когда-нибудь прогресс дойдёт и до такого...')
 
 
         
@@ -2730,7 +2052,7 @@ def randomact():
         
 checktime()
         
-t=threading.Timer(3, randomhelp)
+t=threading.Timer(120, randomhelp)
 t.start()
 
 
