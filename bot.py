@@ -113,7 +113,7 @@ def do(m):
 def do(m):
     if m.from_user.id==441399484:
         global rds
-        rds=!rds
+        rds = not rds
         if rds==True:
             world.send_message(m.chat.id, 'now True')
         else:
