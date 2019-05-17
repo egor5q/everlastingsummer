@@ -101,6 +101,7 @@ works=[
 
 @world.message_handler(commands=['do'])
 def do(m):
+  try:
     if m.from_user.id==441399484:
         cmd=m.text.split('/do ')[1]
         try:
@@ -108,6 +109,8 @@ def do(m):
             world.send_message(m.chat.id, 'Success')
         except:
             world.send_message(441399484, traceback.format_exc())
+  except:
+       pass
                       
 @world.message_handler(commands=['switch'])
 def do(m):
