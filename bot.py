@@ -108,6 +108,17 @@ def do(m):
             world.send_message(m.chat.id, 'Success')
         except:
             world.send_message(441399484, traceback.format_exc())
+                      
+@world.message_handler(commands=['switch'])
+def do(m):
+    if m.from_user.id==441399484:
+        global rds
+        rds=!rds
+        if rds==True:
+            world.send_message(m.chat.id, 'now True')
+        else:
+            world.send_message(m.chat.id, 'now False')
+        
 
 def worktoquest(work):
     if work=='concertready':
