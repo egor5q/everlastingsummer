@@ -52,6 +52,8 @@ sh_admins=[574865060, 268486177]
 se_admins=[851513241]
 pi_admins=[512006137]
 
+ignorelist=[]
+
 rds=True
 
 symbollist=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
@@ -111,7 +113,17 @@ def do(m):
             world.send_message(441399484, traceback.format_exc())
   except:
        pass
-                      
+ 
+@bot.message_handler(commands=['ignore'])
+def ignore(m):
+    try:
+        x=int(m.text.split(' ')[1])
+        if x>0: 
+            ignorelist.append(x)
+            bot.send_message(m.chat.id, 'Теперь айди '+str(x)+' игнорится!')
+    except:
+        pass
+
 @world.message_handler(commands=['switch'])
 def do(m):
     if m.from_user.id==441399484:
@@ -246,11 +258,12 @@ def msghandler(m, pioner):
                 x='(Общий чат)'
             else:
                 x='(ЛС)'
-            try:
-                pioner.send_message(controller['id'], x+'\n'+m.from_user.first_name+' (`'+str(m.from_user.id)+'`) (❓'+str(m.message_id)+'⏹):\n'+m.text, parse_mode='markdown')
-           
-            except Exception as E:
-                    bot.send_message(441399484, traceback.format_exc())
+            if m.chat.id not in ignorelist:
+                try:
+                    pioner.send_message(controller['id'], x+'\n'+m.from_user.first_name+' (`'+str(m.from_user.id)+'`) (❓'+str(m.message_id)+'⏹):\n'+m.text, parse_mode='markdown')
+            
+                except Exception as E:
+                        bot.send_message(441399484, traceback.format_exc())
     
 @bot.message_handler(commands=['pioner_left'])
 def leftpioneeer(m):
