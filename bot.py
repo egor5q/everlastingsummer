@@ -48,7 +48,7 @@ sl_admins=[851513241]
 od_admins=[629070350, 512006137]
 zh_admins=[390362465]
 to_admins=[414374606]
-sh_admins=[574865060, 268486177, 512006137]
+sh_admins=[574865060]
 se_admins=[851513241]
 pi_admins=[512006137]
 
@@ -116,6 +116,7 @@ def do(m):
  
 @bot.message_handler(commands=['ignore'])
 def ignore(m):
+  if m.from_user.id==441399484:
     try:
         x=int(m.text.split(' ')[1])
         if x>0: 
@@ -337,8 +338,9 @@ def pinfo(m):
 
 @bot.message_handler(commands=['work'])
 def work(m):
+    global rds
     x=users.find_one({'id':m.from_user.id})
-    if x!=None:
+    if x!=None and rds==True:
       if x['setgender']==0 and x['setname']==0:
         if x['working']==0:
           if x['waitforwork']==0:
@@ -490,8 +492,9 @@ worktexts=['Ну что, пионер, скучаешь? Ничего, сейч�
 
 @bot.message_handler(commands=['cards'])
 def gamestestdsdfsdgd(m):
-    if electronicstats['waitingplayers']!=1:
-        eveninggames()
+    if rds==True:
+        if electronicstats['waitingplayers']!=1:
+            eveninggames()
 
   
 ####################################### OLGA ##############################################
@@ -821,6 +824,8 @@ def checktime():
         
     
 def eveninggames():
+  global rds
+  if rds==True:
     egames=['cards']#,'ropepulling']
     x=random.choice(egames)
     if x=='cards':
