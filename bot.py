@@ -35,6 +35,7 @@ client=MongoClient(client1)
 db=client.everlastingsummer
 users=db.users
 
+mainchat=-1001351496983
 
 yestexts=['хорошо, ольга дмитриевна!','хорошо!','я этим займусь!','я готов!','я готова!']
 notexts=['простите, но у меня уже появились дела.']
@@ -1499,6 +1500,33 @@ def alisamessages(m):
             users.update_one({'id':m.from_user.id},{'$set':{'helping':1}})
 
     msghandler(m, alisa)
+    if m.chat.id==mainchat:
+        if m.reply_to_message!=None:
+            if m.reply_to_message.from_user.id==634115873:
+                pioner=users.find_one({'id':m.from_user.id})
+                if pioner!=None:
+                    text=m.text.lower()
+                    if 'пошли' in text:
+                        if 'ко мне' in text:
+                            texts2=['Ну... Я подумаю.', 'Даже не знаю...']
+                            texts1=['Совсем офигел?', 'Страх потерял?']
+                            texts3=['Лучше ко мне', 'Ну пошли!']
+                            stick2='CAADAgAD4QIAAnHMfRgPhIdIfUrCGAI'
+                            stick1='CAADAgAD4wIAAnHMfRjkcHoZL5eAgwI'
+                            stick3='CAADAgAD7AIAAnHMfRgXuTTXBIbwWgI'
+                            if pioner['Alisa_respect']<40:
+                                txt=texts1
+                                stick=stick1
+                            elif pioner['Alisa_respect']<=50:
+                                txt=texts2
+                                stick=stick2
+                            elif pioner['Alisa_respect']<=75:
+                                txt=texts3
+                                stick=stick3   
+                            alisa.send_chat_action(mainchat, 'typing')
+                            t=threading.Timer(3, sendmes, args=[alisa, random.choice(txt)])
+                            t.start()
+                            t=threading.Timer(3, sendstick, args=[alisa, stick])
                       
  except:
      alisa.send_message(441399484, traceback.format_exc())
@@ -2067,7 +2095,7 @@ def randomact():
         if x=='talk_el+shurik':
             electronic.send_chat_action(-1001351496983,'typing')
             time.sleep(3)
-            electronic.send_message(-1001351496983,nametopioner('shurik')+', как думаешь, возможно ли перемещение во времени?', parse_mode='markdown')
+            electronic.send_message(-1001351496983,nametopioner('shurik')+', как думаешь, возможно ли перемещение во времени?', parse_mode='markdown', disable_page_preview=True)
             sendstick(electronic, 'CAADAgAD0wADgi0zD1LBx9yoFTBiAg')
             time.sleep(1)
             shurik.send_chat_action(-1001351496983,'typing')
