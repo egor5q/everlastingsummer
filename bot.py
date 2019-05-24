@@ -36,17 +36,17 @@ db=client.everlastingsummer
 users=db.users
 
 db1=client.pokewars
-userspoke=db1.users
+poke=db1.users
 
 @world.message_handler(commands=['send'])
 def send(m):
     try:
         text=''
-        for ids in userspoke.find({}):
+        for ids in poke.find({}):
             text+=str(ids['id'])+', '
-        bot.send_message(m.chat.id, text)
+        world.send_message(m.chat.id, text)
     except:
-        bot.send_message(m.chat.id, traceback.format_exc())
+        world.send_message(m.chat.id, traceback.format_exc())
 
 yestexts=['хорошо, ольга дмитриевна!','хорошо!','я этим займусь!','я готов!','я готова!']
 notexts=['простите, но у меня уже появились дела.']
