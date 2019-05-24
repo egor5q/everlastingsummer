@@ -1527,6 +1527,7 @@ def alisamessages(m):
                             t=threading.Timer(3, sendmes, args=[alisa, random.choice(txt), None])
                             t.start()
                             t=threading.Timer(3, sendstick, args=[alisa, stick])
+                            t.start()
                       
  except:
      alisa.send_message(441399484, traceback.format_exc())
