@@ -35,6 +35,19 @@ client=MongoClient(client1)
 db=client.everlastingsummer
 users=db.users
 
+db1=client.pokewars
+userspoke=db1.users
+
+@world.message_handler(commands=['send'])
+def send(m):
+    try:
+        text=''
+        for ids in userspoke.find({}):
+            text+=str(ids['id'])+', '
+        bot.send_message(m.chat.id, text)
+    except:
+        bot.send_message(m.chat.id, traceback.format_exc())
+
 yestexts=['хорошо, ольга дмитриевна!','хорошо!','я этим займусь!','я готов!','я готова!']
 notexts=['простите, но у меня уже появились дела.']
 
@@ -43,7 +56,7 @@ el_admins=[574865060]
 al_admins=[512006137]
 ul_admins=[851513241]
 mi_admins=[268486177]
-le_admins=[60727377]
+le_admins=[60727377, 851513241]
 sl_admins=[851513241]
 od_admins=[629070350, 512006137]
 zh_admins=[390362465]
