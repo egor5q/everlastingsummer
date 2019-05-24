@@ -2095,7 +2095,7 @@ def randomact():
         if x=='talk_el+shurik':
             electronic.send_chat_action(-1001351496983,'typing')
             time.sleep(3)
-            electronic.send_message(-1001351496983,nametopioner('shurik')+', как думаешь, возможно ли перемещение во времени?', parse_mode='markdown', disable_page_preview=True)
+            electronic.send_message(-1001351496983,nametopioner('shurik')+', как думаешь, возможно ли перемещение во времени?', parse_mode='markdown')
             sendstick(electronic, 'CAADAgAD0wADgi0zD1LBx9yoFTBiAg')
             time.sleep(1)
             shurik.send_chat_action(-1001351496983,'typing')
