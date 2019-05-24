@@ -1524,7 +1524,7 @@ def alisamessages(m):
                                 txt=texts3
                                 stick=stick3   
                             alisa.send_chat_action(mainchat, 'typing')
-                            t=threading.Timer(3, sendmes, args=[alisa, random.choice(txt)])
+                            t=threading.Timer(3, sendmes, args=[alisa, random.choice(txt), None])
                             t.start()
                             t=threading.Timer(3, sendstick, args=[alisa, stick])
                       
@@ -1959,7 +1959,7 @@ def findindex(x):
             
  
 def randomhelp():
-   t=threading.Timer(random.randint(4200,10000),randomhelp)
+   t=threading.Timer(random.randint(420,1000),randomhelp)
    t.start()
    global rds 
    if rds==True:
