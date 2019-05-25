@@ -1563,6 +1563,29 @@ def ulianastopcontrol(m):
             
 @uliana.message_handler()
 def ulianamessages(m):
+    yes=['да', 'давай', 'я в деле', 'рассказывай']
+    if ulianastats['whohelps']!=None:
+        y=0
+        if m.from_user.id==ulianastats['whohelps']:
+          for ids in yes:
+              if ids in m.text.lower():
+                  y=1
+          if y==1:
+            pioner=users.find_one({'id':m.from_user.id})
+            try:
+                ulianastats['timer'].cancel()
+            except:
+                pass
+            allhelps=['Я тут хочу заняться одним безобидным делом, и в этом мне потребуются спички... Если что, тебя не сдам!', 'О, круто! Мне тут нужно раздобыть немного глицерина...']
+            ulianastats['whohelps']=None
+            helpp=random.choice(allhelps)
+            uliana.send_chat_action(m.chat.id,'typing')
+            time.sleep(4)
+            uliana.send_message(m.chat.id, helpp)
+            sendstick(uliana,'CAADAgADKQADgi0zD_inNy0pZyh0Ag')
+            t=threading.Timer(300,helpend,args=[m.from_user.id, 'uliana'])
+            t.start()
+            users.update_one({'id':m.from_user.id},{'$set':{'helping':1}})
     msghandler(m, uliana)
                       
                       
@@ -1862,6 +1885,13 @@ def helpend(id, pioner):
         slavya.send_message(-1001351496983, 'Спасибо за помощь, ['+x['pionername']+'](tg://user?id='+str(x['id'])+')! '+\
                      'Теперь можешь отдыхать.',parse_mode='markdown')
         users.update_one({'id':x['id']},{'$inc':{'Slavya_respect':random.randint(4,5)}})
+        
+    if pioner=='uliana':
+        uliana.send_chat_action(id,'typing')
+        time.sleep(4)
+        uliana.send_message(-1001351496983, 'Как здорово! Спасибо за помощь, ['+x['pionername']+'](tg://user?id='+str(x['id'])+')!'+\
+                     '',parse_mode='markdown')
+        users.update_one({'id':x['id']},{'$inc':{'Uliana_respect':random.randint(4,5)}})
     
 
 
@@ -1898,7 +1928,9 @@ ulianastats={
     'agility':4,
     'intelligence':1,
     'controller':None,
-    'bot':uliana
+    'bot':uliana,
+    'whohelps':None,
+    'timer':None
 }
 slavyastats={
     'strenght':1,
@@ -1997,7 +2029,7 @@ def randomhelp():
    global rds 
    if rds==True:
        spisok=[]
-       pioners=['lena', 'alisa', 'slavya']
+       pioners=['lena', 'alisa', 'slavya', 'uliana']
        x=users.find({})
        for ids in x:
            if ids['pionername']!=None:
@@ -2066,6 +2098,23 @@ def helpto(pioner,x):
         except:
             bot.send_message(441399484, traceback.format_exc())
             
+    if x=='uliana':
+        try:
+            if pioner['Uliana_respect']>=85:
+                text='Привет, '+'['+pioner['pionername']+'](tg://user?id='+str(pioner['id'])+')! Мне не помешала бы помощь в одном деле... Я знаю, что ты согласишься!'
+            else:
+                text='Эй, ['+pioner['pionername']+'](tg://user?id='+str(pioner['id'])+')! Поможешь мне с одним делом?'
+            uliana.send_chat_action(-1001351496983,'typing')
+            time.sleep(4)
+            m=uliana.send_message(-1001351496983,text, parse_mode='markdown')
+            ulianastats['whohelps']=pioner['id']
+            t=threading.Timer(300,helpcancel,args=['uliana', m, pioner['id']])
+            t.start()
+            ulianastats['timer']=t
+            sendstick(uliana,'CAADAgADLwADgi0zD7_x8Aph94DmAg')
+        except:
+            bot.send_message(441399484, traceback.format_exc())
+            
         
 def helpcancel(pioner,m, userid):
     user=users.find_one({'id':userid})
@@ -2096,6 +2145,17 @@ def helpcancel(pioner,m, userid):
             slavya.send_message(-1001351496983,'Ладно, ничего страшного - спрошу кого-нибудь другого.',reply_to_message_id=m.message_id)
         if user['Slavya_respect']>0:
             users.update_one({'id':user['id']},{'$inc':{'Slavya_respect':-1}})
+            
+    if pioner=='uliana':
+        ulianastats['whohelps']=None
+        uliana.send_chat_action(-1001351496983,'typing')
+        time.sleep(4)
+        if user['Uliana_respect']<85:
+            uliana.send_message(-1001351496983,'Ой, ну и ладно! Найду того, кому интересно!',reply_to_message_id=m.message_id)
+        else:
+            uliana.send_message(-1001351496983,'Ладно, как хочешь. Но если появится желание - говори!',reply_to_message_id=m.message_id)
+        if user['Uliana_respect']>0:
+            users.update_one({'id':user['id']},{'$inc':{'Uliana_respect':-1}})
         
     
     
