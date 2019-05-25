@@ -1597,6 +1597,29 @@ def slavyastopcontrol(m):
             
 @slavya.message_handler()
 def slavyamessages(m):
+    yes=['да','я готов', 'давай', 'я в деле']
+    if slavyastats['whohelps']!=None:
+        y=0
+        if m.from_user.id==slavyastats['whohelps']:
+          for ids in yes:
+              if ids in m.text.lower():
+                  y=1
+          if y==1:
+            pioner=users.find_one({'id':m.from_user.id})
+            try:
+                slavyastats['timer'].cancel()
+            except:
+                pass
+            allhelps=['Отлично! А теперь само задание: надо развесить на деревьях гирлянды, а то завтра вечером будут танцы! Нужна соответствующая атмосфера.', 'Спасибо! Тогда наполни вот это ведро водой и принеси сюда, мне надо помыть памятник.']
+            slavyastats['whohelps']=None
+            helpp=random.choice(allhelps)
+            slavya.send_chat_action(m.chat.id,'typing')
+            time.sleep(4)
+            slavya.send_message(m.chat.id, helpp)
+            sendstick(slavya,'CAADAgADUgADgi0zD4hu1wGvwGllAg')
+            t=threading.Timer(300,helpend,args=[m.from_user.id, 'slavya'])
+            t.start()
+            users.update_one({'id':m.from_user.id},{'$set':{'helping':1}})
     msghandler(m, slavya)
                       
                       
@@ -1832,6 +1855,13 @@ def helpend(id, pioner):
         alisa.send_message(-1001351496983, 'Ну спасибо за помощь, ['+x['pionername']+'](tg://user?id='+str(x['id'])+')! '+\
                      'Неплохо получилось!',parse_mode='markdown')
         users.update_one({'id':x['id']},{'$inc':{'Alisa_respect':random.randint(4,5)}})
+        
+    if pioner=='slavya':
+        slavya.send_chat_action(id,'typing')
+        time.sleep(4)
+        slavya.send_message(-1001351496983, 'Спасибо за помощь, ['+x['pionername']+'](tg://user?id='+str(x['id'])+')! '+\
+                     'Теперь можешь отдыхать.',parse_mode='markdown')
+        users.update_one({'id':x['id']},{'$inc':{'Slavya_respect':random.randint(4,5)}})
     
 
 
@@ -1873,6 +1903,8 @@ ulianastats={
 slavyastats={
     'strenght':1,
     'agility':1,
+    'whohelps':None,
+    'timer':None,
     'intelligence':4,
     'controller':None,
     'bot':slavya
@@ -1965,7 +1997,7 @@ def randomhelp():
    global rds 
    if rds==True:
        spisok=[]
-       pioners=['lena', 'alisa']
+       pioners=['lena', 'alisa', 'slavya']
        x=users.find({})
        for ids in x:
            if ids['pionername']!=None:
@@ -2017,6 +2049,23 @@ def helpto(pioner,x):
         except:
             bot.send_message(441399484, traceback.format_exc())
             
+    if x=='slavya':
+        try:
+            if pioner['Slavya_respect']>=85:
+                text='Привет, '+'['+pioner['pionername']+'](tg://user?id='+str(pioner['id'])+')! Ты не раз выручал меня, поэтому я знаю, что тебе можно довериться. Поможешь мне с одним важным заданием?'
+            else:
+                text='Привет, ['+pioner['pionername']+'](tg://user?id='+str(pioner['id'])+')! Поможешь мне с одним важным заданием?'
+            slavya.send_chat_action(-1001351496983,'typing')
+            time.sleep(4)
+            m=slavya.send_message(-1001351496983,text, parse_mode='markdown')
+            slavyastats['whohelps']=pioner['id']
+            t=threading.Timer(300,helpcancel,args=['slavya', m, pioner['id']])
+            t.start()
+            slavyastats['timer']=t
+            sendstick(slavya,'CAADAgADTAADgi0zD6PLpc722Bz3Ag')
+        except:
+            bot.send_message(441399484, traceback.format_exc())
+            
         
 def helpcancel(pioner,m, userid):
     user=users.find_one({'id':userid})
@@ -2037,6 +2086,16 @@ def helpcancel(pioner,m, userid):
             alisa.send_message(-1001351496983,'Ну как хочешь! Сама справлюсь.',reply_to_message_id=m.message_id)
         if user['Alisa_respect']>0:
             users.update_one({'id':user['id']},{'$inc':{'Alisa_respect':-1}})
+    if pioner=='slavya':
+        slavyastats['whohelps']=None
+        slavya.send_chat_action(-1001351496983,'typing')
+        time.sleep(4)
+        if user['Slavya_respect']<85:
+            slavya.send_message(-1001351496983,'Ладно, спрошу кого-нибудь другого.',reply_to_message_id=m.message_id)
+        else:
+            slavya.send_message(-1001351496983,'Ладно, ничего страшного - спрошу кого-нибудь другого.',reply_to_message_id=m.message_id)
+        if user['Slavya_respect']>0:
+            users.update_one({'id':user['id']},{'$inc':{'Slavya_respect':-1}})
         
     
     
