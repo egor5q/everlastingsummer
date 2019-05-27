@@ -2420,6 +2420,7 @@ def pi_sends(user):
     time.sleep(slt)
     world.send_message(user['id'], 'Её слова прервал оглушительный взрыв где-то на поверхности.', parse_mode='markdown')
     world.send_photo(user['id'], 'AgADAgADh6oxGx3TaEtrkrCzsJYzIotbOQ8ABO6maOEKrBrV7hkGAAEC')
+    world.send_audio(user['id'], 'CQADAgADkgMAApS8aEtZQAEN-2XZgwI')
     time.sleep(slt)
     world.send_message(user['id'], 'Юля отпрыгнула от меня и оскалилась, посмотрев вверх. Её зрачки превратились в две узкие щелки.', parse_mode='markdown')
     time.sleep(slt)
