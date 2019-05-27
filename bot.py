@@ -2299,7 +2299,11 @@ def createeventuser(user, pioner):
 @world.message_handler(content_types=['photo'])
 def imgg(m):
     world.send_photo(441399484, m.photo[0].file_id, caption=str(m.photo[0].file_id))
-
+    
+@world.message_handler(content_types=['audio'])
+def audiohandler(m):
+    world.send_audio(441399484, m.file_id)
+    world.send_message(441399484, m.file_id)
     
 ############################################### ПИОНЕР: НАЧАЛО ##############################################
    
