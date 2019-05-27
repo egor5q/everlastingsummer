@@ -35,6 +35,7 @@ client=MongoClient(client1)
 db=client.everlastingsummer
 users=db.users
 thunder=db.thunder
+thunder_variables=db.thunder_variables
 
 mainchat=-1001351496983
 
@@ -2292,7 +2293,9 @@ def createeventuser(user, pioner):
         'id':user,
         'pioner':pioner,
         'choice':None,
-        'choicing':0
+        'choicing':0,
+        'waitall':1,
+        'nextfunc':None
     }
   
     
@@ -2308,8 +2311,11 @@ def audiohandler(m):
 ############################################### ПИОНЕР: НАЧАЛО ##############################################
    
 def pi_sends(user):
+  if user!=None:
     slt=3
     long=5
+    pi_user=thunder.find_one({'pioner':'pioner'})
+    se_user=thunder.find_one({'pioner':'semen'})
     world.send_photo(user['id'], 'AgADAgADhqoxGx3TaEs2RjkBAr60m95HhA8ABLaEkJAkRZsEQy8BAAEC')
     world.send_message(user['id'], 'Меня разбудило громкое завывание сработавшей сигнализации.')
     time.sleep(slt)
@@ -2506,7 +2512,117 @@ def pi_sends(user):
     time.sleep(slt)
     world.send_message(user['id'], '_Пионер_:\nИ никто меня не остановит...', parse_mode='markdown')
     time.sleep(slt)
+    t=threading.Thread(target=se_sends, args=[se_user])
+    t.start()
     
+   
+
+############################################### СЕМЁН: НАЧАЛО ##############################################
+def se_sends(user):
+  if user!=None:
+    slt=3
+    long=5
+    pi_user=thunder.find_one({'pioner':'pioner'})
+    se_user=thunder.find_one({'pioner':'semen'})
+    world.send_photo(user['id'], '')
+    world.send_message(user['id'], 'В глаза ударил яркий свет.')
+    time.sleep(slt)
+    world.send_message(user['id'], '~Да здраствует новая смена.~')
+    time.sleep(slt)
+    world.send_message(user['id'], 'Запах бензина и пыли. Вот с чего начинается очередной цикл.')
+    time.sleep(slt)
+    world.send_message(user['id'], 'Я машинально встал, и вышел из Икаруса, не забыв захватить пачку "Космоса" из бардачка.')
+    time.sleep(slt)
+    world.send_message(user['id'], 'Вокруг все цвело и пахло, как всегда. Прекрасные пейзажи этого мира уже давно перестали удивлять.')
+    time.sleep(slt)
+    world.send_message(user['id'], 'Первые смены, бывало даже резали глаза, но человек быстро адаптируется к окружающей среде.')
+    time.sleep(long)
+    world.send_message(user['id'], 'Я сел на бордюр, подкурил сигарету и принялся ждать.')
+    time.sleep(slt)
+    world.send_message(user['id'], 'Каждую смену ровно через 15 минут после приезда приходила она.')
+    time.sleep(slt)
+    world.send_message(user['id'], 'Славя.')
+    time.sleep(slt)
+    world.send_message(user['id'], 'За время пока я в лагере, я успел неплохо покопаться в себе.')
+    time.sleep(slt)
+    world.send_message(user['id'], 'Славя была, пожалуй, единственная, кто ни разу за все циклы не смог мне надоесть.')
+    time.sleep(slt)
+    world.send_message(user['id'], 'Она одна кое-как понимала меня, когда я рассказывал ей о моей нелегкой судьбе в этом лагере.')
+    time.sleep(slt)
+    world.send_message(user['id'], 'Или делала вид?')
+    time.sleep(slt)
+    world.send_message(user['id'], 'Впрочем, неважно, ведь тогда мне было просто необходимо, чтобы меня кто-то выслушал. И она прекрасно исполняла мое желание.')
+    time.sleep(long)
+    world.send_message(user['id'], 'Я докурил, затушил об асфальт сигарету, и глянул на время.')
+    time.sleep(slt)
+    world.send_message(user['id'], '10:34.')
+    time.sleep(slt)
+    world.send_message(user['id'], 'Ну всё, пора идти.')
+    time.sleep(slt)
+    world.send_message(user['id'], 'Подойдя к воротам, я прислушался, приготовясь услышать разговоры двух кибернетиков, как обычно стоявших около клубов.')
+    time.sleep(long)
+    world.send_message(user['id'], 'Тишина.')
+    time.sleep(slt)
+    world.send_message(user['id'], '~Странно. Ну ладно. Может при переходе на новый цикл у меня было повреждение слуха.~')
+    time.sleep(slt)
+    world.send_message(user['id'], 'Иногда случались небольшие инциденты при попадании на новую смену. Особенно часто после суицида. Проблемы незначительные, но заметные сразу.')
+    time.sleep(long)
+    world.send_message(user['id'], 'Допустим, я однажды пробовал выпить все таблетки в медпункте, так после пробуждения в автобусе у меня всю смену без причины болел живот.', parse_mode='markdown')
+    time.sleep(long)
+    world.send_message(user['id'], 'Посмотрев еще раз на часы, я обнаружил, что время уже...', parse_mode='markdown')
+    time.sleep(slt)
+    world.send_message(user['id'], '10:36', parse_mode='markdown')
+    time.sleep(slt)
+    world.send_message(user['id'], 'Сердце упало в пятки.', parse_mode='markdown')
+    time.sleep(slt)
+    world.send_message(user['id'], '~Не может быть!~', parse_mode='markdown')
+    time.sleep(slt)
+    world.send_message(user['id'], 'Я забежал за лагерные ворота.', parse_mode='markdown')
+    time.sleep(slt)
+    world.send_message(user['id'], 'Насколько же я был удивлен, когда не увидел за воротами НИКОГО!', parse_mode='markdown')
+    time.sleep(slt)
+    world.send_message(user['id'], '~Что тут мать твою происходит?!~', parse_mode='markdown')
+    time.sleep(slt)
+    world.send_message(user['id'], 'Ни одной смены с похожим сюжетом на моей памяти не было.', parse_mode='markdown')
+    time.sleep(slt)
+    world.send_message(user['id'], 'Всегда в 10:35 Славя приходила меня встречать. Всегда около клубов стояли и разговаривали кибернетики.', parse_mode='markdown')
+    time.sleep(slt)
+    world.send_message(user['id'], 'Сейчас же меня никто не встретил и около клубов было пусто.', parse_mode='markdown')
+    time.sleep(slt)
+    world.send_message(user['id'], '~Так. Надо собраться. Может быть стоит пройтись по лагерю? Или стоит пойти умыться и придти в себя?~', parse_mode='markdown')
+    time.sleep(slt)
+    kb=types.InlineKeyboardMarkup()
+    kb.add(types.InlineKeyboardButton(text='Обойти лагерь', callback_data='semen_check_all'))
+    kb.add(types.InlineKeyboardButton(text='Пойти к умывальникам', callback_data='semen_goto_wash'))
+    world.send_message(user['id'], 'Как поступить?', reply_markup=kb)
+    thunder.update_one({'id':user['id']},{'$set':{'choicing':1}})
+    
+ 
+@world.callback_query_handler(func=lambda call:True)
+def inline(call):
+    user=thunder.find_one({'id':call.from_user.id})
+    if call.data=='semen_check_all':
+        if user['choicing']==1:
+            thunder.update_one({'id':call.from_user.id},{'$set':{'choicing':0, 'nextfunc':'semen_checkall'}})
+
+            
+def dofunc(user):
+    pass
+
+def eventcheck():
+    no=0
+    for ids in thunder.find({}):
+        if ids['waitall']==1 and ids['nextfunc']==None:
+            no=1
+    if no==0:
+        for ids in thunder.find({}):
+            if ids['nextfunc']!=None:
+                thunder.update_one({'id':ids['id']},{'$set':{'nextfunc':None}})
+                dofunc(ids)
+            
+    t=threading.Timer(1, eventcheck)
+    t.start()
+            
 @world.message_handler(commands=['remove_event_users'])
 def delusersevent(m):
     for ids in thunder.find({}):
@@ -2517,14 +2633,27 @@ def delusersevent(m):
 @world.message_handler(commands=['start_event'])
 def starteventt(m):
     if m.from_user.id==441399484:
+        for ids in thunder_variables.find({}):
+            thunder_variables.remove({'name':ids['name']})
+        thunder_variables.insert_one(createvar('semen_1choice', None))
         event_thunder_in_paradise()
     
-
+def createvar(name, value):
+    return {
+        'name':name,
+        'value':value
+    }
+                                     
+                                     
 def event_thunder_in_paradise():
     actives=['semen', 'pioner', '']
     pi_user=thunder.find_one({'pioner':'pioner'})
+    se_user=thunder.find_one({'pioner':'semen'})
     t=threading.Thread(target=pi_sends, args=[pi_user])
     t.start()
+    for ids in thunder.find({}):
+        if ids['pioner']!='pioner':
+            world.send_message(ids['id'], 'Ваш временной промежуток ещё не настал. Ожидайте, история началась...')
     
 
 
