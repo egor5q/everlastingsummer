@@ -2309,6 +2309,7 @@ def audiohandler(m):
    
 def pi_sends(user):
     slt=3
+    long=5
     world.send_photo(user['id'], 'AgADAgADhqoxGx3TaEs2RjkBAr60m95HhA8ABLaEkJAkRZsEQy8BAAEC')
     world.send_message(user['id'], 'Меня разбудило громкое завывание сработавшей сигнализации.')
     time.sleep(slt)
@@ -2333,7 +2334,7 @@ def pi_sends(user):
     time.sleep(slt)
     world.send_message(user['id'], 'На первый взгляд это был ничем не примечательный свод тоннеля недалеко от входа в катакомбы, однако, '+
                       'если приглядеться чуть внимательнее, то можно заметить слабо мигающую красную лампочку в самой верхней точки каменного свода.')
-    time.sleep(slt)
+    time.sleep(long)
     world.send_message(user['id'], 'Именно от этой красной лампочки, вниз, тянулась едва ли заметная леска. В черноте тоннеля заметить её было практически невозможно.')
     time.sleep(slt)
     world.send_message(user['id'], 'Я медленно провёл светом фонаря от потолка до пола тоннеля.')
@@ -2345,7 +2346,7 @@ def pi_sends(user):
     world.send_message(user['id'], 'От массы менее пятнадцати килограмм леска бы не порвалась.')
     time.sleep(slt)
     world.send_message(user['id'], 'Это сразу ликвидировало вариант с лесной живностью. Белка или кролик не смогли бы порвать леску, а сигнализация бы не сработала.')
-    time.sleep(slt)
+    time.sleep(long)
     world.send_message(user['id'], 'А это значит, что...')
     time.sleep(slt)
     world.send_message(user['id'], '_Юля_:\nДавно не виделись.', parse_mode='markdown')
@@ -2432,7 +2433,7 @@ def pi_sends(user):
     world.send_message(user['id'], '_Юля_:\nУ нас мало времени! Слушай меня, и запоминай!', parse_mode='markdown')
     time.sleep(slt)
     world.send_message(user['id'], '_Юля_:\nЧерез несколько минут тебя закинет на новую смену. В ней будет много других твоих двойников. Но лишь один из них настоящий. Все остальные не больше чем клоны.', parse_mode='markdown')
-    time.sleep(slt)
+    time.sleep(long)
     world.send_message(user['id'], '_Юля_:\nГоворю сразу, в лагере будут происходить необьяснимые вещи.', parse_mode='markdown')
     time.sleep(slt)
     world.send_message(user['id'], '_Юля_:\nИ я хочу, чтобы ты был готов, когда встретишься с ними. Ты...', parse_mode='markdown')
@@ -2465,11 +2466,11 @@ def pi_sends(user):
     world.send_message(user['id'], '_Юля_:\nЗапомни!', parse_mode='markdown')
     time.sleep(slt)
     world.send_message(user['id'], '_Юля_:\n_Восход окрасит бесконечно темное небо багряной краской, как знак того, сколько крови было пролито ради свободы._', parse_mode='markdown')
-    time.sleep(slt)
+    time.sleep(long)
     world.send_message(user['id'], 'Чужим голосом произнесла Юля.', parse_mode='markdown')
     time.sleep(slt)
     world.send_message(user['id'], '~Спасти его?! Ну уж нет. Я не стану жертвовать своей жизнью ради очередного сопливого Семенчика.~', parse_mode='markdown')
-    time.sleep(slt)
+    time.sleep(long)
     world.send_message(user['id'], 'В груди начала закипать бешеная злоба.', parse_mode='markdown')
     time.sleep(slt)
     world.send_message(user['id'], '_Пионер_:\nСпасти его?! Спасти его?!', parse_mode='markdown')
@@ -2486,7 +2487,7 @@ def pi_sends(user):
     world.send_message(user['id'], '_Пионер_:\nНеужели ты не понимаешь?! Мне нечего терять!', parse_mode='markdown')
     time.sleep(slt)
     world.send_message(user['id'], '_Пионер_:\nТы совершила ошибку, придя сюда. Но я не могу не выразить благодарность тебе за информацию. К сожалению, теперь я буду обладать ей один.', parse_mode='markdown')
-    time.sleep(slt)
+    time.sleep(long)
     world.send_message(user['id'], 'В этот момент рука уже находилась за спиной. Холодное лезвие упиралось в ремень шорт.', parse_mode='markdown')
     time.sleep(slt)
     world.send_message(user['id'], 'Я резко сорвался с места и кинулся на Юлю.', parse_mode='markdown')
