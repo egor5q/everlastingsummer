@@ -2299,10 +2299,13 @@ def createeventuser(user, pioner):
 @world.message_handler(content_types=['photo'])
 def imgg(m):
     world.send_photo(441399484, m.photo[0].file_id, caption=str(m.photo[0].file_id))
+
     
+############################################### ПИОНЕР: НАЧАЛО ##############################################
    
 def pi_sends(user):
     slt=2
+    world.send_photo(user['id'], 'AgADAgADhqoxGx3TaEs2RjkBAr60m95HhA8ABLaEkJAkRZsEQy8BAAEC')
     world.send_message(user['id'], 'Меня разбудило громкое завывание сработавшей сигнализации.')
     time.sleep(slt)
     world.send_message(user['id'], '~Чёрт, надо будет убавить громкость рупоров.~')
@@ -2322,6 +2325,7 @@ def pi_sends(user):
     world.send_message(user['id'], 'Я на ходу подхватил с пола фонарь и направился в черноту тоннеля, захлопнув за собой массивную дверь бомбоубежища.')
     time.sleep(slt)
     world.send_message(user['id'], 'Не прошло и пяти минут, как я уже был на месте.')
+    world.send_photo(user['id'], 'AgADAgAD_qsxG9QTYUuEsMnVDPodCSNTOQ8ABFoAASsafFfUD_AiBgABAg')
     time.sleep(slt)
     world.send_message(user['id'], 'На первый взгляд это был ничем не примечательный свод тоннеля недалеко от входа в катакомбы, однако, '+
                       'если приглядеться чуть внимательнее, то можно заметить слабо мигающую красную лампочку в самой верхней точки каменного свода.')
@@ -2411,6 +2415,7 @@ def pi_sends(user):
     world.send_message(user['id'], '_Юля_:\nНет, не все так просто. Я...', parse_mode='markdown')
     time.sleep(slt)
     world.send_message(user['id'], 'Её слова прервал оглушительный взрыв где-то на поверхности.', parse_mode='markdown')
+    world.send_photo(user['id'], 'AgADAgADh6oxGx3TaEtrkrCzsJYzIotbOQ8ABO6maOEKrBrV7hkGAAEC')
     time.sleep(slt)
     world.send_message(user['id'], 'Юля отпрыгнула от меня и оскалилась, посмотрев вверх. Её зрачки превратились в две узкие щелки.', parse_mode='markdown')
     time.sleep(slt)
@@ -2496,8 +2501,19 @@ def pi_sends(user):
     world.send_message(user['id'], '_Пионер_:\nИ никто меня не остановит...', parse_mode='markdown')
     time.sleep(slt)
     
-    
-    
+@world.message_handler(commands=['remove_event_users'])
+def delusersevent(m):
+    for ids in thunder.find({}):
+        thunder.remove({ids['id']})
+    bot.send_message(m.chat.id, 'success')
+
+
+@world.message_handler(commands=['start_event'])
+def starteventt(m):
+    if m.from_user.id==441399484:
+        event_thunder_in_paradise()
+        for ids in thunder.find({}):
+            thunder.remove({ids['id']})
     
 
 def event_thunder_in_paradise():
