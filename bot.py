@@ -2304,7 +2304,7 @@ def imgg(m):
 ############################################### ПИОНЕР: НАЧАЛО ##############################################
    
 def pi_sends(user):
-    slt=2
+    slt=3
     world.send_photo(user['id'], 'AgADAgADhqoxGx3TaEs2RjkBAr60m95HhA8ABLaEkJAkRZsEQy8BAAEC')
     world.send_message(user['id'], 'Меня разбудило громкое завывание сработавшей сигнализации.')
     time.sleep(slt)
