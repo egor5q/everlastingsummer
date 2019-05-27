@@ -2504,7 +2504,7 @@ def pi_sends(user):
 @world.message_handler(commands=['remove_event_users'])
 def delusersevent(m):
     for ids in thunder.find({}):
-        thunder.remove({ids['id']})
+        thunder.remove({'id':ids['id']})
     bot.send_message(m.chat.id, 'success')
 
 
@@ -2512,8 +2512,6 @@ def delusersevent(m):
 def starteventt(m):
     if m.from_user.id==441399484:
         event_thunder_in_paradise()
-        for ids in thunder.find({}):
-            thunder.remove({ids['id']})
     
 
 def event_thunder_in_paradise():
