@@ -2693,7 +2693,7 @@ def inline(call):
     if call.data=='semen_check_all':
         if user['choicing']==1:
             thunder.update_one({'id':call.from_user.id},{'$set':{'choicing':0, 'nextfunc':'semen_checkall', 'ready':1}})
-            thunder_variables.update_one({'name':'semen_checkall'},{'$set':'value':1}})
+            thunder_variables.update_one({'name':'semen_checkall'},{'$set':{'value':1}})
             checkall()
 
             
