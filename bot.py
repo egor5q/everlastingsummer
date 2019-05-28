@@ -2624,12 +2624,39 @@ def pioner_awaking(user):
     time.sleep(slt)
     world.send_message(user['id'], 'Я встал с пола, покопался в ящиках и достал оттуда кухонный нож.', parse_mode='markdown')
     time.sleep(slt)
-    world.send_message(user['id'], 'Да начнётся игра... На выживание!', parse_mode='markdown')
+    world.send_message(user['id'], 'Да начнётся игра... *На выживание!*', parse_mode='markdown')
     time.sleep(long)
-    world.send_message(user['id'], '', parse_mode='markdown')
+    world.send_message(user['id'], '...', parse_mode='markdown')
     time.sleep(slt)
+    world.send_message(user['id'], 'Я решил выйти наружу через старый корпус.', parse_mode='markdown')
+    time.sleep(slt)
+    world.send_message(user['id'], 'По пути я встретил одного из Семенов, о которых мне говорила Юля. Не составило труда избавиться от конкурента, учитывая тот факт, что у меня было оружие.', parse_mode='markdown')
+    time.sleep(long)
+    world.send_message(user['id'], 'Я ещё много раз встречал их копии, и всегда исход был одним. Они физически не способны противостоять мне. Некоторые из них даже первми пытались кидаться на меня.', parse_mode='markdown')
+    time.sleep(long)
+    world.send_message(user['id'], '~Видимо, не одному мне известно о том, что эта смена последняя.~', parse_mode='markdown')
+    time.sleep(slt)
+    world.send_message(user['id'], '~Интересно, был ли среди них "настоящий", как назвала его Юля?~', parse_mode='markdown')
+    time.sleep(slt)
+    world.send_message(user['id'], 'От этой мысли злоба ещё сильнее разгоралась во мне. Мне не хотелось верить в её слова, но подсознательно я понимал, что она права. Ей не было смысла врать мне тогда.', parse_mode='markdown')
+    time.sleep(long)
+    world.send_message(user['id'], '~Плевать. Выберусь отсюда только я.~', parse_mode='markdown')
+    time.sleep(slt)
+    thunder.update_one({'pioner':'pioner'},{'$set':{'nextfunc':'pioner_gooutbunker', 'ready':1}})
 
 
+############################################### СЛАВЯ: ПРОБУЖДЕНИЕ ##############################################
+
+def slavya_awaking(user):
+  if user!=None:
+    slt=3
+    long=5
+    sl_user=thunder.find_one({'pioner':'slavya'})
+    world.send_photo(user['id'], '')
+    world.send_message(user['id'], 'Я как обычно проснулась у себя в домике.', parse_mode='markdown')
+    
+    
+    
 def semen_checkall(user):
     pass
 
