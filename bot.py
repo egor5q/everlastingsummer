@@ -2654,6 +2654,31 @@ def slavya_awaking(user):
     sl_user=thunder.find_one({'pioner':'slavya'})
     world.send_photo(user['id'], '')
     world.send_message(user['id'], 'Я как обычно проснулась у себя в домике.', parse_mode='markdown')
+    time.sleep(slt)
+    world.send_message(user['id'], 'Но Жени тут почему-то не было.', parse_mode='markdown')
+    time.sleep(slt)
+    world.send_message(user['id'], '~Странно... Обычно я просыпаюсь раньше неё.~', parse_mode='markdown')
+    time.sleep(slt)
+    world.send_message(user['id'], '~Ладно. Наверное, она пошла в библиотеку.~', parse_mode='markdown')
+    time.sleep(slt)
+    world.send_message(user['id'], 'Я встала с кровати, оделась, и взяв умывальные принадлежности, отправилась приводить себя в порядок.', parse_mode='markdown')
+    time.sleep(slt)
+    world.send_message(user['id'], 'Пока я шла к умывальникам, я не встретила ни одного человека.', parse_mode='markdown')
+    time.sleep(slt)
+    world.send_message(user['id'], '~Где все? Неужели сегодня абсолютно весь лагерь решил проспать линейку?~', parse_mode='markdown')
+    time.sleep(slt)
+    world.send_message(user['id'], 'Хотя до линейки было еще где-то пол часа, в это время обычно многие просыпаются и идут по своим делам.', parse_mode='markdown')
+    time.sleep(slt)
+    world.send_message(user['id'], 'Я закончила умываться, но обстановка в лагере не давала покоя.', parse_mode='markdown')
+    time.sleep(slt)
+    world.send_message(user['id'], 'Очень странно. Может, стоит спросить Ольгу Дмитриевну? Или пойти в библиотеку и поговорить с Женей?', parse_mode='markdown')
+    time.sleep(slt)
+    thunder.update_one({'pioner':'slavya'},{'$set':{'choicing':1}})
+    kb=types.InlineKeyboardMarkup()
+    kb.add(types.InlineKeyboardButton(text='Пойти к Ольге Дмитриевне в домик', callback_data='slavya_check_olga'))
+    kb.add(types.InlineKeyboardButton(text='Пойти в библиотеку', callback_data='slavya_check_library'))
+    world.send_message(user['id'], 'Как поступить?', reply_markup=kb)
+    
     
     
     
@@ -2680,6 +2705,7 @@ def checkall():
     if no==0:
         for ids in thunder.find({}):
             dofunc(ids)
+        thunder.update_many({},{'$set':{'nextfunc':None, 'ready':0}})
             
 def dofunc(user):
     if user['nextfunc']=='semen_checkall':
