@@ -2292,9 +2292,8 @@ def createeventuser(user, pioner):
     return {
         'id':user,
         'pioner':pioner,
-        'choice':None,
         'choicing':0,
-        'waitall':1,
+        'ready':0,
         'nextfunc':None
     }
   
@@ -2514,6 +2513,8 @@ def pi_sends(user):
     time.sleep(slt)
     t=threading.Thread(target=se_sends, args=[se_user])
     t.start()
+    t=threading.Timer(10, pioner_awaking, args=[pi_user])
+    t.start()
     
    
 
@@ -2596,38 +2597,72 @@ def se_sends(user):
     kb.add(types.InlineKeyboardButton(text='Пойти к умывальникам', callback_data='semen_goto_wash'))
     world.send_message(user['id'], 'Как поступить?', reply_markup=kb)
     thunder.update_one({'id':user['id']},{'$set':{'choicing':1}})
-    
+ 
+
+
+############################################### ПИОНЕР: ПРОБУЖДЕНИЕ ##############################################
+
+def pioner_awaking(user):
+  if user!=None:
+    slt=3
+    long=5
+    pi_user=thunder.find_one({'pioner':'pioner'})
+    world.send_photo(user['id'], '')
+    world.send_message(user['id'], 'Я очнулся в бункере, на холодном полу.', parse_mode='markdown')
+    time.sleep(slt)
+    world.send_message(user['id'], '~Не в автобусе?~', parse_mode='markdown')
+    time.sleep(slt)
+    world.send_message(user['id'], 'Мне это показалось странным, но потом я вспомнил, что сказала мне Юля в прошлой смене.', parse_mode='markdown')
+    time.sleep(slt)
+    world.send_message(user['id'], '~В лагере будут происходить странные вещи. Эта смена будет последней для всех. И выберется только один...~', parse_mode='markdown')
+    time.sleep(slt)
+    world.send_message(user['id'], '~Не зря я столько времени готовился к этому! Моё тело значительно сильнее и выносливее всех остальных Семёнов.~', parse_mode='markdown')
+    time.sleep(long)
+    world.send_message(user['id'], 'Я оглядел себя, и злобно ухмыльнулся.', parse_mode='markdown')
+    time.sleep(slt)
+    world.send_message(user['id'], '~Настало время выбраться отсюда. И я сделаю это, чего бы мне это не стоило.~', parse_mode='markdown')
+    time.sleep(slt)
+    world.send_message(user['id'], 'Я встал с пола, покопался в ящиках и достал оттуда кухонный нож.', parse_mode='markdown')
+    time.sleep(slt)
+    world.send_message(user['id'], 'Да начнётся игра... На выживание!', parse_mode='markdown')
+    time.sleep(long)
+    world.send_message(user['id'], '', parse_mode='markdown')
+    time.sleep(slt)
+
+
+def semen_checkall(user):
+    pass
+
+
  
 @world.callback_query_handler(func=lambda call:True)
 def inline(call):
     user=thunder.find_one({'id':call.from_user.id})
     if call.data=='semen_check_all':
         if user['choicing']==1:
-            thunder.update_one({'id':call.from_user.id},{'$set':{'choicing':0, 'nextfunc':'semen_checkall'}})
+            thunder.update_one({'id':call.from_user.id},{'$set':{'choicing':0, 'nextfunc':'semen_checkall', 'ready':1}})
+            thunder_variables.update_one({'name':'semen_checkall'},{'$set':'value':1}})
+            checkall()
 
             
-def dofunc(user):
-    pass
-
-def eventcheck():
+def checkall():
     no=0
     for ids in thunder.find({}):
-        if ids['waitall']==1 and ids['nextfunc']==None:
+        if ids['ready']==0:
             no=1
     if no==0:
         for ids in thunder.find({}):
-            if ids['nextfunc']!=None:
-                thunder.update_one({'id':ids['id']},{'$set':{'nextfunc':None}})
-                dofunc(ids)
+            dofunc(ids)
             
-    t=threading.Timer(1, eventcheck)
-    t.start()
+def dofunc(user):
+    if user['nextfunc']=='semen_checkall':
+        semen_checkall(user)
             
 @world.message_handler(commands=['remove_event_users'])
 def delusersevent(m):
     for ids in thunder.find({}):
         thunder.remove({'id':ids['id']})
-    bot.send_message(m.chat.id, 'success')
+    world.send_message(m.chat.id, 'success')
 
 
 @world.message_handler(commands=['start_event'])
