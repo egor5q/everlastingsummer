@@ -36,6 +36,7 @@ db=client.everlastingsummer
 users=db.users
 thunder=db.thunder
 thunder_variables=db.thunder_variables
+ban=db.ban
 
 mainchat=-1001351496983
 
@@ -104,6 +105,18 @@ works=[
               'lvl':3
              }
 ]
+
+
+def createban(id):
+    return {
+        'id':id
+    }
+
+
+if ban.find_one({'id':617640951})==None:
+    ban.insert_one(createban(617640951))
+    
+     
 
 @world.message_handler(commands=['do'])
 def do(m):
@@ -174,6 +187,7 @@ def lvlsort(x):
 
 
 def msghandler(m, pioner):
+  if ban.find_one({'id':m.from_user.id})==None:   
     stats=None
     if pioner==uliana:
         stats=ulianastats
@@ -308,7 +322,7 @@ def allinfoaboutp(m):
         
 @bot.message_handler(commands=['start'])
 def start(m):
- if m.chat.id==m.from_user.id:
+ if m.chat.id==m.from_user.id and ban.find_one({'id':m.from_user.id})==None:
   x=users.find_one({'id':m.from_user.id})
   if x==None:
     users.insert_one(createuser(m.from_user.id, m.from_user.first_name, m.from_user.username))
@@ -342,6 +356,7 @@ def pinfo(m):
 
 @bot.message_handler(commands=['work'])
 def work(m):
+  if ban.find_one({'id':m.from_user.id})==None:   
     global rds
     x=users.find_one({'id':m.from_user.id})
     if x!=None and rds==True:
@@ -504,6 +519,7 @@ def gamestestdsdfsdgd(m):
 ####################################### OLGA ##############################################
 @bot.message_handler(commands=['control'])
 def odcontrol(m):
+  if ban.find_one({'id':m.from_user.id})==None:
     if m.from_user.id in botadmins or m.from_user.id in od_admins:
         if odstats['controller']==None:
             odstats['controller']={'id':m.from_user.id,
@@ -535,6 +551,7 @@ def stickercatchod(m):
 
 @bot.message_handler()
 def messag(m):
+ if ban.find_one({'id':m.from_user.id})==None:   
   if m.from_user.id==m.chat.id:
     x=users.find_one({'id':m.from_user.id})
     if x!=None:
@@ -1351,6 +1368,7 @@ def stickercatchelectronic(m):
 @electronic.message_handler()
 def electronichandler(m):
  try:
+  if ban.find_one({'id':m.from_user.id})==None:   
     if electronicstats['waitingplayers']==1:
         if m.text.lower()=='хочу принять участие в турнире!':
             x=users.find_one({'id':m.from_user.id})
@@ -1410,6 +1428,7 @@ def lenastopcontrol(m):
             
 @lena.message_handler()
 def lenamessages(m):
+  if ban.find_one({'id':m.from_user.id})==None:   
     print('1')
     yes=['да!','конечно!','да','да, могу.','могу','могу.','конечно могу!','да']
     if lenastats['whohelps']!=None:
@@ -1472,6 +1491,7 @@ def alisastopcontrol(m):
 @alisa.message_handler()
 def alisamessages(m):
  try:   
+  if ban.find_one({'id':m.from_user.id})==None:   
     yes=['да','я готов', 'го', 'ну го', 'я в деле']
     if alisastats['whohelps']!=None:
         y=0
@@ -1565,6 +1585,7 @@ def ulianastopcontrol(m):
             
 @uliana.message_handler()
 def ulianamessages(m):
+   if ban.find_one({'id':m.from_user.id})==None:   
     yes=['да', 'давай', 'я в деле', 'рассказывай']
     if ulianastats['whohelps']!=None:
         y=0
@@ -1622,6 +1643,7 @@ def slavyastopcontrol(m):
             
 @slavya.message_handler()
 def slavyamessages(m):
+   if ban.find_one({'id':m.from_user.id})==None:   
     yes=['да','я готов', 'давай', 'я в деле']
     if slavyastats['whohelps']!=None:
         y=0
@@ -1680,6 +1702,7 @@ def mikustopcontrol(m):
             
 @miku.message_handler()
 def mikumessages(m):
+  if ban.find_one({'id':m.from_user.id})==None:   
     msghandler(m, miku)
                       
                       
@@ -1716,6 +1739,7 @@ def zhenyastopcontrol(m):
             
 @zhenya.message_handler()
 def zhenyamessages(m):
+  if ban.find_one({'id':m.from_user.id})==None:   
     msghandler(m, zhenya)
                       
                       
@@ -1752,6 +1776,7 @@ def tolikstopcontrol(m):
             
 @tolik.message_handler()
 def tolikmessages(m):
+  if ban.find_one({'id':m.from_user.id})==None:   
     msghandler(m, tolik)
                       
                       
@@ -1786,7 +1811,7 @@ def shuriktopcontrol(m):
             
 @shurik.message_handler()
 def shurikmessages(m):
-    
+  if ban.find_one({'id':m.from_user.id})==None:     
     msghandler(m, shurik)
                       
                       
@@ -1820,6 +1845,7 @@ def semenstopcontrol(m):
 
 @semen.message_handler()
 def semenmessages(m):
+  if ban.find_one({'id':m.from_user.id})==None:   
     msghandler(m, semen)
     
     
@@ -1853,6 +1879,7 @@ def pioneerstopcontrol(m):
 
 @pioneer.message_handler()
 def pioneermessages(m):
+  if ban.find_one({'id':m.from_user.id})==None:   
     msghandler(m, pioneer)
     
     
