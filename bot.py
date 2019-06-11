@@ -45,7 +45,7 @@ notexts=['простите, но у меня уже появились дела.
 
 botadmins=[441399484]
 el_admins=[574865060]
-al_admins=[512006137]
+al_admins=[512006137, 737959649]
 ul_admins=[851513241]
 mi_admins=[268486177]
 le_admins=[60727377, 851513241]
@@ -54,7 +54,7 @@ od_admins=[629070350, 512006137, 850666493]
 zh_admins=[390362465]
 to_admins=[414374606]
 sh_admins=[574865060]
-se_admins=[851513241]
+se_admins=[851513241, 737959649]
 pi_admins=[512006137]
 
 ignorelist=[]
