@@ -826,6 +826,7 @@ def checktime():
         cardplayers=[]
         eveninggames()
     if(hour==7 and minute==0):
+        odstats['waitforlineyka']=1
         bot.send_chat_action(-1001351496983,'typing')
         time.sleep(3)
         bot.send_message(-1001351496983, 'Доброе утро, пионеры! В 7:30 жду всех на линейке!')
@@ -841,6 +842,7 @@ def checktime():
             text+=ids+'\n'
         bot.send_message(-1001351496983,text+'\nВот все, кто сегодня пришёл. Молодцы, пионеры! Так держать!'+\
                          'Сейчас расскажу о планах на день.',parse_mode='markdown')
+        
             
         
     
