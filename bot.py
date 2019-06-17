@@ -2893,6 +2893,12 @@ def starteventt(m):
             thunder_variables.remove({'name': ids['name']})
         thunder_variables.insert_one(createvar('semen_1choice', None))
         event_thunder_in_paradise()
+        if len(m.text.split()) == 2:
+            try:
+                event_thunder_in_paradise(polunin_pidor=True)
+            except:
+                bot.send_message(mainchat, 'Полунин облажался')
+                world.send_message(mainchat, traceback.format_exc())
 
 
 def createvar(name, value):
@@ -2902,12 +2908,21 @@ def createvar(name, value):
     }
 
 
-def event_thunder_in_paradise():
+def event_thunder_in_paradise(polunin_pidor=False):
     actives = ['semen', 'pioner', '']
     pi_user = thunder.find_one({'pioner': 'pioner'})
     se_user = thunder.find_one({'pioner': 'semen'})
+    if polunin_pidor:
+        event = Event(mainchat, grom)
+        event.add_user(pi_user['id'], 'pioner')
+        event.add_user(se_user['id'], 'semen')
+        return
     t = threading.Thread(target=pi_sends, args=[pi_user])
     t.start()
     for ids in thunder.find({}):
         if ids['pioner'] != 'pioner':
             world.send_message(ids['id'], 'Ваш временной промежуток ещё не настал. Ожидайте, история началась...')
+
+
+from events import Event  # этот импорт должен быть тут, чтобы избежать ошибок
+from events.scenaries import grom  # как и этот
