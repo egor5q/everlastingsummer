@@ -2909,8 +2909,8 @@ def createvar(name, value):
     }
 
 
-from events import Event  # этот импорт должен быть тут, чтобы избежать ошибок
-from events.scenaries import grom  # как и этот
+#from events import Event  # этот импорт должен быть тут, чтобы избежать ошибок
+#from events.scenaries import grom  # как и этот
 
 
 def event_thunder_in_paradise(polunin_pidor=False):
