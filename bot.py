@@ -2908,6 +2908,10 @@ def createvar(name, value):
     }
 
 
+from events import Event  # этот импорт должен быть тут, чтобы избежать ошибок
+from events.scenaries import grom  # как и этот
+
+
 def event_thunder_in_paradise(polunin_pidor=False):
     actives = ['semen', 'pioner', '']
     pi_user = thunder.find_one({'pioner': 'pioner'})
@@ -2923,6 +2927,3 @@ def event_thunder_in_paradise(polunin_pidor=False):
         if ids['pioner'] != 'pioner':
             world.send_message(ids['id'], 'Ваш временной промежуток ещё не настал. Ожидайте, история началась...')
 
-
-from events import Event  # этот импорт должен быть тут, чтобы избежать ошибок
-from events.scenaries import grom  # как и этот
