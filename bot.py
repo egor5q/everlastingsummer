@@ -212,12 +212,12 @@ def msghandler(m, pioner):
 
         if stats['controller'] != None:
             controller = stats['controller']
-            if True:#m.chat.id == controller['id']:
+            if m.from_user.id == controller['id']:
               if m.text[0]!='/':
                 if m.reply_to_message == None:
                     #if m.text.split(' ')[0] != '/pm' and m.text.split(' ')[0] != '/r':
                     try:
-                        bot.delete_message(m.chat.id, m.message_id)
+                        bot.delete_message(chat_id=m.chat.id, message_id=m.message_id)
                     except:
                         bot.send_message(441399484, traceback.format_exc())
                     msg = pioner.send_message(m.chat.id, m.text)
