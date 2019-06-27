@@ -62,7 +62,7 @@ pi_admins = []#[512006137]
 
 ignorelist = []
 
-rds = True
+rds = False
 
 works = [
     {'name': 'concertready',
@@ -212,7 +212,7 @@ def msghandler(m, pioner):
 
         if stats['controller'] != None:
             controller = stats['controller']
-            if m.chat.id == controller['id']:
+            if True:#m.chat.id == controller['id']:
               if m.text[0]!='/':
                 if m.reply_to_message == None:
                     #if m.text.split(' ')[0] != '/pm' and m.text.split(' ')[0] != '/r':
