@@ -218,14 +218,14 @@ def stickhandler(m, pioner):
                     try:
                         bot.delete_message(m.chat.id, m.message_id)
                     except:
-                        pass
-                    pioner.send_sticker(-1001351496983, m.sticker.file_id)
+                        bot.send_message(441399484, traceback.format_exc())
+                    pioner.send_sticker(m.chat.id, m.sticker.file_id)
                 else:
                     try:
                         bot.delete_message(m.chat.id, m.message_id)
                     except:
-                        pass
-                    pioner.send_sticker(-1001351496983, m.sticker.file_id, reply_to_message_id=m.reply_to_message.message_id)
+                        bot.send_message(441399484, traceback.format_exc())
+                    pioner.send_sticker(m.chat.id, m.sticker.file_id, reply_to_message_id=m.reply_to_message.message_id)
     
 
 def msghandler(m, pioner):
