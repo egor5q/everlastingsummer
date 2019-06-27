@@ -219,7 +219,7 @@ def msghandler(m, pioner):
                     try:
                         bot.delete_message(m.chat.id, m.message_id)
                     except:
-                        pass
+                        bot.send_message(441399484, traceback.format_exc())
                     msg = pioner.send_message(m.chat.id, m.text)
                         #for ids in ctrls:
                         #    if ids['controller'] != None and ids['bot'] != pioner:
@@ -271,7 +271,7 @@ def msghandler(m, pioner):
                         try:
                             bot.delete_message(m.chat.id, m.message_id)
                         except:
-                            pass
+                            bot.send_message(441399484, traceback.format_exc())
                         pioner.send_message(m.chat.id, m.text, reply_to_message_id=m.reply_to_message.message_id)
 
                     except Exception as E:
