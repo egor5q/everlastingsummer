@@ -133,6 +133,7 @@ def do(m):
 
 @world.message_handler(commands=['rp'])
 def rp(m):
+  if m.from_user.id==441399484:
     global nowrp
     if nowrp==True:
         nowrp=False
