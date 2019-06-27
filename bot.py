@@ -182,6 +182,52 @@ def lvlsort(x):
     return finallist
 
 
+
+def stickhandler(m, pioner):
+    if ban.find_one({'id': m.from_user.id}) == None:
+        stats = None
+        if pioner == uliana:
+            stats = ulianastats
+        if pioner == lena:
+            stats = lenastats
+        if pioner == tolik:
+            stats = tolikstats
+        if pioner == alisa:
+            stats = alisastats
+        if pioner == bot:
+            stats = odstats
+        if pioner == zhenya:
+            stats = zhenyastats
+        if pioner == shurik:
+            stats = shurikstats
+        if pioner == electronic:
+            stats = electronicstats
+        if pioner == slavya:
+            stats = slavyastats
+        if pioner == miku:
+            stats = mikustats
+        if pioner == pioneer:
+            stats = pioneerstats
+        if pioner == semen:
+            stats = semenstats
+
+        if stats['controller'] != None:
+            controller = stats['controller']
+            if m.from_user.id == controller['id']:
+                if m.reply_to_message == None:
+                    try:
+                        bot.delete_message(m.chat.id, m.message_id)
+                    except:
+                        pass
+                    pioner.send_sticker(-1001351496983, m.sticker.file_id)
+                else:
+                    try:
+                        bot.delete_message(m.chat.id, m.message_id)
+                    except:
+                        pass
+                    pioner.send_sticker(-1001351496983, m.sticker.file_id, reply_to_message_id=m.reply_to_message.message_id)
+    
+
 def msghandler(m, pioner):
     if ban.find_one({'id': m.from_user.id}) == None:
         stats = None
@@ -570,11 +616,7 @@ def odstopcontrol(m):
 def stickercatchod(m):
     if m.from_user.id == 441399484:
         bot.send_message(441399484, m.sticker.file_id)
-    if odstats['controller'] != None:
-        controller = odstats['controller']
-        if m.chat.id == controller['id']:
-            if m.reply_to_message == None:
-                bot.send_sticker(-1001351496983, m.sticker.file_id)
+    stickhandler(m, bot)
 
 
 @bot.message_handler()
@@ -1396,11 +1438,7 @@ def electronicstopcontrol(m):
 
 @electronic.message_handler(content_types=['sticker'])
 def stickercatchelectronic(m):
-    if electronicstats['controller'] != None:
-        controller = electronicstats['controller']
-        if m.chat.id == controller['id']:
-            if m.reply_to_message == None:
-                electronic.send_sticker(-1001351496983, m.sticker.file_id)
+    stickhandler(m, electronic)
 
 
 @electronic.message_handler()
@@ -1507,11 +1545,7 @@ def lenamessages(m):
 
 @lena.message_handler(content_types=['sticker'])
 def stickercatchlena(m):
-    if lenastats['controller'] != None:
-        controller = lenastats['controller']
-        if m.chat.id == controller['id']:
-            if m.reply_to_message == None:
-                lena.send_sticker(-1001351496983, m.sticker.file_id)
+    stickhandler(m, lena)
 
 
 ####################################### ALICE ##############################################
@@ -1605,11 +1639,7 @@ def alisamessages(m):
 
 @alisa.message_handler(content_types=['sticker'])
 def stickercatchalisa(m):
-    if alisastats['controller'] != None:
-        controller = alisastats['controller']
-        if m.chat.id == controller['id']:
-            if m.reply_to_message == None:
-                alisa.send_sticker(-1001351496983, m.sticker.file_id)
+    stickhandler(m, alisa)
 
 
 ####################################### ULIANA ##############################################
@@ -1725,11 +1755,7 @@ def slavyamessages(m):
 
 @slavya.message_handler(content_types=['sticker'])
 def stickercatchslavya(m):
-    if slavyastats['controller'] != None:
-        controller = slavyastats['controller']
-        if m.chat.id == controller['id']:
-            if m.reply_to_message == None:
-                slavya.send_sticker(-1001351496983, m.sticker.file_id)
+    stickhandler(m, slavya)
 
 
 ####################################### MIKU ##############################################
@@ -1761,12 +1787,7 @@ def mikumessages(m):
 
 @miku.message_handler(content_types=['sticker'])
 def stickercatchmiku(m):
-    if mikustats['controller'] != None:
-        controller = mikustats['controller']
-        if m.chat.id == controller['id']:
-            if m.reply_to_message == None:
-                miku.send_sticker(-1001351496983, m.sticker.file_id)
-
+    stickhandler(m, miku)
 
 ####################################### ZHENYA ##############################################
 @zhenya.message_handler(commands=['control'])
@@ -1796,11 +1817,7 @@ def zhenyamessages(m):
 
 @zhenya.message_handler(content_types=['sticker'])
 def stickercatchzhenya(m):
-    if zhenyastats['controller'] != None:
-        controller = zhenyastats['controller']
-        if m.chat.id == controller['id']:
-            if m.reply_to_message == None:
-                zhenya.send_sticker(-1001351496983, m.sticker.file_id)
+    stickhandler(m, zhenya)
 
 
 ####################################### TOLIK ##############################################
@@ -1831,11 +1848,7 @@ def tolikmessages(m):
 
 @tolik.message_handler(content_types=['sticker'])
 def stickercatchtolik(m):
-    if tolikstats['controller'] != None:
-        controller = tolikstats['controller']
-        if m.chat.id == controller['id']:
-            if m.reply_to_message == None:
-                tolik.send_sticker(-1001351496983, m.sticker.file_id)
+    stickhandler(m, tolik)
 
 
 ####################################### SHURIK ##############################################
@@ -1866,11 +1879,7 @@ def shurikmessages(m):
 
 @shurik.message_handler(content_types=['sticker'])
 def stickercatchzshurik(m):
-    if shurikstats['controller'] != None:
-        controller = shurikstats['controller']
-        if m.chat.id == controller['id']:
-            if m.reply_to_message == None:
-                shurik.send_sticker(-1001351496983, m.sticker.file_id)
+    stickhandler(m, shurik)
 
             ###################################### SEMEN ###############################################
 
@@ -1902,11 +1911,7 @@ def semenmessages(m):
 
 @semen.message_handler(content_types=['sticker'])
 def stickercatchsemen(m):
-    if semenstats['controller'] != None:
-        controller = semenstats['controller']
-        if m.chat.id == controller['id']:
-            if m.reply_to_message == None:
-                semen.send_sticker(-1001351496983, m.sticker.file_id)
+    stickhandler(m, semen)
 
             ###################################### PIONEER ###############################################
 
@@ -1938,11 +1943,7 @@ def pioneermessages(m):
 
 @pioneer.message_handler(content_types=['sticker'])
 def stickercatchpioneer(m):
-    if pioneerstats['controller'] != None:
-        controller = pioneerstats['controller']
-        if m.chat.id == controller['id']:
-            if m.reply_to_message == None:
-                pioneer.send_sticker(-1001351496983, m.sticker.file_id)
+    stickhandler(m, pioneer)
 
 
 def helpend(id, pioner):
