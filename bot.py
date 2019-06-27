@@ -40,23 +40,25 @@ thunder_variables = db.thunder_variables
 ban = db.ban
 
 mainchat = -1001351496983
+rpchats=[]
+
 
 yestexts = ['хорошо, ольга дмитриевна!', 'хорошо!', 'я этим займусь!', 'я готов!', 'я готова!']
 notexts = ['простите, но у меня уже появились дела.']
 
-botadmins = [441399484]
-el_admins = [574865060, 524034660]
-al_admins = [512006137, 737959649]
-ul_admins = [851513241]
-mi_admins = [268486177]
-le_admins = [60727377, 851513241]
-sl_admins = [851513241]
-od_admins = [629070350, 512006137, 850666493]
-zh_admins = [390362465]
-to_admins = [414374606]
-sh_admins = [574865060]
-se_admins = [851513241, 737959649]
-pi_admins = [512006137]
+botadmins = []#[441399484]
+el_admins = []#[574865060, 524034660]
+al_admins = []#[512006137, 737959649]
+ul_admins = []#[851513241]
+mi_admins = []#[268486177]
+le_admins = []#[60727377, 851513241]
+sl_admins = []#[851513241]
+od_admins = []#[629070350, 512006137, 850666493]
+zh_admins = []#[390362465]
+to_admins = []#[414374606]
+sh_admins = []#[574865060]
+se_admins = []#[851513241, 737959649]
+pi_admins = []#[512006137]
 
 ignorelist = []
 
@@ -211,79 +213,89 @@ def msghandler(m, pioner):
         if stats['controller'] != None:
             controller = stats['controller']
             if m.chat.id == controller['id']:
+              if m.text[0]!='/':
                 if m.reply_to_message == None:
-                    if m.text.split(' ')[0] != '/pm' and m.text.split(' ')[0] != '/r':
-                        msg = pioner.send_message(-1001351496983, m.text)
-                        for ids in ctrls:
-                            if ids['controller'] != None and ids['bot'] != pioner:
-                                if msg.chat.id == -1001351496983:
-                                    x = '(Общий чат)'
-                                else:
-                                    x = '(ЛС)'
-                                try:
-                                    ids['bot'].send_message(ids['controller']['id'],
-                                                            x + '\n' + msg.from_user.first_name + ' (`' + str(
-                                                                msg.from_user.id) + '`) (❓' + str(
-                                                                msg.message_id) + '⏹):\n' + msg.text,
-                                                            parse_mode='markdown')
-                                except Exception as E:
-                                    bot.send_message(441399484, traceback.format_exc())
-                    elif m.text.split(' ')[0] == '/pm':
-                        try:
-                            text = m.text.split(' ')
-                            t = ''
-                            i = 0
-                            for ids in text:
-                                if i > 1:
-                                    t += ids + ' '
-                                i += 1
-                            pioner.send_message(int(m.text.split(' ')[1]), t)
-                        except:
-                            pioner.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n' +
-                                                '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n' +
-                                                '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!',
-                                                parse_mode='markdown')
+                    #if m.text.split(' ')[0] != '/pm' and m.text.split(' ')[0] != '/r':
+                    try:
+                        bot.delete_message(m.chat.id, m.message_id)
+                    except:
+                        pass
+                    msg = pioner.send_message(m.chat.id, m.text)
+                        #for ids in ctrls:
+                        #    if ids['controller'] != None and ids['bot'] != pioner:
+                        #        if msg.chat.id == -1001351496983:
+                        #            x = '(Общий чат)'
+                        #        else:
+                        #            x = '(ЛС)'
+                        #        try:
+                        #            ids['bot'].send_message(ids['controller']['id'],
+                        #                                    x + '\n' + msg.from_user.first_name + ' (`' + str(
+                        #                                        msg.from_user.id) + '`) (❓' + str(
+                        #                                        msg.message_id) + '⏹):\n' + msg.text,
+                        #                                    parse_mode='markdown')
+                        #        except Exception as E:
+                        #            bot.send_message(441399484, traceback.format_exc())
+                    #elif m.text.split(' ')[0] == '/pm':
+                    #    try:
+                    #        text = m.text.split(' ')
+                    #        t = ''
+                    #        i = 0
+                    #        for ids in text:
+                    #            if i > 1:
+                    #                t += ids + ' '
+                    #            i += 1
+                    #        pioner.send_message(int(m.text.split(' ')[1]), t)
+                    #    except:
+                    #        pioner.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n' +
+                    #                            '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n' +
+                    #                            '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!',
+                    #                            parse_mode='markdown')
 
                 else:
                     try:
-                        i = 0
-                        cid = None
-                        eid = None
-                        for ids in m.reply_to_message.text:
-                            print(ids)
-                            if ids == '❓':
-                                cid = i + 1
-                            if ids == '⏹':
-                                eid = i
-                            i += 1
-                        print('cid')
-                        print(cid)
-                        print('eid')
-                        print(eid)
-                        msgid = m.reply_to_message.text[cid:eid]
-                        pioner.send_message(-1001351496983, m.text, reply_to_message_id=int(msgid))
+                        #i = 0
+                        #cid = None
+                        #eid = None
+                        #for ids in m.reply_to_message.text:
+                        #    print(ids)
+                        #    if ids == '❓':
+                        #        cid = i + 1
+                        #    if ids == '⏹':
+                        #        eid = i
+                        #    i += 1
+                        #print('cid')
+                        #print(cid)
+                        #print('eid')
+                        #print(eid)
+                        #msgid = m.reply_to_message.text[cid:eid]
+                        try:
+                            bot.delete_message(m.chat.id, m.message_id)
+                        except:
+                            pass
+                        pioner.send_message(m.chat.id, m.text, reply_to_message_id=m.reply_to_message.message_id)
 
                     except Exception as E:
                         bot.send_message(441399484, traceback.format_exc())
-                        pioner.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n' +
-                                            '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n' +
-                                            '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!',
-                                            parse_mode='markdown')
+                        #pioner.send_message(m.from_user.id, 'Что-то пошло не так. Возможны следующие варианты:\n' +
+                        #                    '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n' +
+                        #                    '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!',
+                        #                    parse_mode='markdown')
 
 
 
             else:
-                if m.chat.id == -1001351496983:
-                    x = '(Общий чат)'
-                else:
-                    x = '(ЛС)'
-                if m.chat.id not in ignorelist:
-                    try:
-                        pioner.send_message(controller['id'], x + '\n' + m.from_user.first_name + ' (`' + str(
-                            m.from_user.id) + '`) (❓' + str(m.message_id) + '⏹):\n' + m.text, parse_mode='markdown')
+                pass
+                #if m.chat.id == -1001351496983:
+                #    x = '(Общий чат)'
+                #else:
+                #    x = '(ЛС)'
+                #if m.chat.id not in ignorelist:
+                #    try:
+                #        pioner.send_message(controller['id'], x + '\n' + m.from_user.first_name + ' (`' + str(
+                #            m.from_user.id) + '`) (❓' + str(m.message_id) + '⏹):\n' + m.text, parse_mode='markdown')
 
-                    except Exception as E:
-                        bot.send_message(441399484, traceback.format_exc())
+                #    except Exception as E:
+                #        bot.send_message(441399484, traceback.format_exc())
 
 
 @bot.message_handler(commands=['pioner_left'])
