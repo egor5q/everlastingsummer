@@ -38,6 +38,7 @@ users = db.users
 thunder = db.thunder
 thunder_variables = db.thunder_variables
 ban = db.ban
+nowrp=False
 
 mainchat = -1001351496983
 rpchats=[]
@@ -130,6 +131,16 @@ def do(m):
         pass
 
 
+@world.message_handler(commands=['rp'])
+def rp(m):
+    global nowrp
+    if nowrp==True:
+        nowrp=False
+    else:
+        nowrp=True
+    world.send_message(m.chat.id, 'now '+str(nowrp))
+    
+    
 @bot.message_handler(commands=['ignore'])
 def ignore(m):
     if m.from_user.id == 441399484:
@@ -907,7 +918,30 @@ def checktime():
             text += ids + '\n'
         bot.send_message(-1001351496983, text + '\nВот все, кто сегодня пришёл. Молодцы, пионеры! Так держать!' + \
                          'Сейчас расскажу о планах на день.', parse_mode='markdown')
-
+    global nowrp
+    if nowrp:
+        if (hour==9 and minute==0):
+            for ids in rpchats:
+                try:
+                    world.send_message(ids, '*Сигнал, оповещающий о начале завтрака*', parse_mode='markdown')
+                except:
+                    pass
+        if (hour==14 and minute==0):
+            for ids in rpchats:
+                try:
+                    world.send_message(ids, '*Сигнал, оповещающий о начале обеда*', parse_mode='markdown')
+                except:
+                    pass
+        if (hour==21 and minute==0):
+            for ids in rpchats:
+                try:
+                    world.send_message(ids, '*Сигнал, оповещающий о начале ужина*', parse_mode='markdown')
+                except:
+                    pass
+        
+zavtrak = '9:00'
+obed = '14:00'
+uzhin = '21:00'
 
 def eveninggames():
     global rds
