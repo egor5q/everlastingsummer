@@ -1695,11 +1695,7 @@ def ulianamessages(m):
 
 @uliana.message_handler(content_types=['sticker'])
 def stickercatchalisa(m):
-    if ulianastats['controller'] != None:
-        controller = ulianastats['controller']
-        if m.chat.id == controller['id']:
-            if m.reply_to_message == None:
-                uliana.send_sticker(-1001351496983, m.sticker.file_id)
+    stickhandler(m, uliana)
 
 
 ####################################### SLAVYA ##############################################
