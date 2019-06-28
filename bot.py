@@ -30,6 +30,9 @@ tolik = telebot.TeleBot(os.environ['tolik'])
 shurik = telebot.TeleBot(os.environ['shurik'])
 semen = telebot.TeleBot(os.environ['semen'])
 pioneer = telebot.TeleBot(os.environ['pioneer'])
+yuriy = telebot.TeleBot(os.environ['yuriy'])
+
+
 
 client1 = os.environ['database']
 client = MongoClient(client1)
@@ -65,14 +68,15 @@ pi_admins = []#[512006137]
 def createadmin(pioner, id=441399484):
     return {
     pioner:[id],
-    'name':pioner
+    'name':pioner,
+    'controller':None
     }
 
 
 
 admins=db.admins
 
-
+admins.insert_one(createadmin('yu_admins', 509708038))
 
 
 ignorelist = []
@@ -236,6 +240,9 @@ def stickhandler(m, pioner):
             stats = 'pi_admins'
         if pioner == semen:
             stats = 'se_admins'
+        if pioner == yuriy: 
+            stats='yu_admins'
+
         adm=admins.find_one({'name':stats})
         if adm['controller'] != None:
             controller = adm['controller']
@@ -2012,6 +2019,45 @@ def pioneermessages(m):
 @pioneer.message_handler(content_types=['sticker'])
 def stickercatchpioneer(m):
     stickhandler(m, pioneer)
+
+
+
+
+
+            ###################################### YURIY ###############################################
+
+
+@yuriy.message_handler(commands=['control'])
+def yuriyercontrol(m):
+    x='yu_admins'
+    adm=admins.find_one({'name':x})
+    if m.from_user.id in adm[x]:
+            if adm['controller'] == None:
+                admins.update_one({'name':x},{'$set':{'controller': {'id': m.from_user.id,
+                                         'name': m.from_user.first_name}}})
+                pioneer.send_message(m.from_user.id, 'Хех, посмотрим, что ты придумал.')
+
+
+@yuriy.message_handler(commands=['stopcontrol'])
+def pioneerstopcontrol(m):
+    x='yu_admins'
+    adm=admins.find_one({'name':x})
+    if adm['controller'] != None:
+        if adm['controller']['id'] == m.from_user.id:
+            admins.update_one({'name':x},{'$set':{'controller':None}})
+            bot.send_message(m.from_user.id, 'Ты больше не управляешь мной.')
+
+@yuriy.message_handler()
+def pioneermessages(m):
+    if ban.find_one({'id': m.from_user.id}) == None:
+        msghandler(m, pioneer)
+
+
+@yuriy.message_handler(content_types=['sticker'])
+def stickercatchpioneer(m):
+    stickhandler(m, pioneer)
+
+
 
 
 def helpend(id, pioner):
