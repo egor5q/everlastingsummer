@@ -62,6 +62,14 @@ se_admins = [737959649]#[851513241, 737959649]
 pi_admins = []#[512006137]
 
 
+def createadmin(pioner, id=441399484):
+    return {
+    pioner:[id],
+    'name':pioner
+    }
+
+
+
 admins=db.admins
 admins.insert_one(createadmin('se_admins', 737959649))
 admins.insert_one(createadmin('pi_admins'))
@@ -78,14 +86,6 @@ admins.insert_one(createadmin('el_admins', 574865060))
 
 
 
-
-
-
-def createadmin(pioner, id=441399484):
-    return {
-    pioner:[id],
-    'name':pioner
-    }
 
 
 ignorelist = []
