@@ -1553,8 +1553,6 @@ def lenacontrol(m):
                                          'name': m.from_user.first_name}}})
                 lena.send_message(m.from_user.id,
                               'Теперь ты управляешь мной! Я буду присылать тебе все сообщения, которые вижу!')
-        else:
-            pass
 
 
 @lena.message_handler(commands=['stopcontrol'])
