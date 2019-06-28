@@ -258,32 +258,33 @@ def msghandler(m, pioner):
     if ban.find_one({'id': m.from_user.id}) == None:
         stats = None
         if pioner == uliana:
-            stats = ulianastats
+            stats = 'ul_admins'
         if pioner == lena:
-            stats = lenastats
+            stats = 'le_admins'
         if pioner == tolik:
-            stats = tolikstats
+            stats = 'to_admins'
         if pioner == alisa:
-            stats = alisastats
+            stats = 'al_admins'
         if pioner == bot:
-            stats = odstats
+            stats = 'od_admins'
         if pioner == zhenya:
-            stats = zhenyastats
+            stats = 'zh_admins'
         if pioner == shurik:
-            stats = shurikstats
+            stats = 'sh_admins'
         if pioner == electronic:
-            stats = electronicstats
+            stats = 'el_admins'
         if pioner == slavya:
-            stats = slavyastats
+            stats = 'sl_admins'
         if pioner == miku:
-            stats = mikustats
+            stats = 'mi_admins'
         if pioner == pioneer:
-            stats = pioneerstats
+            stats = 'pi_admins'
         if pioner == semen:
-            stats = semenstats
+            stats = 'se_admins'
 
-        if stats['controller'] != None:
-            controller = stats['controller']
+        adm=admins.find_one({'name':stats})
+        if adm['controller'] != None:
+            controller = adm['controller']
             if m.from_user.id == controller['id']:
               if m.text[0]!='/':
                 if m.reply_to_message == None:
@@ -633,9 +634,11 @@ def odcontrol(m):
 
 @bot.message_handler(commands=['stopcontrol'])
 def odstopcontrol(m):
-    if odstats['controller'] != None:
-        if odstats['controller']['id'] == m.from_user.id:
-            odstats['controller'] = None
+    x='od_admins'
+    adm=admins.find_one({'name':x})
+    if adm['controller'] != None:
+        if adm['controller']['id'] == m.from_user.id:
+            admins.update_one({'name':x},{'$set':{'controller':None}})
             bot.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
 
 
@@ -1469,21 +1472,22 @@ def sendstick(sender, stick):
 ####################################### ELECTRONIC ##############################################
 @electronic.message_handler(commands=['control'])
 def electroniccontrol(m):
-    if m.from_user.id in botadmins or m.from_user.id in el_admins:
-        if electronicstats['controller'] == None:
-            electronicstats['controller'] = {'id': m.from_user.id,
-                                             'name': m.from_user.first_name}
-            electronic.send_message(m.from_user.id, 'Привет! надеюсь ты знаешь, как управлять мной.')
-        else:
-            electronic.send_message(m.from_user.id, 'Мной уже управляет ' + electronicstats['controller']['name'] + '!')
+    adm=admins.find_one({'name':'el_admins'})
+        if m.from_user.id in adm['el_admins']:
+            if adm['controller'] == None:
+                admins.update_one({'name':'el_admins'},{'$set':{'controller': {'id': m.from_user.id,
+                                         'name': m.from_user.first_name}}})
+                electronic.send_message(m.from_user.id, 'Привет! надеюсь ты знаешь, как управлять мной.')
 
 
 @electronic.message_handler(commands=['stopcontrol'])
 def electronicstopcontrol(m):
-    if electronicstats['controller'] != None:
-        if electronicstats['controller']['id'] == m.from_user.id:
-            electronicstats['controller'] = None
-            electronic.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+    x='el_admins'
+    adm=admins.find_one({'name':x})
+    if adm['controller'] != None:
+        if adm['controller']['id'] == m.from_user.id:
+            admins.update_one({'name':x},{'$set':{'controller':None}})
+            bot.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
 
 
 @electronic.message_handler(content_types=['sticker'])
@@ -1541,22 +1545,26 @@ def electronichandler(m):
 
 @lena.message_handler(commands=['control'])
 def lenacontrol(m):
-    if m.from_user.id in botadmins or m.from_user.id in le_admins:
-        if lenastats['controller'] == None:
-            lenastats['controller'] = {'id': m.from_user.id,
-                                       'name': m.from_user.first_name}
-            lena.send_message(m.from_user.id,
+    x='le_admins'
+    adm=admins.find_one({'name':x})
+    if m.from_user.id in adm[x]:
+            if adm['controller'] == None:
+                admins.update_one({'name':x},{'$set':{'controller': {'id': m.from_user.id,
+                                         'name': m.from_user.first_name}}})
+                lena.send_message(m.from_user.id,
                               'Теперь ты управляешь мной! Я буду присылать тебе все сообщения, которые вижу!')
         else:
-            lena.send_message(m.from_user.id, 'Мной уже управляет ' + lenastats['controller']['name'] + '!')
+            pass
 
 
 @lena.message_handler(commands=['stopcontrol'])
 def lenastopcontrol(m):
-    if lenastats['controller'] != None:
-        if lenastats['controller']['id'] == m.from_user.id:
-            lenastats['controller'] = None
-            lena.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+    x='le_admins'
+    adm=admins.find_one({'name':x})
+    if adm['controller'] != None:
+        if adm['controller']['id'] == m.from_user.id:
+            admins.update_one({'name':x},{'$set':{'controller':None}})
+            bot.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
 
 
 @lena.message_handler()
@@ -1601,22 +1609,24 @@ def stickercatchlena(m):
 ####################################### ALICE ##############################################
 @alisa.message_handler(commands=['control'])
 def alisacontrol(m):
-    if m.from_user.id in botadmins or m.from_user.id in al_admins:
-        if alisastats['controller'] == None:
-            alisastats['controller'] = {'id': m.from_user.id,
-                                        'name': m.from_user.first_name}
-            alisa.send_message(m.from_user.id,
+    x='al_admins'
+    adm=admins.find_one({'name':x})
+    if m.from_user.id in adm[x]:
+            if adm['controller'] == None:
+                admins.update_one({'name':x},{'$set':{'controller': {'id': m.from_user.id,
+                                         'name': m.from_user.first_name}}})
+                alisa.send_message(m.from_user.id,
                                'Ну ты вроде теперь мной управляешь. Я буду присылать тебе все сообщения, которые вижу, но если мне что-то не понравится - буду злиться!')
-        else:
-            alisa.send_message(m.from_user.id, 'Мной уже управляет ' + alisastats['controller']['name'] + '!')
 
 
 @alisa.message_handler(commands=['stopcontrol'])
 def alisastopcontrol(m):
-    if alisastats['controller'] != None:
-        if alisastats['controller']['id'] == m.from_user.id:
-            alisastats['controller'] = None
-            alisa.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+    x='al_admins'
+    adm=admins.find_one({'name':x})
+    if adm['controller'] != None:
+        if adm['controller']['id'] == m.from_user.id:
+            admins.update_one({'name':x},{'$set':{'controller':None}})
+            bot.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
 
 
 @alisa.message_handler()
@@ -1695,21 +1705,24 @@ def stickercatchalisa(m):
 ####################################### ULIANA ##############################################
 @uliana.message_handler(commands=['control'])
 def ulianaacontrol(m):
-    if m.from_user.id in botadmins or m.from_user.id in ul_admins:
-        if ulianastats['controller'] == None:
-            ulianastats['controller'] = {'id': m.from_user.id,
-                                         'name': m.from_user.first_name}
-            uliana.send_message(m.from_user.id, 'Привет! Теперь ты мной управляешь, прикольно!')
-        else:
-            uliana.send_message(m.from_user.id, 'Мной уже управляет ' + ulianastats['controller']['name'] + '!')
+    x='ul_admins'
+    adm=admins.find_one({'name':x})
+    if m.from_user.id in adm[x]:
+            if adm['controller'] == None:
+                admins.update_one({'name':x},{'$set':{'controller': {'id': m.from_user.id,
+                                         'name': m.from_user.first_name}}})
+                uliana.send_message(m.from_user.id, 'Привет! Теперь ты мной управляешь, прикольно!')
+
 
 
 @uliana.message_handler(commands=['stopcontrol'])
 def ulianastopcontrol(m):
-    if ulianastats['controller'] != None:
-        if ulianastats['controller']['id'] == m.from_user.id:
-            ulianastats['controller'] = None
-            uliana.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+    x='ul_admins'
+    adm=admins.find_one({'name':x})
+    if adm['controller'] != None:
+        if adm['controller']['id'] == m.from_user.id:
+            admins.update_one({'name':x},{'$set':{'controller':None}})
+            bot.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
 
 
 @uliana.message_handler()
@@ -1751,22 +1764,24 @@ def stickercatchalisa(m):
 ####################################### SLAVYA ##############################################
 @slavya.message_handler(commands=['control'])
 def slavyacontrol(m):
-    if m.from_user.id in botadmins or m.from_user.id in sl_admins:
-        if slavyastats['controller'] == None:
-            slavyastats['controller'] = {'id': m.from_user.id,
-                                         'name': m.from_user.first_name}
-            slavya.send_message(m.from_user.id, 'Привет! Теперь ты мной управляешь! Только аккуратнее!')
-        else:
-            slavya.send_message(m.from_user.id, 'Мной уже управляет ' + slavyastats['controller']['name'] + '!')
+    x='sl_admins'
+    adm=admins.find_one({'name':x})
+    if m.from_user.id in adm[x]:
+            if adm['controller'] == None:
+                admins.update_one({'name':x},{'$set':{'controller': {'id': m.from_user.id,
+                                         'name': m.from_user.first_name}}})
+                slavya.send_message(m.from_user.id, 'Привет! Теперь ты мной управляешь! Только аккуратнее!')
+
 
 
 @slavya.message_handler(commands=['stopcontrol'])
 def slavyastopcontrol(m):
-    if slavyastats['controller'] != None:
-        if slavyastats['controller']['id'] == m.from_user.id:
-            slavyastats['controller'] = None
-            slavya.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
-
+    x='sl_admins'
+    adm=admins.find_one({'name':x})
+    if adm['controller'] != None:
+        if adm['controller']['id'] == m.from_user.id:
+            admins.update_one({'name':x},{'$set':{'controller':None}})
+            bot.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
 
 @slavya.message_handler()
 def slavyamessages(m):
@@ -1807,23 +1822,24 @@ def stickercatchslavya(m):
 ####################################### MIKU ##############################################
 @miku.message_handler(commands=['control'])
 def mikucontrol(m):
-    if m.from_user.id in botadmins or m.from_user.id in mi_admins:
-        if mikustats['controller'] == None:
-            mikustats['controller'] = {'id': m.from_user.id,
-                                       'name': m.from_user.first_name}
-            miku.send_message(m.from_user.id,
+    x='mi_admins'
+    adm=admins.find_one({'name':x})
+    if m.from_user.id in adm[x]:
+            if adm['controller'] == None:
+                admins.update_one({'name':x},{'$set':{'controller': {'id': m.from_user.id,
+                                         'name': m.from_user.first_name}}})
+                miku.send_message(m.from_user.id,
                               'Привет! Теперь ты управляешь мной, как здорово! Ой, а я однажды в школе пыталась управлять музыкальным клубом, но ничего не вышло... Надеюсь, у тебя получится лучше!')
-        else:
-            miku.send_message(m.from_user.id, 'Мной уже управляет ' + mikustats['controller']['name'] + '!')
 
 
 @miku.message_handler(commands=['stopcontrol'])
 def mikustopcontrol(m):
-    if mikustats['controller'] != None:
-        if mikustats['controller']['id'] == m.from_user.id:
-            mikustats['controller'] = None
-            miku.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
-
+    x='mi_admins'
+    adm=admins.find_one({'name':x})
+    if adm['controller'] != None:
+        if adm['controller']['id'] == m.from_user.id:
+            admins.update_one({'name':x},{'$set':{'controller':None}})
+            bot.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
 
 @miku.message_handler()
 def mikumessages(m):
@@ -1838,22 +1854,23 @@ def stickercatchmiku(m):
 ####################################### ZHENYA ##############################################
 @zhenya.message_handler(commands=['control'])
 def zhenyacontrol(m):
-    if m.from_user.id in botadmins or m.from_user.id in zh_admins:
-        if zhenyastats['controller'] == None:
-            zhenyastats['controller'] = {'id': m.from_user.id,
-                                         'name': m.from_user.first_name}
-            zhenya.send_message(m.from_user.id, 'Привет, ты теперь управляешь мной... А я пока пойду почитаю.')
-        else:
-            zhenya.send_message(m.from_user.id, 'Мной уже управляет ' + zhenyastats['controller']['name'] + '!')
+    x='zh_admins'
+    adm=admins.find_one({'name':x})
+    if m.from_user.id in adm[x]:
+            if adm['controller'] == None:
+                admins.update_one({'name':x},{'$set':{'controller': {'id': m.from_user.id,
+                                         'name': m.from_user.first_name}}})
+                zhenya.send_message(m.from_user.id, 'Привет, ты теперь управляешь мной... А я пока пойду почитаю.')
 
 
 @zhenya.message_handler(commands=['stopcontrol'])
 def zhenyastopcontrol(m):
-    if zhenyastats['controller'] != None:
-        if zhenyastats['controller']['id'] == m.from_user.id:
-            zhenyastats['controller'] = None
-            zhenya.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
-
+    x='zh_admins'
+    adm=admins.find_one({'name':x})
+    if adm['controller'] != None:
+        if adm['controller']['id'] == m.from_user.id:
+            admins.update_one({'name':x},{'$set':{'controller':None}})
+            bot.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
 
 @zhenya.message_handler()
 def zhenyamessages(m):
@@ -1869,21 +1886,23 @@ def stickercatchzhenya(m):
 ####################################### TOLIK ##############################################
 @tolik.message_handler(commands=['control'])
 def tolikcontrol(m):
-    if m.from_user.id in botadmins or m.from_user.id in to_admins:
-        if tolikstats['controller'] == None:
-            tolikstats['controller'] = {'id': m.from_user.id,
-                                        'name': m.from_user.first_name}
-            tolik.send_message(m.from_user.id, 'Я - Толик.')
-        else:
-            tolik.send_message(m.from_user.id, 'Мной уже управляет ' + tolikstats['controller']['name'] + '!')
+    x='to_admins'
+    adm=admins.find_one({'name':x})
+    if m.from_user.id in adm[x]:
+            if adm['controller'] == None:
+                admins.update_one({'name':x},{'$set':{'controller': {'id': m.from_user.id,
+                                         'name': m.from_user.first_name}}})
+                tolik.send_message(m.from_user.id, 'Я - Толик.')
 
 
 @tolik.message_handler(commands=['stopcontrol'])
 def tolikstopcontrol(m):
-    if tolikstats['controller'] != None:
-        if tolikstats['controller']['id'] == m.from_user.id:
-            tolikstats['controller'] = None
-            tolik.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+    x='to_admins'
+    adm=admins.find_one({'name':x})
+    if adm['controller'] != None:
+        if adm['controller']['id'] == m.from_user.id:
+            admins.update_one({'name':x},{'$set':{'controller':None}})
+            bot.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
 
 
 @tolik.message_handler()
@@ -1900,21 +1919,23 @@ def stickercatchtolik(m):
 ####################################### SHURIK ##############################################
 @shurik.message_handler(commands=['control'])
 def shurikcontrol(m):
-    if m.from_user.id in botadmins or m.from_user.id in sh_admins:
-        if shurikstats['controller'] == None:
-            shurikstats['controller'] = {'id': m.from_user.id,
-                                         'name': m.from_user.first_name}
-            shurik.send_message(m.from_user.id, 'Привет, ну ты теперь управляешь мной. Думаю, что умеешь.')
-        else:
-            shurik.send_message(m.from_user.id, 'Мной уже управляет ' + shurikstats['controller']['name'] + '!')
+    x='sh_admins'
+    adm=admins.find_one({'name':x})
+    if m.from_user.id in adm[x]:
+            if adm['controller'] == None:
+                admins.update_one({'name':x},{'$set':{'controller': {'id': m.from_user.id,
+                                         'name': m.from_user.first_name}}})
+                shurik.send_message(m.from_user.id, 'Привет, ну ты теперь управляешь мной. Думаю, что умеешь.')
 
 
 @shurik.message_handler(commands=['stopcontrol'])
 def shuriktopcontrol(m):
-    if shurikstats['controller'] != None:
-        if shurikstats['controller']['id'] == m.from_user.id:
-            shurikstats['controller'] = None
-            shurik.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+    x='sh_admins'
+    adm=admins.find_one({'name':x})
+    if adm['controller'] != None:
+        if adm['controller']['id'] == m.from_user.id:
+            admins.update_one({'name':x},{'$set':{'controller':None}})
+            bot.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
 
 
 @shurik.message_handler()
@@ -1932,21 +1953,23 @@ def stickercatchzshurik(m):
 
 @semen.message_handler(commands=['control'])
 def semencontrol(m):
-    if m.from_user.id in botadmins or m.from_user.id in se_admins:
-        if semenstats['controller'] == None:
-            semenstats['controller'] = {'id': m.from_user.id,
-                                        'name': m.from_user.first_name}
-            semen.send_message(m.from_user.id, 'Ну ты типо мной управляешь.')
-        else:
-            semen.send_message(m.from_user.id, 'Мной уже управляет ' + semenstats['controller']['name'] + '!')
+    x='se_admins'
+    adm=admins.find_one({'name':x})
+    if m.from_user.id in adm[x]:
+            if adm['controller'] == None:
+                admins.update_one({'name':x},{'$set':{'controller': {'id': m.from_user.id,
+                                         'name': m.from_user.first_name}}})
+                semen.send_message(m.from_user.id, 'Ну ты типо мной управляешь.')
 
 
 @semen.message_handler(commands=['stopcontrol'])
 def semenstopcontrol(m):
-    if semenstats['controller'] != None:
-        if semenstats['controller']['id'] == m.from_user.id:
-            semenstats['controller'] = None
-            semen.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+    x='se_admins'
+    adm=admins.find_one({'name':x})
+    if adm['controller'] != None:
+        if adm['controller']['id'] == m.from_user.id:
+            admins.update_one({'name':x},{'$set':{'controller':None}})
+            bot.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
 
 
 @semen.message_handler()
@@ -1964,22 +1987,23 @@ def stickercatchsemen(m):
 
 @pioneer.message_handler(commands=['control'])
 def pioneercontrol(m):
-    if m.from_user.id in botadmins or m.from_user.id in pi_admins:
-        if pioneerstats['controller'] == None:
-            pioneerstats['controller'] = {'id': m.from_user.id,
-                                          'name': m.from_user.first_name}
-            pioneer.send_message(m.from_user.id, 'Хех, посмотрим, что ты придумал.')
-        else:
-            pioneer.send_message(m.from_user.id, 'Мной управляет ' + pioneerstats['controller']['name'] + '.')
+    x='pi_admins'
+    adm=admins.find_one({'name':x})
+    if m.from_user.id in adm[x]:
+            if adm['controller'] == None:
+                admins.update_one({'name':x},{'$set':{'controller': {'id': m.from_user.id,
+                                         'name': m.from_user.first_name}}})
+                pioneer.send_message(m.from_user.id, 'Хех, посмотрим, что ты придумал.')
 
 
 @pioneer.message_handler(commands=['stopcontrol'])
 def pioneerstopcontrol(m):
-    if pioneerstats['controller'] != None:
-        if pioneerstats['controller']['id'] == m.from_user.id:
-            pioneerstats['controller'] = None
-            pioneer.send_message(m.from_user.id, 'Ты больше не управляешь мной.')
-
+    x='pi_admins'
+    adm=admins.find_one({'name':x})
+    if adm['controller'] != None:
+        if adm['controller']['id'] == m.from_user.id:
+            admins.update_one({'name':x},{'$set':{'controller':None}})
+            bot.send_message(m.from_user.id, 'Ты больше не управляешь мной.')
 
 @pioneer.message_handler()
 def pioneermessages(m):
