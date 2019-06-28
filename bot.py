@@ -71,18 +71,18 @@ def createadmin(pioner, id=441399484):
 
 
 admins=db.admins
-admins.insert_one(createadmin('se_admins', 737959649))
-admins.insert_one(createadmin('pi_admins'))
-admins.insert_one(createadmin('sh_admins'))
-admins.insert_one(createadmin('to_admins'))
-admins.insert_one(createadmin('zh_admins'))
-admins.insert_one(createadmin('od_admins'))
-admins.insert_one(createadmin('sl_admins'))
-admins.insert_one(createadmin('le_admins'))
-admins.insert_one(createadmin('mi_admins'))
-admins.insert_one(createadmin('ul_admins', 652585389))
-admins.insert_one(createadmin('al_admins'))
-admins.insert_one(createadmin('el_admins', 574865060))
+admins.update_one({'name':'se_admins'},{'$set':{'controller':None}})
+admins.update_one({'name':'pi_admins'},{'$set':{'controller':None}})
+admins.update_one({'name':'sh_admins'},{'$set':{'controller':None}})
+admins.update_one({'name':'to_admins'},{'$set':{'controller':None}})
+admins.update_one({'name':'zh_admins'},{'$set':{'controller':None}})
+admins.update_one({'name':'od_admins'},{'$set':{'controller':None}})
+admins.update_one({'name':'sl_admins'},{'$set':{'controller':None}})
+admins.update_one({'name':'le_admins'},{'$set':{'controller':None}})
+admins.update_one({'name':'mi_admins'},{'$set':{'controller':None}})
+admins.update_one({'name':'ul_admins'},{'$set':{'controller':None}})
+admins.update_one({'name':'al_admins'},{'$set':{'controller':None}})
+admins.update_one({'name':'el_admins'},{'$set':{'controller':None}})
 
 
 
