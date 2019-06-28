@@ -1494,7 +1494,7 @@ def electronicstopcontrol(m):
     if adm['controller'] != None:
         if adm['controller']['id'] == m.from_user.id:
             admins.update_one({'name':x},{'$set':{'controller':None}})
-            bot.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+            electronic.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
 
 
 @electronic.message_handler(content_types=['sticker'])
@@ -1569,7 +1569,7 @@ def lenastopcontrol(m):
     if adm['controller'] != None:
         if adm['controller']['id'] == m.from_user.id:
             admins.update_one({'name':x},{'$set':{'controller':None}})
-            bot.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+            lena.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
 
 
 @lena.message_handler()
@@ -1631,7 +1631,7 @@ def alisastopcontrol(m):
     if adm['controller'] != None:
         if adm['controller']['id'] == m.from_user.id:
             admins.update_one({'name':x},{'$set':{'controller':None}})
-            bot.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+            alisa.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
 
 
 @alisa.message_handler()
@@ -1727,7 +1727,7 @@ def ulianastopcontrol(m):
     if adm['controller'] != None:
         if adm['controller']['id'] == m.from_user.id:
             admins.update_one({'name':x},{'$set':{'controller':None}})
-            bot.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+            uliana.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
 
 
 @uliana.message_handler()
@@ -1786,7 +1786,7 @@ def slavyastopcontrol(m):
     if adm['controller'] != None:
         if adm['controller']['id'] == m.from_user.id:
             admins.update_one({'name':x},{'$set':{'controller':None}})
-            bot.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+            slavya.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
 
 @slavya.message_handler()
 def slavyamessages(m):
@@ -1844,7 +1844,7 @@ def mikustopcontrol(m):
     if adm['controller'] != None:
         if adm['controller']['id'] == m.from_user.id:
             admins.update_one({'name':x},{'$set':{'controller':None}})
-            bot.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+            miku.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
 
 @miku.message_handler()
 def mikumessages(m):
@@ -1875,7 +1875,7 @@ def zhenyastopcontrol(m):
     if adm['controller'] != None:
         if adm['controller']['id'] == m.from_user.id:
             admins.update_one({'name':x},{'$set':{'controller':None}})
-            bot.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+            zhenya.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
 
 @zhenya.message_handler()
 def zhenyamessages(m):
@@ -1907,7 +1907,7 @@ def tolikstopcontrol(m):
     if adm['controller'] != None:
         if adm['controller']['id'] == m.from_user.id:
             admins.update_one({'name':x},{'$set':{'controller':None}})
-            bot.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+            tolik.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
 
 
 @tolik.message_handler()
@@ -1940,7 +1940,7 @@ def shuriktopcontrol(m):
     if adm['controller'] != None:
         if adm['controller']['id'] == m.from_user.id:
             admins.update_one({'name':x},{'$set':{'controller':None}})
-            bot.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+            shurik.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
 
 
 @shurik.message_handler()
@@ -1974,7 +1974,7 @@ def semenstopcontrol(m):
     if adm['controller'] != None:
         if adm['controller']['id'] == m.from_user.id:
             admins.update_one({'name':x},{'$set':{'controller':None}})
-            bot.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+            semen.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
 
 
 @semen.message_handler()
@@ -2008,7 +2008,7 @@ def pioneerstopcontrol(m):
     if adm['controller'] != None:
         if adm['controller']['id'] == m.from_user.id:
             admins.update_one({'name':x},{'$set':{'controller':None}})
-            bot.send_message(m.from_user.id, 'Ты больше не управляешь мной.')
+            pioner.send_message(m.from_user.id, 'Ты больше не управляешь мной.')
 
 @pioneer.message_handler()
 def pioneermessages(m):
@@ -2045,7 +2045,7 @@ def pioneerstopcontrol(m):
     if adm['controller'] != None:
         if adm['controller']['id'] == m.from_user.id:
             admins.update_one({'name':x},{'$set':{'controller':None}})
-            bot.send_message(m.from_user.id, 'Ты больше не управляешь мной.')
+            yuriy.send_message(m.from_user.id, 'Ты больше не управляешь мной.')
 
 @yuriy.message_handler()
 def pioneermessages(m):
