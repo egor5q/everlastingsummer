@@ -63,18 +63,18 @@ pi_admins = []#[512006137]
 
 
 admins=db.admins
-admins.insert_one(createadmin('se_admins', 737959649)
-admins.insert_one(createadmin('pi_admins')
-admins.insert_one(createadmin('sh_admins')
-admins.insert_one(createadmin('to_admins')
-admins.insert_one(createadmin('zh_admins')
-admins.insert_one(createadmin('od_admins')
-admins.insert_one(createadmin('sl_admins')
-admins.insert_one(createadmin('le_admins')
-admins.insert_one(createadmin('mi_admins')
-admins.insert_one(createadmin('ul_admins', 652585389)
-admins.insert_one(createadmin('al_admins')
-admins.insert_one(createadmin('el_admins', 574865060)
+admins.insert_one(createadmin('se_admins', 737959649))
+admins.insert_one(createadmin('pi_admins'))
+admins.insert_one(createadmin('sh_admins'))
+admins.insert_one(createadmin('to_admins'))
+admins.insert_one(createadmin('zh_admins'))
+admins.insert_one(createadmin('od_admins'))
+admins.insert_one(createadmin('sl_admins'))
+admins.insert_one(createadmin('le_admins'))
+admins.insert_one(createadmin('mi_admins'))
+admins.insert_one(createadmin('ul_admins', 652585389))
+admins.insert_one(createadmin('al_admins'))
+admins.insert_one(createadmin('el_admins', 574865060))
 
 
 
