@@ -76,8 +76,8 @@ def createadmin(pioner, id=441399484):
 
 admins=db.admins
 
-if admins.find_one({'name':'al_admins'})==None:
-    admins.insert_one(createadmin('al_admins', 438090820))
+if admins.find_one({'name':'ale_admins'})==None:
+    admins.insert_one(createadmin('ale_admins', 438090820))
 
 
 ignorelist = []
@@ -244,7 +244,7 @@ def stickhandler(m, pioner):
         if pioner == yuriy: 
             stats='yu_admins'
         if pioner==alexandr:
-            stats='al_admins'
+            stats='ale_admins'
 
         adm=admins.find_one({'name':stats})
         if adm['controller'] != None:
@@ -294,7 +294,7 @@ def msghandler(m, pioner):
         if pioner == yuriy: 
             stats='yu_admins'
         if pioner==alexandr:
-            stats='al_admins'
+            stats='ale_admins'
 
         adm=admins.find_one({'name':stats})
         if adm['controller'] != None:
@@ -2071,7 +2071,7 @@ def stickercatchpioneer(m):
 
 @alexandr.message_handler(commands=['control'])
 def alexandrercontrol(m):
-    x='al_admins'
+    x='ale_admins'
     adm=admins.find_one({'name':x})
     if m.from_user.id in adm[x]:
             if adm['controller'] == None:
@@ -2082,7 +2082,7 @@ def alexandrercontrol(m):
 
 @alexandr.message_handler(commands=['stopcontrol'])
 def alexandrstopcontrol(m):
-    x='al_admins'
+    x='ale_admins'
     adm=admins.find_one({'name':x})
     if adm['controller'] != None:
         if adm['controller']['id'] == m.from_user.id:
