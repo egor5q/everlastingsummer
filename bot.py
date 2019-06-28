@@ -2487,7 +2487,9 @@ if True:
     t.start()
     t = threading.Timer(1, polling, args=[world])
     t.start()
-
+    
+    t = threading.Timer(1, polling, args=[yuriy])
+    t.start()
 
 @world.message_handler(commands=['addplayer'])
 def addplayer(m):
