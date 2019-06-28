@@ -76,7 +76,7 @@ def createadmin(pioner, id=441399484):
 
 admins=db.admins
 
-admins.insert_one(createadmin('yu_admins', 509708038))
+#admins.insert_one(createadmin('yu_admins', 509708038))
 
 
 ignorelist = []
