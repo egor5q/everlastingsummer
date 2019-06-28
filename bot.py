@@ -71,19 +71,6 @@ def createadmin(pioner, id=441399484):
 
 
 admins=db.admins
-admins.update_one({'name':'se_admins'},{'$set':{'controller':None}})
-admins.update_one({'name':'pi_admins'},{'$set':{'controller':None}})
-admins.update_one({'name':'sh_admins'},{'$set':{'controller':None}})
-admins.update_one({'name':'to_admins'},{'$set':{'controller':None}})
-admins.update_one({'name':'zh_admins'},{'$set':{'controller':None}})
-admins.update_one({'name':'od_admins'},{'$set':{'controller':None}})
-admins.update_one({'name':'sl_admins'},{'$set':{'controller':None}})
-admins.update_one({'name':'le_admins'},{'$set':{'controller':None}})
-admins.update_one({'name':'mi_admins'},{'$set':{'controller':None}})
-admins.update_one({'name':'ul_admins'},{'$set':{'controller':None}})
-admins.update_one({'name':'al_admins'},{'$set':{'controller':None}})
-admins.update_one({'name':'el_admins'},{'$set':{'controller':None}})
-
 
 
 
@@ -226,32 +213,32 @@ def stickhandler(m, pioner):
     if ban.find_one({'id': m.from_user.id}) == None:
         stats = None
         if pioner == uliana:
-            stats = ulianastats
+            stats = 'ul_admins'
         if pioner == lena:
-            stats = lenastats
+            stats = 'le_admins'
         if pioner == tolik:
-            stats = tolikstats
+            stats = 'to_admins'
         if pioner == alisa:
-            stats = alisastats
+            stats = 'al_admins'
         if pioner == bot:
-            stats = odstats
+            stats = 'od_admins'
         if pioner == zhenya:
-            stats = zhenyastats
+            stats = 'zh_admins'
         if pioner == shurik:
-            stats = shurikstats
+            stats = 'sh_admins'
         if pioner == electronic:
-            stats = electronicstats
+            stats = 'el_admins'
         if pioner == slavya:
-            stats = slavyastats
+            stats = 'sl_admins'
         if pioner == miku:
-            stats = mikustats
+            stats = 'mi_admins'
         if pioner == pioneer:
-            stats = pioneerstats
+            stats = 'pi_admins'
         if pioner == semen:
-            stats = semenstats
-
-        if stats['controller'] != None:
-            controller = stats['controller']
+            stats = 'se_admins'
+        adm=admins.find_one({'name':stats})
+        if adm['controller'] != None:
+            controller = adm['controller']
             if m.from_user.id == controller['id']:
                 if m.reply_to_message == None:
                     try:
@@ -633,14 +620,15 @@ def gamestestdsdfsdgd(m):
 @bot.message_handler(commands=['control'])
 def odcontrol(m):
     if ban.find_one({'id': m.from_user.id}) == None:
-        if m.from_user.id in botadmins or m.from_user.id in od_admins:
-            if odstats['controller'] == None:
-                odstats['controller'] = {'id': m.from_user.id,
-                                         'name': m.from_user.first_name}
+        adm=admins.find_one({'name':'od_admins'})
+        if m.from_user.id in adm['od_admins']:
+            if adm['controller'] == None:
+                admins.update_one({'name':'od_admins'},{'$set':{'controller': {'id': m.from_user.id,
+                                         'name': m.from_user.first_name}}})
                 bot.send_message(m.from_user.id,
                                  'Здравствуй, пионер. Быть вожатым - большая ответственность! Не опозорь меня!')
             else:
-                bot.send_message(m.from_user.id, 'Мной уже управляет ' + odstats['controller']['name'] + '!')
+                bot.send_message(m.from_user.id, 'Мной уже управляют!')
 
 
 @bot.message_handler(commands=['stopcontrol'])
