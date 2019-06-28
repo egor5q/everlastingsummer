@@ -288,6 +288,8 @@ def msghandler(m, pioner):
             stats = 'pi_admins'
         if pioner == semen:
             stats = 'se_admins'
+        if pioner == yuriy: 
+            stats='yu_admins'
 
         adm=admins.find_one({'name':stats})
         if adm['controller'] != None:
@@ -2048,7 +2050,7 @@ def pioneerstopcontrol(m):
             yuriy.send_message(m.from_user.id, 'Ты больше не управляешь мной.')
 
 @yuriy.message_handler()
-def pioneermessages(m):
+def yuriyrmessages(m):
     if ban.find_one({'id': m.from_user.id}) == None:
         msghandler(m, yuriy)
 
@@ -2487,7 +2489,6 @@ if True:
     t.start()
     t = threading.Timer(1, polling, args=[world])
     t.start()
-    
     t = threading.Timer(1, polling, args=[yuriy])
     t.start()
 
