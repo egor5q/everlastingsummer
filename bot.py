@@ -2035,7 +2035,7 @@ def yuriyercontrol(m):
             if adm['controller'] == None:
                 admins.update_one({'name':x},{'$set':{'controller': {'id': m.from_user.id,
                                          'name': m.from_user.first_name}}})
-                pioneer.send_message(m.from_user.id, 'Теперь ты управляешь мной!')
+                yuriy.send_message(m.from_user.id, 'Теперь ты управляешь мной!')
 
 
 @yuriy.message_handler(commands=['stopcontrol'])
@@ -2050,12 +2050,12 @@ def pioneerstopcontrol(m):
 @yuriy.message_handler()
 def pioneermessages(m):
     if ban.find_one({'id': m.from_user.id}) == None:
-        msghandler(m, pioneer)
+        msghandler(m, yuriy)
 
 
 @yuriy.message_handler(content_types=['sticker'])
 def stickercatchpioneer(m):
-    stickhandler(m, pioneer)
+    stickhandler(m, yuriy)
 
 
 
