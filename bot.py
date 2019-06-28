@@ -31,7 +31,7 @@ shurik = telebot.TeleBot(os.environ['shurik'])
 semen = telebot.TeleBot(os.environ['semen'])
 pioneer = telebot.TeleBot(os.environ['pioneer'])
 yuriy = telebot.TeleBot(os.environ['yuriy'])
-
+alexandr = telebot.TeleBot(os.environ['alexandr'])
 
 
 client1 = os.environ['database']
@@ -76,7 +76,8 @@ def createadmin(pioner, id=441399484):
 
 admins=db.admins
 
-#admins.insert_one(createadmin('yu_admins', 509708038))
+if admins.find_one({'name':'al_admins'})==None:
+    admins.insert_one(createadmin('al_admins', 438090820))
 
 
 ignorelist = []
@@ -242,6 +243,8 @@ def stickhandler(m, pioner):
             stats = 'se_admins'
         if pioner == yuriy: 
             stats='yu_admins'
+        if pioner==alexandr:
+            stats='al_admins'
 
         adm=admins.find_one({'name':stats})
         if adm['controller'] != None:
@@ -290,6 +293,8 @@ def msghandler(m, pioner):
             stats = 'se_admins'
         if pioner == yuriy: 
             stats='yu_admins'
+        if pioner==alexandr:
+            stats='al_admins'
 
         adm=admins.find_one({'name':stats})
         if adm['controller'] != None:
@@ -2026,7 +2031,7 @@ def stickercatchpioneer(m):
 
 
 
-            ###################################### YURIY ###############################################
+###################################### YURIY ###############################################
 
 
 @yuriy.message_handler(commands=['control'])
@@ -2058,6 +2063,41 @@ def yuriyrmessages(m):
 @yuriy.message_handler(content_types=['sticker'])
 def stickercatchpioneer(m):
     stickhandler(m, yuriy)
+    
+    
+    
+###################################### ALEXANDR ###############################################
+
+
+@alexandr.message_handler(commands=['control'])
+def alexandrercontrol(m):
+    x='al_admins'
+    adm=admins.find_one({'name':x})
+    if m.from_user.id in adm[x]:
+            if adm['controller'] == None:
+                admins.update_one({'name':x},{'$set':{'controller': {'id': m.from_user.id,
+                                         'name': m.from_user.first_name}}})
+                alexandr.send_message(m.from_user.id, 'Теперь ты управляешь мной!')
+
+
+@alexandr.message_handler(commands=['stopcontrol'])
+def alexandrstopcontrol(m):
+    x='al_admins'
+    adm=admins.find_one({'name':x})
+    if adm['controller'] != None:
+        if adm['controller']['id'] == m.from_user.id:
+            admins.update_one({'name':x},{'$set':{'controller':None}})
+            alexandr.send_message(m.from_user.id, 'Ты больше не управляешь мной.')
+
+@alexandr.message_handler()
+def yuriyrmessages(m):
+    if ban.find_one({'id': m.from_user.id}) == None:
+        msghandler(m, alexandr)
+
+
+@alexandr.message_handler(content_types=['sticker'])
+def stickercatchpioneer(m):
+    stickhandler(m, alexandr)
 
 
 
@@ -2490,6 +2530,8 @@ if True:
     t = threading.Timer(1, polling, args=[world])
     t.start()
     t = threading.Timer(1, polling, args=[yuriy])
+    t.start()
+    t = threading.Timer(1, polling, args=[alexandr])
     t.start()
 
 @world.message_handler(commands=['addplayer'])
