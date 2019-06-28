@@ -2035,7 +2035,7 @@ def yuriyercontrol(m):
             if adm['controller'] == None:
                 admins.update_one({'name':x},{'$set':{'controller': {'id': m.from_user.id,
                                          'name': m.from_user.first_name}}})
-                pioneer.send_message(m.from_user.id, 'Хех, посмотрим, что ты придумал.')
+                pioneer.send_message(m.from_user.id, 'Теперь ты управляешь мной!')
 
 
 @yuriy.message_handler(commands=['stopcontrol'])
