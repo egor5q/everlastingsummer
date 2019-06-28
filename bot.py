@@ -1473,7 +1473,7 @@ def sendstick(sender, stick):
 @electronic.message_handler(commands=['control'])
 def electroniccontrol(m):
     adm=admins.find_one({'name':'el_admins'})
-        if m.from_user.id in adm['el_admins']:
+    if m.from_user.id in adm['el_admins']:
             if adm['controller'] == None:
                 admins.update_one({'name':'el_admins'},{'$set':{'controller': {'id': m.from_user.id,
                                          'name': m.from_user.first_name}}})
