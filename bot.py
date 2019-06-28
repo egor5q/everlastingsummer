@@ -32,6 +32,7 @@ semen = telebot.TeleBot(os.environ['semen'])
 pioneer = telebot.TeleBot(os.environ['pioneer'])
 yuriy = telebot.TeleBot(os.environ['yuriy'])
 alexandr = telebot.TeleBot(os.environ['alexandr'])
+vladislav = telebot.TeleBot(os.environ['vladislav'])
 
 
 client1 = os.environ['database']
@@ -76,8 +77,8 @@ def createadmin(pioner, id=441399484):
 
 admins=db.admins
 
-if admins.find_one({'name':'ale_admins'})==None:
-    admins.insert_one(createadmin('ale_admins', 438090820))
+if admins.find_one({'name':'vl_admins'})==None:
+    admins.insert_one(createadmin('vl_admins', 638721729))
 
 
 ignorelist = []
@@ -245,6 +246,8 @@ def stickhandler(m, pioner):
             stats='yu_admins'
         if pioner==alexandr:
             stats='ale_admins'
+        if pioner==vladislav:
+            stats='vl_admins'
 
         adm=admins.find_one({'name':stats})
         if adm['controller'] != None:
@@ -295,6 +298,8 @@ def msghandler(m, pioner):
             stats='yu_admins'
         if pioner==alexandr:
             stats='ale_admins'
+        if pioner==vladislav:
+            stats='vl_admins'
 
         adm=admins.find_one({'name':stats})
         if adm['controller'] != None:
@@ -2098,7 +2103,42 @@ def yuriyrmessages(m):
 @alexandr.message_handler(content_types=['sticker'])
 def stickercatchpioneer(m):
     stickhandler(m, alexandr)
+    
+    
+    
+    
+###################################### VLADISLAV ###############################################
 
+
+@vladislav.message_handler(commands=['control'])
+def vladislavrercontrol(m):
+    x='vl_admins'
+    adm=admins.find_one({'name':x})
+    if m.from_user.id in adm[x]:
+            if adm['controller'] == None:
+                admins.update_one({'name':x},{'$set':{'controller': {'id': m.from_user.id,
+                                         'name': m.from_user.first_name}}})
+                vladislav.send_message(m.from_user.id, 'Теперь ты управляешь мной!')
+
+
+@vladislav.message_handler(commands=['stopcontrol'])
+def alexandrstopcontrol(m):
+    x='vl_admins'
+    adm=admins.find_one({'name':x})
+    if adm['controller'] != None:
+        if adm['controller']['id'] == m.from_user.id:
+            admins.update_one({'name':x},{'$set':{'controller':None}})
+            vladislav.send_message(m.from_user.id, 'Ты больше не управляешь мной.')
+
+@vladislav.message_handler()
+def yuriyrmessages(m):
+    if ban.find_one({'id': m.from_user.id}) == None:
+        msghandler(m, vladislav)
+
+
+@vladislav.message_handler(content_types=['sticker'])
+def stickercatchpioneer(m):
+    stickhandler(m, vladislav)
 
 
 
@@ -2532,6 +2572,8 @@ if True:
     t = threading.Timer(1, polling, args=[yuriy])
     t.start()
     t = threading.Timer(1, polling, args=[alexandr])
+    t.start()
+    t = threading.Timer(1, polling, args=[vladislav])
     t.start()
 
 @world.message_handler(commands=['addplayer'])
