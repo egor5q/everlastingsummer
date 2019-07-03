@@ -9,7 +9,7 @@ from emoji import emojize
 from telebot import types
 from pymongo import MongoClient
 import traceback
-#import re
+import re
 
 
 from requests.exceptions import ReadTimeout
