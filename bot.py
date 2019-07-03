@@ -2095,13 +2095,13 @@ def alexandrstopcontrol(m):
             alexandr.send_message(m.from_user.id, 'Ты больше не управляешь мной.')
 
 @alexandr.message_handler()
-def yuriyrmessages(m):
+def alexrmessages(m):
     if ban.find_one({'id': m.from_user.id}) == None:
         msghandler(m, alexandr)
 
 
 @alexandr.message_handler(content_types=['sticker'])
-def stickercatchpioneer(m):
+def stickercatchpialexr(m):
     stickhandler(m, alexandr)
     
     
