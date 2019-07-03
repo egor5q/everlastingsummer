@@ -266,12 +266,20 @@ def stickhandler(m, pioner):
                         bot.delete_message(m.chat.id, m.message_id)
                     except:
                         bot.send_message(441399484, traceback.format_exc())
+                        try:
+                            alisa.delete_message(m.chat.id, m.message_id)
+                        except:
+                            pass
                     pioner.send_sticker(m.chat.id, m.sticker.file_id)
                 else:
                     try:
                         bot.delete_message(m.chat.id, m.message_id)
                     except:
                         bot.send_message(441399484, traceback.format_exc())
+                        try:
+                            alisa.delete_message(m.chat.id, m.message_id)
+                        except:
+                            pass
                     pioner.send_sticker(m.chat.id, m.sticker.file_id, reply_to_message_id=m.reply_to_message.message_id)
     
 
@@ -320,6 +328,10 @@ def msghandler(m, pioner):
                         bot.delete_message(chat_id=m.chat.id, message_id=m.message_id)
                     except:
                         bot.send_message(441399484, traceback.format_exc())
+                        try:
+                            alisa.delete_message(m.chat.id, m.message_id)
+                        except:
+                            pass
                     msg = pioner.send_message(m.chat.id, m.text)
                         #for ids in ctrls:
                         #    if ids['controller'] != None and ids['bot'] != pioner:
@@ -372,6 +384,10 @@ def msghandler(m, pioner):
                             bot.delete_message(m.chat.id, m.message_id)
                         except:
                             bot.send_message(441399484, traceback.format_exc())
+                            try:
+                                alisa.delete_message(m.chat.id, m.message_id)
+                            except:
+                                pass
                         pioner.send_message(m.chat.id, m.text, reply_to_message_id=m.reply_to_message.message_id)
 
                     except Exception as E:
