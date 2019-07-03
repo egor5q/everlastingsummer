@@ -162,6 +162,14 @@ def rp(m):
     world.send_message(m.chat.id, 'now '+str(nowrp))
     
     
+@bot.message_handler(commands=['see'])
+def see(m):
+  if m.from_user.id==441399484:
+    try:
+        bot.send_message(m.chat.id, str(m.reply_to_message))
+    except:
+        bot.send_message(441399484, traceback.format_exc())
+
 @bot.message_handler(commands=['ignore'])
 def ignore(m):
     if m.from_user.id == 441399484:
