@@ -83,7 +83,7 @@ if admins.find_one({'name':'vl_admins'})==None:
 
 ignorelist = []
 
-rds = False
+rds = True
 
 works = [
     {'name': 'concertready',
