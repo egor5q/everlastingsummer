@@ -337,7 +337,7 @@ def pichandler(m, pioner):
                             alisa.delete_message(m.chat.id, m.message_id)
                         except:
                             pass
-                    if m.text!=None:
+                    if m.caption!=None:
                         pioner.send_photo(m.chat.id, m.photo[0].file_id, caption=m.caption)
                     else:
                         pioner.send_photo(m.chat.id, m.photo[0].file_id)
@@ -350,7 +350,7 @@ def pichandler(m, pioner):
                             alisa.delete_message(m.chat.id, m.message_id)
                         except:
                             pass
-                    if m.text!=None:
+                    if m.caption!=None:
                         pioner.send_photo(m.chat.id, m.photo[0].file_id, caption=m.caption, reply_to_message_id=m.reply_to_message.message_id)
                     else:
                         pioner.send_photo(m.chat.id, m.photo[0].file_id, reply_to_message_id=m.reply_to_message.message_id)
