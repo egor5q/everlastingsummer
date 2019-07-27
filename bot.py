@@ -338,7 +338,7 @@ def pichandler(m, pioner):
                         except:
                             pass
                     if m.text!=None:
-                        pioner.send_photo(m.chat.id, m.photo[0].file_id, caption=m.text)
+                        pioner.send_photo(m.chat.id, m.photo[0].file_id, caption=m.caption)
                     else:
                         pioner.send_photo(m.chat.id, m.photo[0].file_id)
                 else:
@@ -351,7 +351,7 @@ def pichandler(m, pioner):
                         except:
                             pass
                     if m.text!=None:
-                        pioner.send_photo(m.chat.id, m.photo[0].file_id, caption=m.text, reply_to_message_id=m.reply_to_message.message_id)
+                        pioner.send_photo(m.chat.id, m.photo[0].file_id, caption=m.caption, reply_to_message_id=m.reply_to_message.message_id)
                     else:
                         pioner.send_photo(m.chat.id, m.photo[0].file_id, reply_to_message_id=m.reply_to_message.message_id)
     
