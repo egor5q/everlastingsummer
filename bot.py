@@ -322,9 +322,9 @@ def msghandler(m, pioner):
             stats='vl_admins'
         if pioner==samanta:
             stats='sa_admins'
+        text=None
         if m.text[0]=='/':
             pioner2=None
-            text=None
             if m.text[:4]=='/жен':
                 pioner2=zhenya
             elif m.text[:4]=='/мик':
@@ -459,10 +459,6 @@ def msghandler(m, pioner):
                 #    except Exception as E:
                 #        bot.send_message(441399484, traceback.format_exc())
 
-
-
-vladislav = telebot.TeleBot(os.environ['vladislav'])
-samanta = telebot.TeleBot(os.environ['samanta'])
                 
                 
 @bot.message_handler(commands=['pioner_left'])
