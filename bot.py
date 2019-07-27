@@ -33,6 +33,7 @@ pioneer = telebot.TeleBot(os.environ['pioneer'])
 yuriy = telebot.TeleBot(os.environ['yuriy'])
 alexandr = telebot.TeleBot(os.environ['alexandr'])
 vladislav = telebot.TeleBot(os.environ['vladislav'])
+samanta = telebot.TeleBot(os.environ['samanta'])
 
 
 client1 = os.environ['database']
@@ -77,8 +78,8 @@ def createadmin(pioner, id=441399484):
 
 admins=db.admins
 
-if admins.find_one({'name':'vl_admins'})==None:
-    admins.insert_one(createadmin('vl_admins', 638721729))
+if admins.find_one({'name':'sa_admins'})==None:
+    admins.insert_one(createadmin('sa_admins', 594911696))
 
 
 ignorelist = []
@@ -257,6 +258,8 @@ def stickhandler(m, pioner):
             stats='ale_admins'
         if pioner==vladislav:
             stats='vl_admins'
+        if pioner==samanta:
+            stats='sa_admins'
 
         adm=admins.find_one({'name':stats})
         if adm['controller'] != None:
@@ -317,6 +320,8 @@ def msghandler(m, pioner):
             stats='ale_admins'
         if pioner==vladislav:
             stats='vl_admins'
+        if pioner==samanta:
+            stats='sa_admins'
 
         adm=admins.find_one({'name':stats})
         if adm['controller'] != None:
@@ -2167,6 +2172,40 @@ def stickercatchpioneer(m):
 
 
 
+####################################### SAMANTA ##############################################
+@samanta.message_handler(commands=['control'])
+def samantacontrol(m):
+    x='sa_admins'
+    adm=admins.find_one({'name':x})
+    if m.from_user.id in adm[x]:
+            if adm['controller'] == None:
+                admins.update_one({'name':x},{'$set':{'controller': {'id': m.from_user.id,
+                                         'name': m.from_user.first_name}}})
+                samanta.send_message(m.from_user.id,
+                              'Привет! Теперь ты управляешь мной!')
+
+
+@samanta.message_handler(commands=['stopcontrol'])
+def samantastopcontrol(m):
+    x='sa_admins'
+    adm=admins.find_one({'name':x})
+    if adm['controller'] != None:
+        if adm['controller']['id'] == m.from_user.id:
+            admins.update_one({'name':x},{'$set':{'controller':None}})
+            samanta.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+
+@samanta.message_handler()
+def samantamessages(m):
+    if ban.find_one({'id': m.from_user.id}) == None:
+        msghandler(m, samanta)
+
+
+@samanta.message_handler(content_types=['sticker'])
+def stickercatchsamantau(m):
+    stickhandler(m, samanta)
+
+
+
 def helpend(id, pioner):
     x = users.find_one({'id': id})
     users.update_one({'id': id}, {'$set': {'helping': 0}})
@@ -2599,6 +2638,8 @@ if True:
     t = threading.Timer(1, polling, args=[alexandr])
     t.start()
     t = threading.Timer(1, polling, args=[vladislav])
+    t.start()
+    t = threading.Timer(1, polling, args=[samanta])
     t.start()
 
 @world.message_handler(commands=['addplayer'])
