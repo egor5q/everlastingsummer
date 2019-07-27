@@ -287,6 +287,75 @@ def stickhandler(m, pioner):
                     pioner.send_sticker(m.chat.id, m.sticker.file_id, reply_to_message_id=m.reply_to_message.message_id)
     
 
+    
+def pichandler(m, pioner):
+    if ban.find_one({'id': m.from_user.id}) == None:
+        stats = None
+        if pioner == uliana:
+            stats = 'ul_admins'
+        if pioner == lena:
+            stats = 'le_admins'
+        if pioner == tolik:
+            stats = 'to_admins'
+        if pioner == alisa:
+            stats = 'al_admins'
+        if pioner == bot:
+            stats = 'od_admins'
+        if pioner == zhenya:
+            stats = 'zh_admins'
+        if pioner == shurik:
+            stats = 'sh_admins'
+        if pioner == electronic:
+            stats = 'el_admins'
+        if pioner == slavya:
+            stats = 'sl_admins'
+        if pioner == miku:
+            stats = 'mi_admins'
+        if pioner == pioneer:
+            stats = 'pi_admins'
+        if pioner == semen:
+            stats = 'se_admins'
+        if pioner == yuriy: 
+            stats='yu_admins'
+        if pioner==alexandr:
+            stats='ale_admins'
+        if pioner==vladislav:
+            stats='vl_admins'
+        if pioner==samanta:
+            stats='sa_admins'
+
+        adm=admins.find_one({'name':stats})
+        if adm['controller'] != None:
+            controller = adm['controller']
+            if m.from_user.id == controller['id']:
+                if m.reply_to_message == None:
+                    try:
+                        bot.delete_message(m.chat.id, m.message_id)
+                    except:
+                        bot.send_message(441399484, traceback.format_exc())
+                        try:
+                            alisa.delete_message(m.chat.id, m.message_id)
+                        except:
+                            pass
+                    if m.text!=None:
+                        pioner.send_photo(m.chat.id, m.photo[0].file_id, caption=m.text)
+                    else:
+                        pioner.send_photo(m.chat.id, m.photo[0].file_id)
+                else:
+                    try:
+                        bot.delete_message(m.chat.id, m.message_id)
+                    except:
+                        bot.send_message(441399484, traceback.format_exc())
+                        try:
+                            alisa.delete_message(m.chat.id, m.message_id)
+                        except:
+                            pass
+                    if m.text!=None:
+                        pioner.send_photo(m.chat.id, m.photo[0].file_id, caption=m.text, reply_to_message_id=m.reply_to_message.message_id)
+                    else:
+                        pioner.send_photo(m.chat.id, m.photo[0].file_id, reply_to_message_id=m.reply_to_message.message_id)
+    
+    
 def msghandler(m, pioner):
     if ban.find_one({'id': m.from_user.id}) == None:
         stats = None
@@ -737,6 +806,10 @@ def stickercatchod(m):
     if m.from_user.id == 441399484:
         bot.send_message(441399484, m.sticker.file_id)
     stickhandler(m, bot)
+    
+@bot.message_handler(content_types=['photo'])
+def photocatchod(m):
+    pichandler(m, bot)
 
 
 @bot.message_handler()
@@ -1584,6 +1657,9 @@ def electronicstopcontrol(m):
 def stickercatchelectronic(m):
     stickhandler(m, electronic)
 
+@electronic.message_handler(content_types=['photo'])
+def photocatchel(m):
+    pichandler(m, electronic)
 
 @electronic.message_handler()
 def electronichandler(m):
@@ -1631,6 +1707,9 @@ def electronichandler(m):
 
     except:
         electronic.send_message(441399484, traceback.format_exc())
+
+ 
+######################## LENA ###################################################
 
 
 @lena.message_handler(commands=['control'])
@@ -1693,6 +1772,10 @@ def lenamessages(m):
 def stickercatchlena(m):
     stickhandler(m, lena)
 
+@lena.message_handler(content_types=['photo'])
+def photocatchlena(m):
+    pichandler(m, lena)
+    
 
 ####################################### ALICE ##############################################
 @alisa.message_handler(commands=['control'])
@@ -1789,6 +1872,10 @@ def alisamessages(m):
 def stickercatchalisa(m):
     stickhandler(m, alisa)
 
+@alisa.message_handler(content_types=['photo'])
+def photocatchalisa(m):
+    pichandler(m, alisa)
+    
 
 ####################################### ULIANA ##############################################
 @uliana.message_handler(commands=['control'])
@@ -1848,6 +1935,10 @@ def ulianamessages(m):
 def stickercatchalisa(m):
     stickhandler(m, uliana)
 
+@uliana.message_handler(content_types=['photo'])
+def photocatchuliana(m):
+    pichandler(m, uliana)
+    
 
 ####################################### SLAVYA ##############################################
 @slavya.message_handler(commands=['control'])
@@ -1907,6 +1998,10 @@ def stickercatchslavya(m):
     stickhandler(m, slavya)
 
 
+@slavya.message_handler(content_types=['photo'])
+def photocatchslavya(m):
+    pichandler(m, slavya)
+    
 ####################################### MIKU ##############################################
 @miku.message_handler(commands=['control'])
 def mikucontrol(m):
@@ -1935,6 +2030,10 @@ def mikumessages(m):
         msghandler(m, miku)
 
 
+@miku.message_handler(content_types=['photo'])
+def photocatchmiku(m):
+    pichandler(m, miku)  
+        
 @miku.message_handler(content_types=['sticker'])
 def stickercatchmiku(m):
     stickhandler(m, miku)
@@ -1970,6 +2069,10 @@ def zhenyamessages(m):
 def stickercatchzhenya(m):
     stickhandler(m, zhenya)
 
+@zhenya.message_handler(content_types=['photo'])
+def photocatchzhenya(m):
+    pichandler(m, zhenya)
+    
 
 ####################################### TOLIK ##############################################
 @tolik.message_handler(commands=['control'])
@@ -2003,6 +2106,10 @@ def tolikmessages(m):
 def stickercatchtolik(m):
     stickhandler(m, tolik)
 
+@tolik.message_handler(content_types=['photo'])
+def photocatchtolik(m):
+    pichandler(m, tolik)
+    
 
 ####################################### SHURIK ##############################################
 @shurik.message_handler(commands=['control'])
@@ -2035,8 +2142,13 @@ def shurikmessages(m):
 @shurik.message_handler(content_types=['sticker'])
 def stickercatchzshurik(m):
     stickhandler(m, shurik)
+    
+@shurik.message_handler(content_types=['photo'])
+def photocatchshurik(m):
+    pichandler(m, shurik)
+    
 
-            ###################################### SEMEN ###############################################
+###################################### SEMEN ###############################################
 
 
 @semen.message_handler(commands=['control'])
@@ -2069,8 +2181,12 @@ def semenmessages(m):
 @semen.message_handler(content_types=['sticker'])
 def stickercatchsemen(m):
     stickhandler(m, semen)
+    
+@semen.message_handler(content_types=['photo'])
+def photocatchsemen(m):
+    pichandler(m, semen)
 
-            ###################################### PIONEER ###############################################
+###################################### PIONEER ###############################################
 
 
 @pioneer.message_handler(commands=['control'])
@@ -2104,7 +2220,9 @@ def stickercatchpioneer(m):
     stickhandler(m, pioneer)
 
 
-
+@pioneer.message_handler(content_types=['photo'])
+def photocatchpioneer(m):
+    pichandler(m, pioneer)
 
 
 ###################################### YURIY ###############################################
@@ -2140,7 +2258,9 @@ def yuriyrmessages(m):
 def stickercatchpioneer(m):
     stickhandler(m, yuriy)
     
-    
+@yuriy.message_handler(content_types=['photo'])
+def photocatchyuriy(m):
+    pichandler(m, yuriy)
     
 ###################################### ALEXANDR ###############################################
 
@@ -2175,6 +2295,10 @@ def alexrmessages(m):
 def stickercatchpialexr(m):
     stickhandler(m, alexandr)
     
+    
+@alexandr.message_handler(content_types=['photo'])
+def photocatchalex(m):
+    pichandler(m, alexandr)
     
     
     
@@ -2211,7 +2335,10 @@ def yuriyrmessages(m):
 def stickercatchpioneer(m):
     stickhandler(m, vladislav)
 
-
+@vladislav.message_handler(content_types=['photo'])
+def photocatchvlad(m):
+    pichandler(m, vladislav)
+    
 
 ####################################### SAMANTA ##############################################
 @samanta.message_handler(commands=['control'])
@@ -2245,7 +2372,10 @@ def samantamessages(m):
 def stickercatchsamantau(m):
     stickhandler(m, samanta)
 
-
+@samanta.message_handler(content_types=['photo'])
+def photocatchsam(m):
+    pichandler(m, samanta)    
+    
 
 def helpend(id, pioner):
     x = users.find_one({'id': id})
