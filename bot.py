@@ -322,12 +322,49 @@ def msghandler(m, pioner):
             stats='vl_admins'
         if pioner==samanta:
             stats='sa_admins'
-
+        if m.text[0]=='/':
+            pioner2=None
+            text=None
+            if m.text[:4]=='/жен':
+                pioner2=zhenya
+            elif m.text[:4]=='/мик':
+                pioner2=miku
+            elif m.text[:4]=='/али':
+                pioner2=alisa
+            elif m.text[:3]=='/од':
+                pioner2=bot
+            elif m.text[:4]=='/лен':
+                pioner2=lena
+            elif m.text[:4]=='/сла':
+                pioner2=slavya
+            elif m.text[:4]=='/уль':
+                pioner2=uliana
+            elif m.text[:4]=='/эле':
+                pioner2=electronic
+            elif m.text[:4]=='/тол':
+                pioner2=tolik
+            elif m.text[:4]=='/шур':
+                pioner2=shurik
+            elif m.text[:4]=='/сем':
+                pioner2=semen
+            elif m.text[:4]=='/пио':
+                pioner2=pioneer
+            elif m.text[:4]=='/юри':
+                pioner2=yuriy
+            elif m.text[:4]=='/але':
+                pioner2=miku
+            elif m.text[:3]=='/вла':
+                pioner2=vladislav
+            elif m.text[:3]=='/сам':
+                pioner2=samanta
+            if pioner2==None or pioner!=pioner2:
+                return
+            else:
+                text=m.text[4:]
         adm=admins.find_one({'name':stats})
         if adm['controller'] != None:
             controller = adm['controller']
             if m.from_user.id == controller['id']:
-              if m.text[0]!='/':
                 if m.reply_to_message == None:
                     #if m.text.split(' ')[0] != '/pm' and m.text.split(' ')[0] != '/r':
                     try:
@@ -338,7 +375,11 @@ def msghandler(m, pioner):
                             alisa.delete_message(m.chat.id, m.message_id)
                         except:
                             pass
-                    msg = pioner.send_message(m.chat.id, m.text)
+                    if text!=None:
+                        tosend=text
+                    else:
+                        tosend=m.text
+                    msg = pioner.send_message(m.chat.id, tosend)
                         #for ids in ctrls:
                         #    if ids['controller'] != None and ids['bot'] != pioner:
                         #        if msg.chat.id == -1001351496983:
@@ -402,9 +443,8 @@ def msghandler(m, pioner):
                         #                    '1. Неправильный формат отправки сообщения в ЛС юзера (пример: _/pm 441399484 Привет!_)\n' +
                         #                    '2. Юзер не написал этому пионеру/пионерке в ЛС.\nМожно реплайнуть на сообщение от меня, и я реплайну на оригинальное сообщение в чате!',
                         #                    parse_mode='markdown')
-
-
-
+                        
+                    
             else:
                 pass
                 #if m.chat.id == -1001351496983:
@@ -420,6 +460,11 @@ def msghandler(m, pioner):
                 #        bot.send_message(441399484, traceback.format_exc())
 
 
+
+vladislav = telebot.TeleBot(os.environ['vladislav'])
+samanta = telebot.TeleBot(os.environ['samanta'])
+                
+                
 @bot.message_handler(commands=['pioner_left'])
 def leftpioneeer(m):
     if m.from_user.id == 441399484:
