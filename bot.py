@@ -35,6 +35,11 @@ alexandr = telebot.TeleBot(os.environ['alexandr'])
 vladislav = telebot.TeleBot(os.environ['vladislav'])
 samanta = telebot.TeleBot(os.environ['samanta'])
 
+cday=1
+times=['Время до линейки', 'Линейка', 'Завтрак', 'Время после завтрака', 'Обед', 'Время после обеда', 'Ужин', 'Время после ужина (вечер)', 'Ночь']
+
+rp_players=[]
+
 
 client1 = os.environ['database']
 client = MongoClient(client1)
@@ -43,12 +48,75 @@ users = db.users
 thunder = db.thunder
 thunder_variables = db.thunder_variables
 ban = db.ban
+cday=db.cday
+ctime_rp=db.ctime
 nowrp=False
+
+if ctime_rp.find_one({})==None:
+    ctime_rp.insert_one({'ctime_rp':times[0]})
+    
+if cday.find_one({})==None:
+    cday.insert_one({'cday':1})
 
 mainchat = -1001351496983
 rpchats=[]
 
+accept=[]
+decline=[]
 
+
+@bot.message_handler(commands=['change_time'])
+def change_time(m):
+    if m.chat.id==-1001425303036:
+        if m.from_user.id in rp_players:
+            kb=types.InlineKeyboardMarkup()
+            kb.add(types.InlineKeyboardButton(text='Я за!', callback_data='accept'))
+            kb.add(types.InlineKeyboardButton(text='Я против!', callback_data='decline'))
+            bot.send_message(m.chat.id, m.from_user.first_name+' считает, что пора менять время суток!', reply_markup=kb)   
+
+
+@bot.message_handler(commands=['currenttime'])
+def currenttime(m):
+    ct=ctime_rp.find_one({})
+    cd=str(cday.find_one({})['cday'])
+    bot.send_message(m.chat.id, 'Текущий день: *'+cd+'*.\n'+'Текущее время: *'+ct['ctime_rp']+'*.', parse_mode='markdown')
+            
+            
+@bot.callback_query_handler(func=lambda call:True)
+def inline(call):
+    if call.from_user.id in rp_players:
+        if call.data=='accept':
+            if call.from_user.id not in accept:
+                accept.append(call.from_user.id)
+                bot.answer_callback_query(call.id, 'Ваш голос учтён!')
+                if len(accept)>=3:
+                    ct=ctime_rp.find_one({})
+                    i=0
+                    while ct['ctime_rp']!=times[i]:
+                        i+=1
+                    if ct['ctime_rp']=='Ночь':
+                        cday.update_one({},{'$inc':{'cday':1}})
+                        ctime_rp.update_one({},{'$set':{'ctime_rp':times[0]}})
+                    else:
+                        ctime_rp.update_one({},{'$set':{'ctime_rp':times[i+1]}})
+                    medit('Время суток изменено!', call.message.chat.id, call.message.message_id)
+                    accept=[]
+                    decline=[]
+            else:
+                bot.answer_callback_query(call.id, 'Вы уже голосовали!')
+        else:
+            if call.from_user.id not in decline:
+                decline.append(call.from_user.id)
+                bot.answer_callback_query(call.id, 'Ваш голос учтён!')
+                if len(decline)>=3:
+                    medit('3 человека проголосовало против смены времени!', call.message.chat.id, call.message.message_id)
+                    accept=[]
+                    decline=[]
+            else:
+                bot.answer_callback_query(call.id, 'Вы уже голосовали!')
+        
+            
+                             
 yestexts = ['хорошо, ольга дмитриевна!', 'хорошо!', 'я этим займусь!', 'я готов!', 'я готова!']
 notexts = ['простите, но у меня уже появились дела.']
 
