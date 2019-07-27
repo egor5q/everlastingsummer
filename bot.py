@@ -325,37 +325,37 @@ def msghandler(m, pioner):
         text=None
         if m.text[0]=='/':
             pioner2=None
-            if m.text[:4]=='/жен':
+            if m.text[:4].lower()=='/жен':
                 pioner2=zhenya
-            elif m.text[:4]=='/мик':
+            elif m.text[:4].lower()=='/мик':
                 pioner2=miku
-            elif m.text[:4]=='/али':
+            elif m.text[:4].lower()=='/али':
                 pioner2=alisa
-            elif m.text[:3]=='/од':
+            elif m.text[:3].lower()=='/од':
                 pioner2=bot
-            elif m.text[:4]=='/лен':
+            elif m.text[:4].lower()=='/лен':
                 pioner2=lena
-            elif m.text[:4]=='/сла':
+            elif m.text[:4].lower()=='/сла':
                 pioner2=slavya
-            elif m.text[:4]=='/уль':
+            elif m.text[:4].lower()=='/уль':
                 pioner2=uliana
-            elif m.text[:4]=='/эле':
+            elif m.text[:4].lower()=='/эле':
                 pioner2=electronic
-            elif m.text[:4]=='/тол':
+            elif m.text[:4].lower()=='/тол':
                 pioner2=tolik
-            elif m.text[:4]=='/шур':
+            elif m.text[:4].lower()=='/шур':
                 pioner2=shurik
-            elif m.text[:4]=='/сем':
+            elif m.text[:4].lower()=='/сем':
                 pioner2=semen
-            elif m.text[:4]=='/пио':
+            elif m.text[:4].lower()=='/пио':
                 pioner2=pioneer
-            elif m.text[:4]=='/юри':
+            elif m.text[:4].lower()=='/юри':
                 pioner2=yuriy
-            elif m.text[:4]=='/але':
+            elif m.text[:4].lower()=='/але':
                 pioner2=miku
-            elif m.text[:3]=='/вла':
+            elif m.text[:4].lower()=='/вла':
                 pioner2=vladislav
-            elif m.text[:3]=='/сам':
+            elif m.text[:4].lower()=='/сам':
                 pioner2=samanta
             if pioner2==None or pioner!=pioner2:
                 return
