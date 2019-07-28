@@ -100,8 +100,8 @@ def inline(call):
                     else:
                         ctime_rp.update_one({},{'$set':{'ctime_rp':times[i+1]}})
                     medit('Время суток изменено!', call.message.chat.id, call.message.message_id)
-                    accept=[]
-                    decline=[]
+                    accept.clear()
+                    decline.clear()
             else:
                 bot.answer_callback_query(call.id, 'Вы уже голосовали!')
         else:
@@ -110,8 +110,8 @@ def inline(call):
                 bot.answer_callback_query(call.id, 'Ваш голос учтён!')
                 if len(decline)>=3:
                     medit('3 человека проголосовало против смены времени!', call.message.chat.id, call.message.message_id)
-                    accept=[]
-                    decline=[]
+                    accept.clear()
+                    decline.clear()
             else:
                 bot.answer_callback_query(call.id, 'Вы уже голосовали!')
         
