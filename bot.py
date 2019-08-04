@@ -34,6 +34,8 @@ yuriy = telebot.TeleBot(os.environ['yuriy'])
 alexandr = telebot.TeleBot(os.environ['alexandr'])
 vladislav = telebot.TeleBot(os.environ['vladislav'])
 samanta = telebot.TeleBot(os.environ['samanta'])
+vasiliyhait = telebot.TeleBot(os.environ['vasiliyhait'])
+
 
 cday=1
 times=['Время до линейки', 'Линейка', 'Завтрак', 'Время после завтрака', 'Обед', 'Время после обеда', 'Ужин', 'Время после ужина (вечер)', 'Ночь']
@@ -333,6 +335,8 @@ def stickhandler(m, pioner):
             stats='vl_admins'
         if pioner==samanta:
             stats='sa_admins'
+        if pioner==vasiliyhait:
+            stats='va_admins'
 
         adm=admins.find_one({'name':stats})
         if adm['controller'] != None:
@@ -396,6 +400,8 @@ def pichandler(m, pioner):
             stats='vl_admins'
         if pioner==samanta:
             stats='sa_admins'
+        if pioner==vasiliyhait:
+            stats='va_admins'
 
         adm=admins.find_one({'name':stats})
         if adm['controller'] != None:
@@ -464,6 +470,8 @@ def msghandler(m, pioner):
             stats='vl_admins'
         if pioner==samanta:
             stats='sa_admins'
+        if pioner==vasiliyhait:
+            stats='va_admins'
         text=None
         if m.text[0]=='/':
             pioner2=None
@@ -2447,7 +2455,46 @@ def stickercatchsamantau(m):
 
 @samanta.message_handler(content_types=['photo'])
 def photocatchsam(m):
-    pichandler(m, samanta)    
+    pichandler(m, samanta)   
+
+
+
+####################################### VASILIYHAIT ##############################################
+@vasiliyhait.message_handler(commands=['control'])
+def samantacontrol(m):
+    x='va_admins'
+    adm=admins.find_one({'name':x})
+    if m.from_user.id in adm[x]:
+            if adm['controller'] == None:
+                admins.update_one({'name':x},{'$set':{'controller': {'id': m.from_user.id,
+                                         'name': m.from_user.first_name}}})
+                samanta.send_message(m.from_user.id,
+                              'Привет! Теперь ты управляешь мной!')
+
+
+@vasiliyhait.message_handler(commands=['stopcontrol'])
+def samantastopcontrol(m):
+    x='va_admins'
+    adm=admins.find_one({'name':x})
+    if adm['controller'] != None:
+        if adm['controller']['id'] == m.from_user.id:
+            admins.update_one({'name':x},{'$set':{'controller':None}})
+            samanta.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+
+@vasiliyhait.message_handler()
+def samantamessages(m):
+    if ban.find_one({'id': m.from_user.id}) == None:
+        msghandler(m, vasiliyhait)
+
+
+@vasiliyhait.message_handler(content_types=['sticker'])
+def stickercatchsamantau(m):
+    stickhandler(m, vasiliyhait)
+
+@vasiliyhait.message_handler(content_types=['photo'])
+def photocatchsam(m):
+    pichandler(m, vasiliyhait)    
+    
     
 
 def helpend(id, pioner):
@@ -2884,6 +2931,8 @@ if True:
     t = threading.Timer(1, polling, args=[vladislav])
     t.start()
     t = threading.Timer(1, polling, args=[samanta])
+    t.start()
+    t = threading.Timer(1, polling, args=[vasiliyhait])
     t.start()
 
 @world.message_handler(commands=['addplayer'])
