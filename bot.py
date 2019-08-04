@@ -153,8 +153,8 @@ def medit(message_text, chat_id, message_id, reply_markup=None, parse_mode=None)
 
 admins=db.admins
 
-if admins.find_one({'name':'sa_admins'})==None:
-    admins.insert_one(createadmin('sa_admins', 594911696))
+if admins.find_one({'name':'va_admins'})==None:
+    admins.insert_one(createadmin('va_admins', 496583701))
 
 
 ignorelist = []
