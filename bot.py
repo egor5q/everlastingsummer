@@ -434,6 +434,75 @@ def pichandler(m, pioner):
                     else:
                         pioner.send_photo(m.chat.id, m.photo[0].file_id, reply_to_message_id=m.reply_to_message.message_id)
     
+
+
+def audiohandler(m, pioner):
+    if ban.find_one({'id': m.from_user.id}) == None:
+        stats = None
+        if pioner == uliana:
+            stats = 'ul_admins'
+        if pioner == lena:
+            stats = 'le_admins'
+        if pioner == tolik:
+            stats = 'to_admins'
+        if pioner == alisa:
+            stats = 'al_admins'
+        if pioner == bot:
+            stats = 'od_admins'
+        if pioner == zhenya:
+            stats = 'zh_admins'
+        if pioner == shurik:
+            stats = 'sh_admins'
+        if pioner == electronic:
+            stats = 'el_admins'
+        if pioner == slavya:
+            stats = 'sl_admins'
+        if pioner == miku:
+            stats = 'mi_admins'
+        if pioner == pioneer:
+            stats = 'pi_admins'
+        if pioner == semen:
+            stats = 'se_admins'
+        if pioner == yuriy: 
+            stats='yu_admins'
+        if pioner==alexandr:
+            stats='ale_admins'
+        if pioner==vladislav:
+            stats='vl_admins'
+        if pioner==samanta:
+            stats='sa_admins'
+        if pioner==vasiliyhait:
+            stats='va_admins'
+
+        adm=admins.find_one({'name':stats})
+        if adm['controller'] != None:
+            controller = adm['controller']
+            if m.from_user.id == controller['id']:
+                if m.reply_to_message == None:
+                    try:
+                        bot.delete_message(m.chat.id, m.message_id)
+                    except:
+                        bot.send_message(441399484, traceback.format_exc())
+                        try:
+                            alisa.delete_message(m.chat.id, m.message_id)
+                        except:
+                            pass
+                    
+                    pioner.send_audio(m.chat.id, m.audio.file_id)
+                else:
+                    try:
+                        bot.delete_message(m.chat.id, m.message_id)
+                    except:
+                        bot.send_message(441399484, traceback.format_exc())
+                        try:
+                            alisa.delete_message(m.chat.id, m.message_id)
+                        except:
+                            pass
+                    
+                    pioner.send_audio(m.chat.id, m.audio.file_id, reply_to_message_id=m.reply_to_message.message_id)
+    
+
+
     
 def msghandler(m, pioner):
     if ban.find_one({'id': m.from_user.id}) == None:
@@ -891,6 +960,11 @@ def stickercatchod(m):
 @bot.message_handler(content_types=['photo'])
 def photocatchod(m):
     pichandler(m, bot)
+
+
+@bot.message_handler(content_types=['audio'])
+def photocatchod(m):
+    audiohandler(m, bot)
 
 
 @bot.message_handler()
@@ -1738,6 +1812,11 @@ def electronicstopcontrol(m):
 def stickercatchelectronic(m):
     stickhandler(m, electronic)
 
+@electronic.message_handler(content_types=['audio'])
+def stickercatchelectronic(m):
+    audiohandler(m, electronic)
+
+
 @electronic.message_handler(content_types=['photo'])
 def photocatchel(m):
     pichandler(m, electronic)
@@ -1856,6 +1935,10 @@ def stickercatchlena(m):
 @lena.message_handler(content_types=['photo'])
 def photocatchlena(m):
     pichandler(m, lena)
+
+@lena.message_handler(content_types=['audio'])
+def photocatchlena(m):
+    audiohandler(m, lena)
     
 
 ####################################### ALICE ##############################################
@@ -1956,6 +2039,11 @@ def stickercatchalisa(m):
 @alisa.message_handler(content_types=['photo'])
 def photocatchalisa(m):
     pichandler(m, alisa)
+
+
+@alisa.message_handler(content_types=['audio'])
+def photocatchalisa(m):
+    audiohandler(m, alisa)
     
 
 ####################################### ULIANA ##############################################
@@ -2015,6 +2103,10 @@ def ulianamessages(m):
 @uliana.message_handler(content_types=['sticker'])
 def stickercatchalisa(m):
     stickhandler(m, uliana)
+
+@uliana.message_handler(content_types=['audio'])
+def stickercatchalisa(m):
+    audiohandler(m, uliana)
 
 @uliana.message_handler(content_types=['photo'])
 def photocatchuliana(m):
@@ -2078,6 +2170,10 @@ def slavyamessages(m):
 def stickercatchslavya(m):
     stickhandler(m, slavya)
 
+@slavya.message_handler(content_types=['audio'])
+def stickercatchslavya(m):
+    audiohandler(m, slavya)
+
 
 @slavya.message_handler(content_types=['photo'])
 def photocatchslavya(m):
@@ -2119,6 +2215,10 @@ def photocatchmiku(m):
 def stickercatchmiku(m):
     stickhandler(m, miku)
 
+@miku.message_handler(content_types=['audio'])
+def stickercatchmiku(m):
+    audiohandler(m, miku)
+
 ####################################### ZHENYA ##############################################
 @zhenya.message_handler(commands=['control'])
 def zhenyacontrol(m):
@@ -2153,6 +2253,10 @@ def stickercatchzhenya(m):
 @zhenya.message_handler(content_types=['photo'])
 def photocatchzhenya(m):
     pichandler(m, zhenya)
+
+@zhenya.message_handler(content_types=['audio'])
+def photocatchzhenya(m):
+    audiohandler(m, zhenya)
     
 
 ####################################### TOLIK ##############################################
@@ -2186,6 +2290,10 @@ def tolikmessages(m):
 @tolik.message_handler(content_types=['sticker'])
 def stickercatchtolik(m):
     stickhandler(m, tolik)
+
+@tolik.message_handler(content_types=['audio'])
+def stickercatchtolik(m):
+    audiohandler(m, tolik)
 
 @tolik.message_handler(content_types=['photo'])
 def photocatchtolik(m):
@@ -2223,6 +2331,10 @@ def shurikmessages(m):
 @shurik.message_handler(content_types=['sticker'])
 def stickercatchzshurik(m):
     stickhandler(m, shurik)
+
+@shurik.message_handler(content_types=['audio'])
+def stickercatchzshurik(m):
+    audiohandler(m, shurik)
     
 @shurik.message_handler(content_types=['photo'])
 def photocatchshurik(m):
@@ -2263,6 +2375,11 @@ def semenmessages(m):
 def stickercatchsemen(m):
     stickhandler(m, semen)
     
+@semen.message_handler(content_types=['audio'])
+def stickercatchsemen(m):
+    audiohandler(m, semen)
+    
+
 @semen.message_handler(content_types=['photo'])
 def photocatchsemen(m):
     pichandler(m, semen)
@@ -2299,6 +2416,10 @@ def pioneermessages(m):
 @pioneer.message_handler(content_types=['sticker'])
 def stickercatchpioneer(m):
     stickhandler(m, pioneer)
+
+@pioneer.message_handler(content_types=['audio'])
+def stickercatchpioneer(m):
+    audiohandler(m, pioneer)
 
 
 @pioneer.message_handler(content_types=['photo'])
@@ -2338,6 +2459,10 @@ def yuriyrmessages(m):
 @yuriy.message_handler(content_types=['sticker'])
 def stickercatchpioneer(m):
     stickhandler(m, yuriy)
+
+@yuriy.message_handler(content_types=['audio'])
+def stickercatchpioneer(m):
+    audiohandler(m, yuriy)
     
 @yuriy.message_handler(content_types=['photo'])
 def photocatchyuriy(m):
@@ -2375,6 +2500,11 @@ def alexrmessages(m):
 @alexandr.message_handler(content_types=['sticker'])
 def stickercatchpialexr(m):
     stickhandler(m, alexandr)
+    
+
+@alexandr.message_handler(content_types=['audio'])
+def stickercatchpialexr(m):
+    audiohandler(m, alexandr)
     
     
 @alexandr.message_handler(content_types=['photo'])
@@ -2416,6 +2546,10 @@ def yuriyrmessages(m):
 def stickercatchpioneer(m):
     stickhandler(m, vladislav)
 
+@vladislav.message_handler(content_types=['audio'])
+def stickercatchpioneer(m):
+    audiohandler(m, vladislav)
+
 @vladislav.message_handler(content_types=['photo'])
 def photocatchvlad(m):
     pichandler(m, vladislav)
@@ -2452,6 +2586,10 @@ def samantamessages(m):
 @samanta.message_handler(content_types=['sticker'])
 def stickercatchsamantau(m):
     stickhandler(m, samanta)
+
+@samanta.message_handler(content_types=['audio'])
+def stickercatchsamantau(m):
+    audiohandler(m, samanta)
 
 @samanta.message_handler(content_types=['photo'])
 def photocatchsam(m):
@@ -2490,6 +2628,10 @@ def samantamessages(m):
 @vasiliyhait.message_handler(content_types=['sticker'])
 def stickercatchsamantau(m):
     stickhandler(m, vasiliyhait)
+
+@vasiliyhait.message_handler(content_types=['audio'])
+def stickercatchsamantau(m):
+    audiohandler(m, vasiliyhait)
 
 @vasiliyhait.message_handler(content_types=['photo'])
 def photocatchsam(m):
