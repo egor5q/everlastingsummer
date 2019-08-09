@@ -964,6 +964,7 @@ def photocatchod(m):
 
 
 @bot.message_handler(content_types=['audio'])
+@bot.message_handler(content_types=['voice'])
 def photocatchod(m):
     audiohandler(m, bot)
 
@@ -1814,6 +1815,8 @@ def stickercatchelectronic(m):
     stickhandler(m, electronic)
 
 @electronic.message_handler(content_types=['audio'])
+@electronic.message_handler(content_types=['voice'])
+
 def stickercatchelectronic(m):
     audiohandler(m, electronic)
 
@@ -1938,6 +1941,8 @@ def photocatchlena(m):
     pichandler(m, lena)
 
 @lena.message_handler(content_types=['audio'])
+@lena.message_handler(content_types=['voice'])
+
 def photocatchlena(m):
     audiohandler(m, lena)
     
@@ -2043,6 +2048,8 @@ def photocatchalisa(m):
 
 
 @alisa.message_handler(content_types=['audio'])
+@alisa.message_handler(content_types=['voice'])
+
 def photocatchalisa(m):
     audiohandler(m, alisa)
     
@@ -2106,6 +2113,8 @@ def stickercatchalisa(m):
     stickhandler(m, uliana)
 
 @uliana.message_handler(content_types=['audio'])
+@uliana.message_handler(content_types=['voice'])
+
 def stickercatchalisa(m):
     audiohandler(m, uliana)
 
@@ -2172,6 +2181,8 @@ def stickercatchslavya(m):
     stickhandler(m, slavya)
 
 @slavya.message_handler(content_types=['audio'])
+@slavya.message_handler(content_types=['voice'])
+
 def stickercatchslavya(m):
     audiohandler(m, slavya)
 
@@ -2217,6 +2228,8 @@ def stickercatchmiku(m):
     stickhandler(m, miku)
 
 @miku.message_handler(content_types=['audio'])
+@miku.message_handler(content_types=['voice'])
+
 def stickercatchmiku(m):
     audiohandler(m, miku)
 
@@ -2256,6 +2269,8 @@ def photocatchzhenya(m):
     pichandler(m, zhenya)
 
 @zhenya.message_handler(content_types=['audio'])
+@zhenya.message_handler(content_types=['voice'])
+
 def photocatchzhenya(m):
     audiohandler(m, zhenya)
     
@@ -2293,6 +2308,8 @@ def stickercatchtolik(m):
     stickhandler(m, tolik)
 
 @tolik.message_handler(content_types=['audio'])
+@tolik.message_handler(content_types=['voice'])
+
 def stickercatchtolik(m):
     audiohandler(m, tolik)
 
@@ -2334,6 +2351,8 @@ def stickercatchzshurik(m):
     stickhandler(m, shurik)
 
 @shurik.message_handler(content_types=['audio'])
+@shurik.message_handler(content_types=['voice'])
+
 def stickercatchzshurik(m):
     audiohandler(m, shurik)
     
@@ -2377,6 +2396,8 @@ def stickercatchsemen(m):
     stickhandler(m, semen)
     
 @semen.message_handler(content_types=['audio'])
+@semen.message_handler(content_types=['voice'])
+
 def stickercatchsemen(m):
     audiohandler(m, semen)
     
@@ -2419,6 +2440,8 @@ def stickercatchpioneer(m):
     stickhandler(m, pioneer)
 
 @pioneer.message_handler(content_types=['audio'])
+@pioneer.message_handler(content_types=['voice'])
+
 def stickercatchpioneer(m):
     audiohandler(m, pioneer)
 
@@ -2462,6 +2485,8 @@ def stickercatchpioneer(m):
     stickhandler(m, yuriy)
 
 @yuriy.message_handler(content_types=['audio'])
+@yuriy.message_handler(content_types=['voice'])
+
 def stickercatchpioneer(m):
     audiohandler(m, yuriy)
     
@@ -2504,6 +2529,8 @@ def stickercatchpialexr(m):
     
 
 @alexandr.message_handler(content_types=['audio'])
+@alexandr.message_handler(content_types=['voice'])
+
 def stickercatchpialexr(m):
     audiohandler(m, alexandr)
     
@@ -2548,6 +2575,8 @@ def stickercatchpioneer(m):
     stickhandler(m, vladislav)
 
 @vladislav.message_handler(content_types=['audio'])
+@vladislav.message_handler(content_types=['voice'])
+
 def stickercatchpioneer(m):
     audiohandler(m, vladislav)
 
@@ -2589,6 +2618,8 @@ def stickercatchsamantau(m):
     stickhandler(m, samanta)
 
 @samanta.message_handler(content_types=['audio'])
+@samanta.message_handler(content_types=['voice'])
+
 def stickercatchsamantau(m):
     audiohandler(m, samanta)
 
@@ -2631,6 +2662,8 @@ def stickercatchsamantau(m):
     stickhandler(m, vasiliyhait)
 
 @vasiliyhait.message_handler(content_types=['audio'])
+@vasiliyhait.message_handler(content_types=['voice'])
+
 def stickercatchsamantau(m):
     audiohandler(m, vasiliyhait)
 
