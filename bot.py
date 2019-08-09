@@ -438,6 +438,7 @@ def pichandler(m, pioner):
 
 def audiohandler(m, pioner):
     if ban.find_one({'id': m.from_user.id}) == None:
+        bot.send_message(441399484, 'audeo')
         stats = None
         if pioner == uliana:
             stats = 'ul_admins'
