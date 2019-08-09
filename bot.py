@@ -488,8 +488,10 @@ def audiohandler(m, pioner):
                             alisa.delete_message(m.chat.id, m.message_id)
                         except:
                             pass
-                    
-                    pioner.send_audio(m.chat.id, m.audio.file_id)
+                    try:
+                        pioner.send_audio(m.chat.id, m.audio.file_id)
+                    except:
+                        pioner.send_voice(m.chat.id, m.voice.file_id)
                 else:
                     try:
                         bot.delete_message(m.chat.id, m.message_id)
@@ -499,9 +501,10 @@ def audiohandler(m, pioner):
                             alisa.delete_message(m.chat.id, m.message_id)
                         except:
                             pass
-                    
-                    pioner.send_audio(m.chat.id, m.audio.file_id, reply_to_message_id=m.reply_to_message.message_id)
-    
+                    try:
+                        pioner.send_audio(m.chat.id, m.audio.file_id, reply_to_message_id=m.reply_to_message.message_id)
+                    except:
+                        pioner.send_voice(m.chat.id, m.voice.file_id, reply_to_message_id=m.reply_to_message.message_id)
 
 
     
