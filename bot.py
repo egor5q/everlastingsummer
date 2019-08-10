@@ -35,6 +35,7 @@ alexandr = telebot.TeleBot(os.environ['alexandr'])
 vladislav = telebot.TeleBot(os.environ['vladislav'])
 samanta = telebot.TeleBot(os.environ['samanta'])
 vasiliyhait = telebot.TeleBot(os.environ['vasiliyhait'])
+viola=telebot.TeleBot(os.environ['viola'])
 
 
 cday=1
@@ -153,8 +154,8 @@ def medit(message_text, chat_id, message_id, reply_markup=None, parse_mode=None)
 
 admins=db.admins
 
-if admins.find_one({'name':'va_admins'})==None:
-    admins.insert_one(createadmin('va_admins', 496583701))
+if admins.find_one({'name':'vi_admins'})==None:
+    admins.insert_one(createadmin('vi_admins', 441399484))
 
 
 ignorelist = []
@@ -337,6 +338,8 @@ def stickhandler(m, pioner):
             stats='sa_admins'
         if pioner==vasiliyhait:
             stats='va_admins'
+        if pioner==viola:
+            stats='vi_admins'
 
         adm=admins.find_one({'name':stats})
         if adm['controller'] != None:
@@ -402,6 +405,8 @@ def pichandler(m, pioner):
             stats='sa_admins'
         if pioner==vasiliyhait:
             stats='va_admins'
+        if pioner==viola:
+            stats='vi_admins'
 
         adm=admins.find_one({'name':stats})
         if adm['controller'] != None:
@@ -474,6 +479,8 @@ def audiohandler(m, pioner):
             stats='sa_admins'
         if pioner==vasiliyhait:
             stats='va_admins'
+        if pioner==viola:
+            stats='vi_admins'
 
         adm=admins.find_one({'name':stats})
         if adm['controller'] != None:
@@ -545,6 +552,10 @@ def msghandler(m, pioner):
             stats='sa_admins'
         if pioner==vasiliyhait:
             stats='va_admins'
+        if pioner==viola:
+            stats='vi_admins'
+
+
         text=None
         if m.text[0]=='/':
             pioner2=None
@@ -2676,6 +2687,53 @@ def photocatchsam(m):
     
     
 
+
+
+####################################### VIOLA ##############################################
+@viola.message_handler(commands=['control'])
+def samantacontrol(m):
+    x='vi_admins'
+    adm=admins.find_one({'name':x})
+    if m.from_user.id in adm[x]:
+            if adm['controller'] == None:
+                admins.update_one({'name':x},{'$set':{'controller': {'id': m.from_user.id,
+                                         'name': m.from_user.first_name}}})
+                viola.send_message(m.from_user.id,
+                              'Привет, пионер. Теперь ты управляешь мной.')
+
+
+@viola.message_handler(commands=['stopcontrol'])
+def samantastopcontrol(m):
+    x='vi_admins'
+    adm=admins.find_one({'name':x})
+    if adm['controller'] != None:
+        if adm['controller']['id'] == m.from_user.id:
+            admins.update_one({'name':x},{'$set':{'controller':None}})
+            viola.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+
+@viola.message_handler()
+def samantamessages(m):
+    if ban.find_one({'id': m.from_user.id}) == None:
+        msghandler(m, viola)
+
+
+@viola.message_handler(content_types=['sticker'])
+def stickercatchsamantau(m):
+    stickhandler(m, viola)
+
+@viola.message_handler(content_types=['audio'])
+@viola.message_handler(content_types=['voice'])
+
+def stickercatchsamantau(m):
+    audiohandler(m, viola)
+
+@viola.message_handler(content_types=['photo'])
+def photocatchsam(m):
+    pichandler(m, viola)    
+    
+    
+
+
 def helpend(id, pioner):
     x = users.find_one({'id': id})
     users.update_one({'id': id}, {'$set': {'helping': 0}})
@@ -3112,6 +3170,8 @@ if True:
     t = threading.Timer(1, polling, args=[samanta])
     t.start()
     t = threading.Timer(1, polling, args=[vasiliyhait])
+    t.start()
+    t = threading.Timer(1, polling, args=[viola])
     t.start()
 
 @world.message_handler(commands=['addplayer'])
