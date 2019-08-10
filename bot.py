@@ -2699,8 +2699,9 @@ def samantacontrol(m):
                 admins.update_one({'name':x},{'$set':{'controller': {'id': m.from_user.id,
                                          'name': m.from_user.first_name}}})
                 viola.send_message(m.from_user.id,
-                              'Привет, пионер. Теперь ты управляешь мной.')
-
+                              'Ну привет, пионер. Теперь ты управляешь мной.')
+            else:
+                viola.send_message(m.from_user.id, 'Мной уже управляют!')
 
 @viola.message_handler(commands=['stopcontrol'])
 def samantastopcontrol(m):
