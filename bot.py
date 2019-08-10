@@ -2441,7 +2441,7 @@ def pioneerstopcontrol(m):
     if adm['controller'] != None:
         if adm['controller']['id'] == m.from_user.id:
             admins.update_one({'name':x},{'$set':{'controller':None}})
-            pioner.send_message(m.from_user.id, 'Ты больше не управляешь мной.')
+            pioneer.send_message(m.from_user.id, 'Ты больше не управляешь мной.')
 
 @pioneer.message_handler()
 def pioneermessages(m):
