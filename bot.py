@@ -37,6 +37,7 @@ vladislav = telebot.TeleBot(os.environ['vladislav'])
 samanta = telebot.TeleBot(os.environ['samanta'])
 vasiliyhait = telebot.TeleBot(os.environ['vasiliyhait'])
 viola=telebot.TeleBot(os.environ['viola'])
+yuliya=telebot.TeleBot(os.environ['yuliya'])
 
 
 cday=1
@@ -155,8 +156,8 @@ def medit(message_text, chat_id, message_id, reply_markup=None, parse_mode=None)
 
 admins=db.admins
 
-if admins.find_one({'name':'vi_admins'})==None:
-    admins.insert_one(createadmin('vi_admins', 441399484))
+if admins.find_one({'name':'yul_admins'})==None:
+    admins.insert_one(createadmin('yul_admins', 881045722))
 
 
 ignorelist = []
@@ -301,46 +302,51 @@ def lvlsort(x):
     return finallist
 
 
+def statfind(pioner):
+    stats=None
+    if pioner == uliana:
+        stats = 'ul_admins'
+    if pioner == lena:
+        stats = 'le_admins'
+    if pioner == tolik:
+        stats = 'to_admins'
+    if pioner == alisa:
+        stats = 'al_admins'
+    if pioner == bot:
+        stats = 'od_admins'
+    if pioner == zhenya:
+        stats = 'zh_admins'
+    if pioner == shurik:
+        stats = 'sh_admins'
+    if pioner == electronic:
+        stats = 'el_admins'
+    if pioner == slavya:
+        stats = 'sl_admins'
+    if pioner == miku:
+        stats = 'mi_admins'
+    if pioner == pioneer:
+        stats = 'pi_admins'
+    if pioner == semen:
+        stats = 'se_admins'
+    if pioner == yuriy: 
+        stats='yu_admins'
+    if pioner==alexandr:
+        stats='ale_admins'
+    if pioner==vladislav:
+        stats='vl_admins'
+    if pioner==samanta:
+        stats='sa_admins'
+    if pioner==vasiliyhait:
+        stats='va_admins'
+    if pioner==viola:
+        stats='vi_admins'
+    if pioner==yuliya:
+        stats='yul_stats' 
+    return stats
 
 def stickhandler(m, pioner):
     if ban.find_one({'id': m.from_user.id}) == None:
-        stats = None
-        if pioner == uliana:
-            stats = 'ul_admins'
-        if pioner == lena:
-            stats = 'le_admins'
-        if pioner == tolik:
-            stats = 'to_admins'
-        if pioner == alisa:
-            stats = 'al_admins'
-        if pioner == bot:
-            stats = 'od_admins'
-        if pioner == zhenya:
-            stats = 'zh_admins'
-        if pioner == shurik:
-            stats = 'sh_admins'
-        if pioner == electronic:
-            stats = 'el_admins'
-        if pioner == slavya:
-            stats = 'sl_admins'
-        if pioner == miku:
-            stats = 'mi_admins'
-        if pioner == pioneer:
-            stats = 'pi_admins'
-        if pioner == semen:
-            stats = 'se_admins'
-        if pioner == yuriy: 
-            stats='yu_admins'
-        if pioner==alexandr:
-            stats='ale_admins'
-        if pioner==vladislav:
-            stats='vl_admins'
-        if pioner==samanta:
-            stats='sa_admins'
-        if pioner==vasiliyhait:
-            stats='va_admins'
-        if pioner==viola:
-            stats='vi_admins'
+        stats=statfind(pioner)
 
         adm=admins.find_one({'name':stats})
         if adm['controller'] != None:
@@ -371,43 +377,7 @@ def stickhandler(m, pioner):
     
 def pichandler(m, pioner):
     if ban.find_one({'id': m.from_user.id}) == None:
-        stats = None
-        if pioner == uliana:
-            stats = 'ul_admins'
-        if pioner == lena:
-            stats = 'le_admins'
-        if pioner == tolik:
-            stats = 'to_admins'
-        if pioner == alisa:
-            stats = 'al_admins'
-        if pioner == bot:
-            stats = 'od_admins'
-        if pioner == zhenya:
-            stats = 'zh_admins'
-        if pioner == shurik:
-            stats = 'sh_admins'
-        if pioner == electronic:
-            stats = 'el_admins'
-        if pioner == slavya:
-            stats = 'sl_admins'
-        if pioner == miku:
-            stats = 'mi_admins'
-        if pioner == pioneer:
-            stats = 'pi_admins'
-        if pioner == semen:
-            stats = 'se_admins'
-        if pioner == yuriy: 
-            stats='yu_admins'
-        if pioner==alexandr:
-            stats='ale_admins'
-        if pioner==vladislav:
-            stats='vl_admins'
-        if pioner==samanta:
-            stats='sa_admins'
-        if pioner==vasiliyhait:
-            stats='va_admins'
-        if pioner==viola:
-            stats='vi_admins'
+        stats=statfind(pioner)
 
         adm=admins.find_one({'name':stats})
         if adm['controller'] != None:
@@ -445,43 +415,7 @@ def pichandler(m, pioner):
 def audiohandler(m, pioner):
     if ban.find_one({'id': m.from_user.id}) == None:
         bot.send_message(441399484, 'audeo')
-        stats = None
-        if pioner == uliana:
-            stats = 'ul_admins'
-        if pioner == lena:
-            stats = 'le_admins'
-        if pioner == tolik:
-            stats = 'to_admins'
-        if pioner == alisa:
-            stats = 'al_admins'
-        if pioner == bot:
-            stats = 'od_admins'
-        if pioner == zhenya:
-            stats = 'zh_admins'
-        if pioner == shurik:
-            stats = 'sh_admins'
-        if pioner == electronic:
-            stats = 'el_admins'
-        if pioner == slavya:
-            stats = 'sl_admins'
-        if pioner == miku:
-            stats = 'mi_admins'
-        if pioner == pioneer:
-            stats = 'pi_admins'
-        if pioner == semen:
-            stats = 'se_admins'
-        if pioner == yuriy: 
-            stats='yu_admins'
-        if pioner==alexandr:
-            stats='ale_admins'
-        if pioner==vladislav:
-            stats='vl_admins'
-        if pioner==samanta:
-            stats='sa_admins'
-        if pioner==vasiliyhait:
-            stats='va_admins'
-        if pioner==viola:
-            stats='vi_admins'
+        stats=statfind(pioner)
 
         adm=admins.find_one({'name':stats})
         if adm['controller'] != None:
@@ -518,45 +452,8 @@ def audiohandler(m, pioner):
     
 def msghandler(m, pioner):
     if ban.find_one({'id': m.from_user.id}) == None:
-        stats = None
-        if pioner == uliana:
-            stats = 'ul_admins'
-        if pioner == lena:
-            stats = 'le_admins'
-        if pioner == tolik:
-            stats = 'to_admins'
-        if pioner == alisa:
-            stats = 'al_admins'
-        if pioner == bot:
-            stats = 'od_admins'
-        if pioner == zhenya:
-            stats = 'zh_admins'
-        if pioner == shurik:
-            stats = 'sh_admins'
-        if pioner == electronic:
-            stats = 'el_admins'
-        if pioner == slavya:
-            stats = 'sl_admins'
-        if pioner == miku:
-            stats = 'mi_admins'
-        if pioner == pioneer:
-            stats = 'pi_admins'
-        if pioner == semen:
-            stats = 'se_admins'
-        if pioner == yuriy: 
-            stats='yu_admins'
-        if pioner==alexandr:
-            stats='ale_admins'
-        if pioner==vladislav:
-            stats='vl_admins'
-        if pioner==samanta:
-            stats='sa_admins'
-        if pioner==vasiliyhait:
-            stats='va_admins'
-        if pioner==viola:
-            stats='vi_admins'
-
-
+        stats=statfind(pioner)
+        
         text=None
         if m.text[0]=='/':
             pioner2=None
@@ -2734,6 +2631,51 @@ def photocatchsam(m):
     pichandler(m, viola)    
     
     
+    
+####################################### YULIYA ##############################################
+@yuliya.message_handler(commands=['control'])
+def samantacontrol(m):
+    x='yul_admins'
+    adm=admins.find_one({'name':x})
+    if m.from_user.id in adm[x]:
+            if adm['controller'] == None:
+                admins.update_one({'name':x},{'$set':{'controller': {'id': m.from_user.id,
+                                         'name': m.from_user.first_name}}})
+                yuliya.send_message(m.from_user.id,
+                                  'Привет! Теперь ты управляешь мной!')
+            else:
+                yuliya.send_message(m.from_user.id, 'Мной уже управляют!')
+
+@yuliya.message_handler(commands=['stopcontrol'])
+def samantastopcontrol(m):
+    x='yul_admins'
+    adm=admins.find_one({'name':x})
+    if adm['controller'] != None:
+        if adm['controller']['id'] == m.from_user.id:
+            admins.update_one({'name':x},{'$set':{'controller':None}})
+            yuliya.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+
+@yuliya.message_handler()
+def samantamessages(m):
+    if ban.find_one({'id': m.from_user.id}) == None:
+        msghandler(m, yuliya)
+
+
+@yuliya.message_handler(content_types=['sticker'])
+def stickercatchsamantau(m):
+    stickhandler(m, yuliya)
+
+@yuliya.message_handler(content_types=['audio'])
+@yuliya.message_handler(content_types=['voice'])
+
+def stickercatchsamantau(m):
+    audiohandler(m, yuliya)
+
+@yuliya.message_handler(content_types=['photo'])
+def photocatchsam(m):
+    pichandler(m, yuliya)    
+    
+    
 
 
 def helpend(id, pioner):
@@ -3174,6 +3116,8 @@ if True:
     t = threading.Timer(1, polling, args=[vasiliyhait])
     t.start()
     t = threading.Timer(1, polling, args=[viola])
+    t.start()
+    t = threading.Timer(1, polling, args=[yuliya])
     t.start()
 
 @world.message_handler(commands=['addplayer'])
