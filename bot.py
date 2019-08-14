@@ -341,7 +341,7 @@ def statfind(pioner):
     if pioner==viola:
         stats='vi_admins'
     if pioner==yuliya:
-        stats='yul_stats' 
+        stats='yul_admins' 
     return stats
 
 def stickhandler(m, pioner):
