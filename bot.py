@@ -10,7 +10,8 @@ from telebot import types
 from pymongo import MongoClient
 import traceback
 import re
-
+import apiai
+import json
 
 
 
@@ -69,6 +70,37 @@ rpchats=[]
 
 accept=[]
 decline=[]
+
+
+
+def neiro(m, pioner):
+    if pioner != alisa:
+        return
+    allow = False
+    if m.reply_to_message != None:
+        if m.reply_to_message.from_user.id == 634115873:
+            allow = True
+    if m.from_user.id == m.chat.id:
+        allow = True
+    if 'алиса' in m.text.lower():
+        allow = True
+    if allow == False:
+        return
+    req = apiai.ApiAI(os.environ['apiai']).text_request()
+    req.lang = 'ru'
+    req.session_id = 'Alisa_id'
+    req.query = m.text
+    responseJson = json.loads(req.getresponse().read().decode('utf-8'))
+    response = responseJson['result']['fulfillment']['speech']
+    print(responseJson)
+    if response:
+        neiro.send_message(m.chat.id, response)
+    else:
+        not_understand = ['Я тебя не понимаю! Говори понятнее!', 'Прости, не понимаю тебя.', 'Я тебя не поняла!']
+        txt = random.choice(not_understand)
+        neiro.send_message(m.chat.id, txt, reply_to_message_id = m.message_id)
+    
+
 
 
 @bot.message_handler(commands=['change_time'])
@@ -491,7 +523,7 @@ def msghandler(m, pioner):
             elif m.text[:4].lower()=='/сам':
                 pioner2=samanta
             if pioner2==None or pioner!=pioner2:
-                return
+                neiro(m, pioner)
             else:
                 text=m.text[4:]
         adm=admins.find_one({'name':stats})
