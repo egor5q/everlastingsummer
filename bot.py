@@ -94,11 +94,11 @@ def neiro(m, pioner):
     response = responseJson['result']['fulfillment']['speech']
     print(responseJson)
     if response:
-        neiro.send_message(m.chat.id, response)
+        pioner.send_message(m.chat.id, response)
     else:
         not_understand = ['Я тебя не понимаю! Говори понятнее!', 'Прости, не понимаю тебя.', 'Я тебя не поняла!']
         txt = random.choice(not_understand)
-        neiro.send_message(m.chat.id, txt, reply_to_message_id = m.message_id)
+        pioner.send_message(m.chat.id, txt, reply_to_message_id = m.message_id)
     
 
 
