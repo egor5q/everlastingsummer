@@ -86,7 +86,7 @@ def neiro(m, pioner):
         allow = True
     if allow == False:
         return
-    req = apiai.ApiAI(os.environ['apiai']).text_request()
+    req = apiai.ApiAI(os.environ['apiai_alisa']).text_request()
     req.lang = 'ru'
     req.session_id = 'Alisa_id'
     req.query = m.text
