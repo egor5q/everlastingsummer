@@ -93,6 +93,16 @@ def neiro(m, pioner):
     responseJson = json.loads(req.getresponse().read().decode('utf-8'))
     response = responseJson['result']['fulfillment']['speech']
     print(responseJson)
+    answ = None
+    try:
+        if 'парень' in responseJson['result']['parameters']['paren']:
+            answ = 'Ну... У меня нет парня.'
+        elif 'парнем' in responseJson['result']['parameters']['paren']:
+            answ = 'Мило... Я подумаю.'
+    except:
+        pass
+    if answ != None:
+        response = answ
     if response:
         pioner.send_message(m.chat.id, response)
     else:
