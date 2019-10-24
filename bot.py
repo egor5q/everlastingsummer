@@ -95,10 +95,11 @@ def neiro(m, pioner):
     print(responseJson)
     answ = None
     try:
-        if 'парень' in responseJson['result']['parameters']['paren']:
-            answ = 'Ну... У меня нет парня.'
-        elif 'парнем' in responseJson['result']['parameters']['paren']:
-            answ = 'Мило... Я подумаю.'
+        if 'paren' in responseJson['result']['parameters']:
+            if 'парень' in responseJson['result']['parameters']['paren']:
+                answ = 'Ну... У меня нет парня.'
+            elif 'парнем' in responseJson['result']['parameters']['paren']:
+                answ = 'Мило... Я подумаю.'
     except:
         pass
     if answ != None:
