@@ -523,7 +523,7 @@ def msghandler(m, pioner):
             elif m.text[:4].lower()=='/сам':
                 pioner2=samanta
             if pioner2==None or pioner!=pioner2:
-                neiro(m, pioner)
+                return
             else:
                 text=m.text[4:]
         adm=admins.find_one({'name':stats})
@@ -611,7 +611,7 @@ def msghandler(m, pioner):
                         
                     
             else:
-                pass
+                neiro(m, pioner)
                 #if m.chat.id == -1001351496983:
                 #    x = '(Общий чат)'
                 #else:
@@ -624,7 +624,8 @@ def msghandler(m, pioner):
                 #    except Exception as E:
                 #        bot.send_message(441399484, traceback.format_exc())
 
-                
+        else:
+            neiro(m, pioner)
                 
 @bot.message_handler(commands=['pioner_left'])
 def leftpioneeer(m):
