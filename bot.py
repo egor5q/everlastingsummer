@@ -2693,7 +2693,8 @@ def photocatchsam(m):
     
 ####################################### YULIYA ##############################################
 @yuliya.message_handler(commands=['control'])
-def samantacontrol(m):
+def samantacontrolyu(m):
+    yuliya.send_message(441399484, '1')
     x='yul_admins'
     adm=admins.find_one({'name':x})
     if m.from_user.id in adm[x]:
