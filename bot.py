@@ -40,6 +40,8 @@ samanta = telebot.TeleBot(os.environ['samanta'])
 vasiliyhait = telebot.TeleBot(os.environ['vasiliyhait'])
 viola=telebot.TeleBot(os.environ['viola'])
 yuliya=telebot.TeleBot(os.environ['yuliya'])
+evillena = telebot.TeleBot(os.environ['evillena'])
+monster = telebot.TeleBot(os.environ['monster'])
 
 
 cday=1
@@ -201,8 +203,11 @@ def medit(message_text, chat_id, message_id, reply_markup=None, parse_mode=None)
 
 admins=db.admins
 
-if admins.find_one({'name':'yul_admins'})==None:
-    admins.insert_one(createadmin('yul_admins', 881045722))
+if admins.find_one({'name':'evl_admins'})==None:
+    admins.insert_one(createadmin('evl_admins', 496583701))
+    
+if admins.find_one({'name':'mns_admins'})==None:
+    admins.insert_one(createadmin('mns_admins', 496583701))
 
 
 ignorelist = []
@@ -386,7 +391,11 @@ def statfind(pioner):
     if pioner==viola:
         stats='vi_admins'
     if pioner==yuliya:
-        stats='yul_admins' 
+        stats='yul_admins'
+    if pioner==monster:
+        stats='mns_admins'
+    if pioner==evillena:
+        stats='evl_admins'
     return stats
 
 def stickhandler(m, pioner):
@@ -534,6 +543,10 @@ def msghandler(m, pioner):
                 pioner2=vladislav
             elif m.text[:4].lower()=='/сам':
                 pioner2=samanta
+            elif m.text[:4].lower()=='/евл':
+                pioner2=evillena
+            elif m.text[:4].lower()=='/улм':
+                pioner2=monster
             if pioner2==None or pioner!=pioner2:
                 return
             else:
@@ -2722,6 +2735,95 @@ def photocatchsam(m):
     pichandler(m, yuliya)    
     
     
+    
+####################################### EVILLENA ##############################################
+@evillena.message_handler(commands=['control'])
+def samantacontrol(m):
+    x='evl_admins'
+    adm=admins.find_one({'name':x})
+    if m.from_user.id in adm[x]:
+            if adm['controller'] == None:
+                admins.update_one({'name':x},{'$set':{'controller': {'id': m.from_user.id,
+                                         'name': m.from_user.first_name}}})
+                yuliya.send_message(m.from_user.id,
+                                  'Теперь ты управляешь мной!')
+            else:
+                yuliya.send_message(m.from_user.id, 'Мной уже управляют!')
+
+@evillena.message_handler(commands=['stopcontrol'])
+def samantastopcontrol(m):
+    x='yul_admins'
+    adm=admins.find_one({'name':x})
+    if adm['controller'] != None:
+        if adm['controller']['id'] == m.from_user.id:
+            admins.update_one({'name':x},{'$set':{'controller':None}})
+            yuliya.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+
+@evillena.message_handler()
+def samantamessages(m):
+    if ban.find_one({'id': m.from_user.id}) == None:
+        msghandler(m, yuliya)
+
+
+@evillena.message_handler(content_types=['sticker'])
+def stickercatchsamantau(m):
+    stickhandler(m, yuliya)
+
+@evillena.message_handler(content_types=['audio'])
+@evillena.message_handler(content_types=['voice'])
+
+def stickercatchsamantau(m):
+    audiohandler(m, evillena)
+
+@evillena.message_handler(content_types=['photo'])
+def photocatchsam(m):
+    pichandler(m, evillena)    
+    
+    
+    
+####################################### MONSTER ##############################################
+@monster.message_handler(commands=['control'])
+def samantacontrol(m):
+    x='mns_admins'
+    adm=admins.find_one({'name':x})
+    if m.from_user.id in adm[x]:
+            if adm['controller'] == None:
+                admins.update_one({'name':x},{'$set':{'controller': {'id': m.from_user.id,
+                                         'name': m.from_user.first_name}}})
+                yuliya.send_message(m.from_user.id,
+                                  'Теперь ты управляешь мной!')
+            else:
+                yuliya.send_message(m.from_user.id, 'Мной уже управляют!')
+
+@monster.message_handler(commands=['stopcontrol'])
+def samantastopcontrol(m):
+    x='mns_admins'
+    adm=admins.find_one({'name':x})
+    if adm['controller'] != None:
+        if adm['controller']['id'] == m.from_user.id:
+            admins.update_one({'name':x},{'$set':{'controller':None}})
+            yuliya.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+
+@monster.message_handler()
+def samantamessages(m):
+    if ban.find_one({'id': m.from_user.id}) == None:
+        msghandler(m, monster)
+
+
+@monster.message_handler(content_types=['sticker'])
+def stickercatchsamantau(m):
+    stickhandler(m, monster)
+
+@monster.message_handler(content_types=['audio'])
+@monster.message_handler(content_types=['voice'])
+
+def stickercatchsamantau(m):
+    audiohandler(m, monster)
+
+@monster.message_handler(content_types=['photo'])
+def photocatchsam(m):
+    pichandler(m, monster)    
+    
 
 
 def helpend(id, pioner):
@@ -3164,6 +3266,10 @@ if True:
     t = threading.Timer(1, polling, args=[viola])
     t.start()
     t = threading.Timer(1, polling, args=[yuliya])
+    t.start()
+    t = threading.Timer(1, polling, args=[evillena])
+    t.start()
+    t = threading.Timer(1, polling, args=[monster])
     t.start()
 
 @world.message_handler(commands=['addplayer'])
