@@ -352,6 +352,7 @@ def lvlsort(x):
     return finallist
 
 
+
 def statfind(pioner):
     stats=None
     if pioner == uliana:
@@ -636,7 +637,7 @@ def msghandler(m, pioner):
                         
                     
             else:
-                neiro(m, pioner)
+                pass#neiro(m, pioner)
                 #if m.chat.id == -1001351496983:
                 #    x = '(Общий чат)'
                 #else:
@@ -650,7 +651,7 @@ def msghandler(m, pioner):
                 #        bot.send_message(441399484, traceback.format_exc())
 
         else:
-            neiro(m, pioner)
+            pass#neiro(m, pioner)
                 
 @bot.message_handler(commands=['pioner_left'])
 def leftpioneeer(m):
