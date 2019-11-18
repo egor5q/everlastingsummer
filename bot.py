@@ -2755,7 +2755,7 @@ def samantacontrol(m):
 
 @evillena.message_handler(commands=['stopcontrol'])
 def samantastopcontrol(m):
-    x='yul_admins'
+    x='evl_admins'
     adm=admins.find_one({'name':x})
     if adm['controller'] != None:
         if adm['controller']['id'] == m.from_user.id:
