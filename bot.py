@@ -2748,10 +2748,10 @@ def samantacontrol(m):
             if adm['controller'] == None:
                 admins.update_one({'name':x},{'$set':{'controller': {'id': m.from_user.id,
                                          'name': m.from_user.first_name}}})
-                yuliya.send_message(m.from_user.id,
+                evillena.send_message(m.from_user.id,
                                   'Теперь ты управляешь мной!')
             else:
-                yuliya.send_message(m.from_user.id, 'Мной уже управляют!')
+                evillena.send_message(m.from_user.id, 'Мной уже управляют!')
 
 @evillena.message_handler(commands=['stopcontrol'])
 def samantastopcontrol(m):
@@ -2760,17 +2760,17 @@ def samantastopcontrol(m):
     if adm['controller'] != None:
         if adm['controller']['id'] == m.from_user.id:
             admins.update_one({'name':x},{'$set':{'controller':None}})
-            yuliya.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+            evillena.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
 
 @evillena.message_handler()
 def samantamessages(m):
     if ban.find_one({'id': m.from_user.id}) == None:
-        msghandler(m, yuliya)
+        msghandler(m, evillena)
 
 
 @evillena.message_handler(content_types=['sticker'])
 def stickercatchsamantau(m):
-    stickhandler(m, yuliya)
+    stickhandler(m, evillena)
 
 @evillena.message_handler(content_types=['audio'])
 @evillena.message_handler(content_types=['voice'])
