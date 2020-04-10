@@ -45,6 +45,10 @@ viola=telebot.TeleBot(os.environ['viola'])
 yuliya=telebot.TeleBot(os.environ['yuliya'])
 evillena = telebot.TeleBot(os.environ['evillena'])
 monster = telebot.TeleBot(os.environ['monster'])
+sayori = telebot.TeleBot(os.environ['sayori'])
+yuri = telebot.TeleBot(os.environ['yuri'])
+monika = telebot.TeleBot(os.environ['monika'])
+natsuki = telebot.TeleBot(os.environ['natsuki'])
 
 
 cday=1
@@ -211,6 +215,18 @@ if admins.find_one({'name':'evl_admins'})==None:
     
 if admins.find_one({'name':'mns_admins'})==None:
     admins.insert_one(createadmin('mns_admins', 496583701))
+    
+if admins.find_one({'name':'sayori_admins'})==None:
+    admins.insert_one(createadmin('sayori_admins', 441399484))
+    
+if admins.find_one({'name':'yuri_admins'})==None:
+    admins.insert_one(createadmin('yuri_admins', 441399484))
+    
+if admins.find_one({'name':'natsuki_admins'})==None:
+    admins.insert_one(createadmin('natsuki_admins', 441399484))
+    
+if admins.find_one({'name':'monika_admins'})==None:
+    admins.insert_one(createadmin('monika_admins', 441399484))
 
 
 ignorelist = []
@@ -400,6 +416,14 @@ def statfind(pioner):
         stats='mns_admins'
     if pioner==evillena:
         stats='evl_admins'
+    if pioner==sayori:
+        stats='sayori_admins'
+    if pioner==monika:
+        stats='monika_admins'
+    if pioner==natsuki:
+        stats='natsuki_admins'
+    if pioner==yuri:
+        stats='yuri_admins'
     return stats
 
 def stickhandler(m, pioner):
@@ -414,9 +438,8 @@ def stickhandler(m, pioner):
                     try:
                         bot.delete_message(m.chat.id, m.message_id)
                     except:
-                        bot.send_message(441399484, traceback.format_exc())
                         try:
-                            alisa.delete_message(m.chat.id, m.message_id)
+                            monika.delete_message(m.chat.id, m.message_id)
                         except:
                             pass
                     pioner.send_sticker(m.chat.id, m.sticker.file_id)
@@ -2695,6 +2718,183 @@ def photocatchsam(m):
     
     
     
+####################################### Sayori ##############################################
+@sayori.message_handler(commands=['control'])
+def samantaacontrol(m):
+    x='sayori_admins'
+    adm=admins.find_one({'name':x})
+    if m.from_user.id in adm[x]:
+            if adm['controller'] == None:
+                admins.update_one({'name':x},{'$set':{'controller': {'id': m.from_user.id,
+                                         'name': m.from_user.first_name}}})
+                sayori.send_message(m.from_user.id,
+                              'Ура, теперь ты управляешь мной!')
+            else:
+                sayori.send_message(m.from_user.id, 'Мной уже управляют!')
+
+@sayori.message_handler(commands=['stopcontrol'])
+def samantastopcontrol(m):
+    x='sayori_admins'
+    adm=admins.find_one({'name':x})
+    if adm['controller'] != None:
+        if adm['controller']['id'] == m.from_user.id:
+            admins.update_one({'name':x},{'$set':{'controller':None}})
+            sayori.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+
+@sayori.message_handler()
+def samantamessages(m):
+    if ban.find_one({'id': m.from_user.id}) == None:
+        msghandler(m, sayori)
+
+
+@sayori.message_handler(content_types=['sticker'])
+def stickercatchsamantau(m):
+    stickhandler(m, sayori)
+
+@sayori.message_handler(content_types=['audio'])
+@sayori.message_handler(content_types=['voice'])
+
+def stickercatchsamantau(m):
+    audiohandler(m, sayori)
+
+@sayori.message_handler(content_types=['photo'])
+def photocatchsam(m):
+    pichandler(m, sayori)    
+    
+    
+    
+####################################### Yuri ##############################################
+@yuri.message_handler(commands=['control'])
+def samantaacontrol(m):
+    x='yuri_admins'
+    adm=admins.find_one({'name':x})
+    if m.from_user.id in adm[x]:
+            if adm['controller'] == None:
+                admins.update_one({'name':x},{'$set':{'controller': {'id': m.from_user.id,
+                                         'name': m.from_user.first_name}}})
+                yuri.send_message(m.from_user.id,
+                              'Теперь ты управляешь мной! Только аккуратнее...')
+            else:
+                yuri.send_message(m.from_user.id, 'Мной уже управляют!')
+
+@yuri.message_handler(commands=['stopcontrol'])
+def samantastopcontrol(m):
+    x='yuri_admins'
+    adm=admins.find_one({'name':x})
+    if adm['controller'] != None:
+        if adm['controller']['id'] == m.from_user.id:
+            admins.update_one({'name':x},{'$set':{'controller':None}})
+            yuri.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+
+@yuri.message_handler()
+def samantamessages(m):
+    if ban.find_one({'id': m.from_user.id}) == None:
+        msghandler(m, yuri)
+
+
+@yuri.message_handler(content_types=['sticker'])
+def stickercatchsamantau(m):
+    stickhandler(m, yuri)
+
+@yuri.message_handler(content_types=['audio'])
+@yuri.message_handler(content_types=['voice'])
+
+def stickercatchsamantau(m):
+    audiohandler(m, yuri)
+
+@yuri.message_handler(content_types=['photo'])
+def photocatchsam(m):
+    pichandler(m, yuri)    
+    
+    
+####################################### Monika ##############################################
+@monika.message_handler(commands=['control'])
+def samantaacontrol(m):
+    x='monika_admins'
+    adm=admins.find_one({'name':x})
+    if m.from_user.id in adm[x]:
+            if adm['controller'] == None:
+                admins.update_one({'name':x},{'$set':{'controller': {'id': m.from_user.id,
+                                         'name': m.from_user.first_name}}})
+                monika.send_message(m.from_user.id,
+                              'Привет, теперь ты управляешь мной!')
+            else:
+                monika.send_message(m.from_user.id, 'Мной уже управляют!')
+
+@monika.message_handler(commands=['stopcontrol'])
+def samantastopcontrol(m):
+    x='monika_admins'
+    adm=admins.find_one({'name':x})
+    if adm['controller'] != None:
+        if adm['controller']['id'] == m.from_user.id:
+            admins.update_one({'name':x},{'$set':{'controller':None}})
+            monika.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+
+@monika.message_handler()
+def samantamessages(m):
+    if ban.find_one({'id': m.from_user.id}) == None:
+        msghandler(m, monika)
+
+
+@monika.message_handler(content_types=['sticker'])
+def stickercatchsamantau(m):
+    stickhandler(m, monika)
+
+@monika.message_handler(content_types=['audio'])
+@monika.message_handler(content_types=['voice'])
+
+def stickercatchsamantau(m):
+    audiohandler(m, monika)
+
+@monika.message_handler(content_types=['photo'])
+def photocatchsam(m):
+    pichandler(m, monika)    
+    
+    
+####################################### Natsuki ##############################################
+@natsuki.message_handler(commands=['control'])
+def samantaacontrol(m):
+    x='natsuki_admins'
+    adm=admins.find_one({'name':x})
+    if m.from_user.id in adm[x]:
+            if adm['controller'] == None:
+                admins.update_one({'name':x},{'$set':{'controller': {'id': m.from_user.id,
+                                         'name': m.from_user.first_name}}})
+                natsuki.send_message(m.from_user.id,
+                              'Теперь ты управляешь мной! Но запомни - это не мило!')
+            else:
+                natsuki.send_message(m.from_user.id, 'Мной уже управляют!')
+
+@natsuki.message_handler(commands=['stopcontrol'])
+def samantastopcontrol(m):
+    x='natsuki_admins'
+    adm=admins.find_one({'name':x})
+    if adm['controller'] != None:
+        if adm['controller']['id'] == m.from_user.id:
+            admins.update_one({'name':x},{'$set':{'controller':None}})
+            natsuki.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+
+@natsuki.message_handler()
+def samantamessages(m):
+    if ban.find_one({'id': m.from_user.id}) == None:
+        msghandler(m, natsuki)
+
+
+@natsuki.message_handler(content_types=['sticker'])
+def stickercatchsamantau(m):
+    stickhandler(m, natsuki)
+
+@natsuki.message_handler(content_types=['audio'])
+@natsuki.message_handler(content_types=['voice'])
+
+def stickercatchsamantau(m):
+    audiohandler(m, natsuki)
+
+@natsuki.message_handler(content_types=['photo'])
+def photocatchsam(m):
+    pichandler(m, natsuki)    
+    
+    
 ####################################### YULIYA ##############################################
 @yuliya.message_handler(commands=['control'])
 def samantacontrolyu(m):
@@ -3275,6 +3475,14 @@ if True:
     t = threading.Timer(1, polling, args=[evillena])
     t.start()
     t = threading.Timer(1, polling, args=[monster])
+    t.start()
+    t = threading.Timer(1, polling, args=[natsuki])
+    t.start()
+    t = threading.Timer(1, polling, args=[monika])
+    t.start()
+    t = threading.Timer(1, polling, args=[sayori])
+    t.start()
+    t = threading.Timer(1, polling, args=[yuri])
     t.start()
 
 @world.message_handler(commands=['addplayer'])
