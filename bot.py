@@ -447,9 +447,8 @@ def stickhandler(m, pioner):
                     try:
                         bot.delete_message(m.chat.id, m.message_id)
                     except:
-                        bot.send_message(441399484, traceback.format_exc())
                         try:
-                            alisa.delete_message(m.chat.id, m.message_id)
+                            monika.delete_message(m.chat.id, m.message_id)
                         except:
                             pass
                     pioner.send_sticker(m.chat.id, m.sticker.file_id, reply_to_message_id=m.reply_to_message.message_id)
@@ -468,9 +467,8 @@ def pichandler(m, pioner):
                     try:
                         bot.delete_message(m.chat.id, m.message_id)
                     except:
-                        bot.send_message(441399484, traceback.format_exc())
                         try:
-                            alisa.delete_message(m.chat.id, m.message_id)
+                            monika.delete_message(m.chat.id, m.message_id)
                         except:
                             pass
                     if m.caption!=None:
@@ -481,9 +479,8 @@ def pichandler(m, pioner):
                     try:
                         bot.delete_message(m.chat.id, m.message_id)
                     except:
-                        bot.send_message(441399484, traceback.format_exc())
                         try:
-                            alisa.delete_message(m.chat.id, m.message_id)
+                            monika.delete_message(m.chat.id, m.message_id)
                         except:
                             pass
                     if m.caption!=None:
@@ -508,7 +505,7 @@ def audiohandler(m, pioner):
                     except:
                         bot.send_message(441399484, traceback.format_exc())
                         try:
-                            alisa.delete_message(m.chat.id, m.message_id)
+                            monika.delete_message(m.chat.id, m.message_id)
                         except:
                             pass
                     try:
@@ -521,7 +518,7 @@ def audiohandler(m, pioner):
                     except:
                         bot.send_message(441399484, traceback.format_exc())
                         try:
-                            alisa.delete_message(m.chat.id, m.message_id)
+                            monika.delete_message(m.chat.id, m.message_id)
                         except:
                             pass
                     try:
@@ -589,7 +586,7 @@ def msghandler(m, pioner):
                     except:
                         bot.send_message(441399484, traceback.format_exc())
                         try:
-                            alisa.delete_message(m.chat.id, m.message_id)
+                            monika.delete_message(m.chat.id, m.message_id)
                         except:
                             pass
                     if text!=None:
@@ -649,7 +646,7 @@ def msghandler(m, pioner):
                         except:
                             bot.send_message(441399484, traceback.format_exc())
                             try:
-                                alisa.delete_message(m.chat.id, m.message_id)
+                                monika.delete_message(m.chat.id, m.message_id)
                             except:
                                 pass
                         pioner.send_message(m.chat.id, m.text, reply_to_message_id=m.reply_to_message.message_id)
