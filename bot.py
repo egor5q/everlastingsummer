@@ -503,7 +503,6 @@ def audiohandler(m, pioner):
                     try:
                         bot.delete_message(m.chat.id, m.message_id)
                     except:
-                        bot.send_message(441399484, traceback.format_exc())
                         try:
                             monika.delete_message(m.chat.id, m.message_id)
                         except:
@@ -516,7 +515,6 @@ def audiohandler(m, pioner):
                     try:
                         bot.delete_message(m.chat.id, m.message_id)
                     except:
-                        bot.send_message(441399484, traceback.format_exc())
                         try:
                             monika.delete_message(m.chat.id, m.message_id)
                         except:
@@ -584,7 +582,6 @@ def msghandler(m, pioner):
                     try:
                         bot.delete_message(chat_id=m.chat.id, message_id=m.message_id)
                     except:
-                        bot.send_message(441399484, traceback.format_exc())
                         try:
                             monika.delete_message(m.chat.id, m.message_id)
                         except:
@@ -644,7 +641,6 @@ def msghandler(m, pioner):
                         try:
                             bot.delete_message(m.chat.id, m.message_id)
                         except:
-                            bot.send_message(441399484, traceback.format_exc())
                             try:
                                 monika.delete_message(m.chat.id, m.message_id)
                             except:
