@@ -122,6 +122,17 @@ def neiro(m, pioner):
         #pioner.send_message(m.chat.id, txt, reply_to_message_id = m.message_id)
     
 
+@bot.message_handler(commands=['id'])
+def iddd(m):
+ try:
+    if m.reply_to_message!=None:
+        user=m.reply_to_message.from_user
+        bot.send_message(m.chat.id, 'id выбранного пользователя:\n'+'`'+str(user.id)+'`',reply_to_message_id=m.message_id,parse_mode='markdown')
+    else:
+        bot.send_message(m.chat.id, 'Чтобы узнать id пользователя, введите эту команду, ответив на его сообщение.')
+
+ except:
+  pass
 
 
 @bot.message_handler(commands=['change_time'])
