@@ -15,7 +15,6 @@ import apiai
 import json
 
 
-
 from requests.exceptions import ReadTimeout
 from requests.exceptions import ConnectionError
 
