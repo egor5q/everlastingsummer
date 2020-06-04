@@ -54,6 +54,7 @@ times=['Время до линейки', 'Линейка', 'Завтрак', 'В
 
 rp_players=[441399484, 652585389, 737959649, 638721729, 438090820]
 
+bot.send_message(441399484, os.environ)
 
 client1 = os.environ['database']
 client = MongoClient(client1)
