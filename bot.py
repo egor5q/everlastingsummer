@@ -2703,8 +2703,8 @@ def samantacontrol(m):
             if adm['controller'] == None:
                 admins.update_one({'name':x},{'$set':{'controller': {'id': m.from_user.id,
                                          'name': m.from_user.first_name}}})
-                samanta.send_message(m.from_user.id,
-                              'Привет! Теперь ты управляешь мной!')
+                vasiliyhait.send_message(m.from_user.id,
+                              'Теперь ты управляешь мной.')
 
 
 @vasiliyhait.message_handler(commands=['stopcontrol'])
@@ -2714,7 +2714,7 @@ def samantastopcontrol(m):
     if adm['controller'] != None:
         if adm['controller']['id'] == m.from_user.id:
             admins.update_one({'name':x},{'$set':{'controller':None}})
-            samanta.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+            vasiliyhait.send_message(m.from_user.id, 'Ты больше не управляешь мной.')
 
 @vasiliyhait.message_handler()
 def samantamessages(m):
