@@ -435,6 +435,9 @@ def stickhandler(m, pioner):
         stats=statfind(pioner)
 
         adm=admins.find_one({'name':stats})
+        if adm == None:
+            bot.send_message(441399484, stats)
+            return
         if adm['controller'] != None:
             controller = adm['controller']
             if m.from_user.id == controller['id']:
@@ -464,6 +467,9 @@ def pichandler(m, pioner):
         stats=statfind(pioner)
 
         adm=admins.find_one({'name':stats})
+        if adm == None:
+            bot.send_message(441399484, stats)
+            return
         if adm['controller'] != None:
             controller = adm['controller']
             if m.from_user.id == controller['id']:
@@ -500,6 +506,9 @@ def audiohandler(m, pioner):
         stats=statfind(pioner)
 
         adm=admins.find_one({'name':stats})
+        if adm == None:
+            bot.send_message(441399484, stats)
+            return
         if adm['controller'] != None:
             controller = adm['controller']
             if m.from_user.id == controller['id']:
@@ -578,6 +587,9 @@ def msghandler(m, pioner):
             else:
                 text=m.text[4:]
         adm=admins.find_one({'name':stats})
+        if adm == None:
+            bot.send_message(441399484, stats)
+            return
         if adm['controller'] != None:
             controller = adm['controller']
             if m.from_user.id == controller['id']:
