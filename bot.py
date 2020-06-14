@@ -231,6 +231,64 @@ if admins.find_one({'name':'natsuki_admins'})==None:
     
 if admins.find_one({'name':'monika_admins'})==None:
     admins.insert_one(createadmin('monika_admins', 441399484))
+    
+if admins.find_one({'name':'ul_admins'})==None:
+    admins.insert_one(createadmin('ul_admins', 441399484))
+    
+if admins.find_one({'name':'le_admins'})==None:
+    admins.insert_one(createadmin('le_admins', 441399484))
+    
+if admins.find_one({'name':'to_admins'})==None:
+    admins.insert_one(createadmin('to_admins', 441399484))
+    
+if admins.find_one({'name':'al_admins'})==None:
+    admins.insert_one(createadmin('al_admins', 441399484))
+    
+if admins.find_one({'name':'od_admins'})==None:
+    admins.insert_one(createadmin('od_admins', 441399484))
+    
+if admins.find_one({'name':'zh_admins'})==None:
+    admins.insert_one(createadmin('zh_admins', 441399484))
+    
+if admins.find_one({'name':'sh_admins'})==None:
+    admins.insert_one(createadmin('sh_admins', 441399484))
+    
+if admins.find_one({'name':'el_admins'})==None:
+    admins.insert_one(createadmin('el_admins', 441399484))
+    
+if admins.find_one({'name':'sl_admins'})==None:
+    admins.insert_one(createadmin('sl_admins', 441399484))
+    
+if admins.find_one({'name':'mi_admins'})==None:
+    admins.insert_one(createadmin('mi_admins', 441399484))
+    
+if admins.find_one({'name':'pi_admins'})==None:
+    admins.insert_one(createadmin('pi_admins', 441399484))
+    
+if admins.find_one({'name':'se_admins'})==None:
+    admins.insert_one(createadmin('se_admins', 441399484))
+    
+if admins.find_one({'name':'yu_admins'})==None:
+    admins.insert_one(createadmin('yu_admins', 441399484))
+    
+if admins.find_one({'name':'ale_admins'})==None:
+    admins.insert_one(createadmin('ale_admins', 441399484))
+    
+if admins.find_one({'name':'vl_admins'})==None:
+    admins.insert_one(createadmin('vl_admins', 441399484))
+    
+if admins.find_one({'name':'sa_admins'})==None:
+    admins.insert_one(createadmin('sa_admins', 441399484))
+    
+if admins.find_one({'name':'va_admins'})==None:
+    admins.insert_one(createadmin('va_admins', 441399484))
+    
+if admins.find_one({'name':'vi_admins'})==None:
+    admins.insert_one(createadmin('vi_admins', 441399484))
+    
+if admins.find_one({'name':'yul_admins'})==None:
+    admins.insert_one(createadmin('yul_admins', 441399484))
+   
 
 
 ignorelist = []
