@@ -13,7 +13,7 @@ import traceback
 import re
 import apiai
 import json
-
+import config
 
 
 from requests.exceptions import ReadTimeout
@@ -117,6 +117,7 @@ def neiro(m, pioner):
 
 @bot.message_handler(commands=['id'])
 def iddd(m):
+ config.about(m, bot)
  try:
     if m.reply_to_message!=None:
         user=m.reply_to_message.from_user
@@ -130,6 +131,7 @@ def iddd(m):
 
 @bot.message_handler(commands=['change_time'])
 def change_time(m):
+    config.about(m, bot)
     if m.chat.id==-1001425303036:
         if m.from_user.id in rp_players:
             kb=types.InlineKeyboardMarkup()
@@ -140,6 +142,7 @@ def change_time(m):
 
 @bot.message_handler(commands=['currenttime'])
 def currenttime(m):
+    config.about(m, bot)
     ct=ctime_rp.find_one({})
     cd=str(cday.find_one({})['cday'])
     bot.send_message(m.chat.id, 'Текущий день: *'+cd+'*.\n'+'Текущее время: *'+ct['ctime_rp']+'*.', parse_mode='markdown')
@@ -349,6 +352,7 @@ if ban.find_one({'id': 617640951}) == None:
 
 @world.message_handler(commands=['do'])
 def do(m):
+    config.about(m, world)
     try:
         if m.from_user.id == 441399484:
             cmd = m.text.split('/do ')[1]
@@ -363,6 +367,7 @@ def do(m):
 
 @world.message_handler(commands=['rp'])
 def rp(m):
+  config.about(m, world)
   if m.from_user.id==441399484:
     global nowrp
     if nowrp==True:
@@ -374,6 +379,7 @@ def rp(m):
     
 @bot.message_handler(commands=['see'])
 def see(m):
+  config.about(m, bot)
   if m.from_user.id==441399484:
     try:
         bot.send_message(m.chat.id, str(m.reply_to_message))
@@ -382,6 +388,7 @@ def see(m):
 
 @bot.message_handler(commands=['ignore'])
 def ignore(m):
+    config.about(m, bot)
     if m.from_user.id == 441399484:
         try:
             x = int(m.text.split(' ')[1])
@@ -395,6 +402,7 @@ def ignore(m):
 
 @world.message_handler(commands=['switch'])
 def do(m):
+    config.about(m, world)
     if m.from_user.id == 441399484:
         global rds
         rds = not rds
@@ -489,6 +497,7 @@ def statfind(pioner):
     return stats
 
 def stickhandler(m, pioner):
+    config.about(m, pioner)
     if ban.find_one({'id': m.from_user.id}) == None:
         stats=statfind(pioner)
 
@@ -521,6 +530,7 @@ def stickhandler(m, pioner):
 
     
 def pichandler(m, pioner):
+    config.about(m, pioner)
     if ban.find_one({'id': m.from_user.id}) == None:
         stats=statfind(pioner)
 
@@ -559,6 +569,7 @@ def pichandler(m, pioner):
 
 
 def audiohandler(m, pioner):
+    config.about(m, pioner)
     if ban.find_one({'id': m.from_user.id}) == None:
         bot.send_message(441399484, 'audeo')
         stats=statfind(pioner)
@@ -598,6 +609,7 @@ def audiohandler(m, pioner):
 
     
 def msghandler(m, pioner):
+    config.about(m, pioner)
     if ban.find_one({'id': m.from_user.id}) == None:
         stats=statfind(pioner)
         
@@ -748,6 +760,7 @@ def msghandler(m, pioner):
                 
 @bot.message_handler(commands=['pioner_left'])
 def leftpioneeer(m):
+    config.about(m, bot)
     if m.from_user.id == 441399484:
         try:
             user = users.find_one({'id': int(m.text.split(' ')[1])})
@@ -759,6 +772,7 @@ def leftpioneeer(m):
 
 @bot.message_handler(commands=['allinfo'])
 def allinfoaboutp(m):
+    config.about(m, bot)
     try:
         x = users.find({})
         text = ''
@@ -784,6 +798,7 @@ def allinfoaboutp(m):
 
 @bot.message_handler(commands=['start'])
 def start(m):
+    config.about(m, bot)
     if m.chat.id == m.from_user.id and ban.find_one({'id': m.from_user.id}) == None:
         x = users.find_one({'id': m.from_user.id})
         if x == None:
@@ -806,6 +821,7 @@ def start(m):
 
 @bot.message_handler(commands=['pioner'])
 def pinfo(m):
+    config.about(m, bot)
     if m.from_user.id == 441399484:
         try:
             x = users.find_one({'id': m.reply_to_message.from_user.id})
@@ -820,6 +836,7 @@ def pinfo(m):
 
 @bot.message_handler(commands=['work'])
 def work(m):
+    config.about(m, bot)
     if ban.find_one({'id': m.from_user.id}) == None:
         global rds
         x = users.find_one({'id': m.from_user.id})
@@ -987,6 +1004,7 @@ worktexts = ['Ну что, пионер, скучаешь? Ничего, сей�
 
 @bot.message_handler(commands=['cards'])
 def gamestestdsdfsdgd(m):
+    config.about(m, bot)
     if rds == True:
         if electronicstats['waitingplayers'] != 1:
             eveninggames()
@@ -995,6 +1013,7 @@ def gamestestdsdfsdgd(m):
 ####################################### OLGA ##############################################
 @bot.message_handler(commands=['control'])
 def odcontrol(m):
+    config.about(m, bot)
     if ban.find_one({'id': m.from_user.id}) == None:
         adm=admins.find_one({'name':'od_admins'})
         if m.from_user.id in adm['od_admins']:
@@ -1009,6 +1028,7 @@ def odcontrol(m):
 
 @bot.message_handler(commands=['stopcontrol'])
 def odstopcontrol(m):
+    config.about(m, bot)
     x='od_admins'
     adm=admins.find_one({'name':x})
     if adm['controller'] != None:
@@ -1857,6 +1877,7 @@ def sendstick(sender, stick):
 ####################################### ELECTRONIC ##############################################
 @electronic.message_handler(commands=['control'])
 def electroniccontrol(m):
+    config.about(m, electronic)
     adm=admins.find_one({'name':'el_admins'})
     if m.from_user.id in adm['el_admins']:
             if adm['controller'] == None:
@@ -1867,6 +1888,7 @@ def electroniccontrol(m):
 
 @electronic.message_handler(commands=['stopcontrol'])
 def electronicstopcontrol(m):
+    config.about(m, electronic)
     x='el_admins'
     adm=admins.find_one({'name':x})
     if adm['controller'] != None:
@@ -1943,6 +1965,7 @@ def electronichandler(m):
 
 @lena.message_handler(commands=['control'])
 def lenacontrol(m):
+    config.about(m, lena)
     x='le_admins'
     adm=admins.find_one({'name':x})
     if m.from_user.id in adm[x]:
@@ -1955,6 +1978,7 @@ def lenacontrol(m):
 
 @lena.message_handler(commands=['stopcontrol'])
 def lenastopcontrol(m):
+    config.about(m, lena)
     x='le_admins'
     adm=admins.find_one({'name':x})
     if adm['controller'] != None:
@@ -2015,6 +2039,7 @@ def photocatchlena(m):
 ####################################### ALICE ##############################################
 @alisa.message_handler(commands=['control'])
 def alisacontrol(m):
+    config.about(m, alisa)
     x='al_admins'
     adm=admins.find_one({'name':x})
     if m.from_user.id in adm[x]:
@@ -2027,6 +2052,7 @@ def alisacontrol(m):
 
 @alisa.message_handler(commands=['stopcontrol'])
 def alisastopcontrol(m):
+    config.about(m, alisa)
     x='al_admins'
     adm=admins.find_one({'name':x})
     if adm['controller'] != None:
@@ -2122,6 +2148,7 @@ def photocatchalisa(m):
 ####################################### ULIANA ##############################################
 @uliana.message_handler(commands=['control'])
 def ulianaacontrol(m):
+    config.about(m, uliana)
     x='ul_admins'
     adm=admins.find_one({'name':x})
     if m.from_user.id in adm[x]:
@@ -2134,6 +2161,7 @@ def ulianaacontrol(m):
 
 @uliana.message_handler(commands=['stopcontrol'])
 def ulianastopcontrol(m):
+    config.about(m, uliana)
     x='ul_admins'
     adm=admins.find_one({'name':x})
     if adm['controller'] != None:
@@ -2191,6 +2219,7 @@ def photocatchuliana(m):
 ####################################### SLAVYA ##############################################
 @slavya.message_handler(commands=['control'])
 def slavyacontrol(m):
+    config.about(m, slavya)
     x='sl_admins'
     adm=admins.find_one({'name':x})
     if m.from_user.id in adm[x]:
@@ -2203,6 +2232,7 @@ def slavyacontrol(m):
 
 @slavya.message_handler(commands=['stopcontrol'])
 def slavyastopcontrol(m):
+    config.about(m, slavya)
     x='sl_admins'
     adm=admins.find_one({'name':x})
     if adm['controller'] != None:
@@ -2259,6 +2289,7 @@ def photocatchslavya(m):
 ####################################### MIKU ##############################################
 @miku.message_handler(commands=['control'])
 def mikucontrol(m):
+    config.about(m, miku)
     x='mi_admins'
     adm=admins.find_one({'name':x})
     if m.from_user.id in adm[x]:
@@ -2271,6 +2302,7 @@ def mikucontrol(m):
 
 @miku.message_handler(commands=['stopcontrol'])
 def mikustopcontrol(m):
+    config.about(m, miku)
     x='mi_admins'
     adm=admins.find_one({'name':x})
     if adm['controller'] != None:
@@ -2301,6 +2333,7 @@ def stickercatchmiku(m):
 ####################################### ZHENYA ##############################################
 @zhenya.message_handler(commands=['control'])
 def zhenyacontrol(m):
+    config.about(m, zhenya)
     x='zh_admins'
     adm=admins.find_one({'name':x})
     if m.from_user.id in adm[x]:
@@ -2312,6 +2345,7 @@ def zhenyacontrol(m):
 
 @zhenya.message_handler(commands=['stopcontrol'])
 def zhenyastopcontrol(m):
+    config.about(m, zhenya)
     x='zh_admins'
     adm=admins.find_one({'name':x})
     if adm['controller'] != None:
@@ -2343,6 +2377,7 @@ def photocatchzhenya(m):
 ####################################### TOLIK ##############################################
 @tolik.message_handler(commands=['control'])
 def tolikcontrol(m):
+    config.about(m, tolik)
     x='to_admins'
     adm=admins.find_one({'name':x})
     if m.from_user.id in adm[x]:
@@ -2354,6 +2389,7 @@ def tolikcontrol(m):
 
 @tolik.message_handler(commands=['stopcontrol'])
 def tolikstopcontrol(m):
+    config.about(m, tolik)
     x='to_admins'
     adm=admins.find_one({'name':x})
     if adm['controller'] != None:
@@ -2386,6 +2422,7 @@ def photocatchtolik(m):
 ####################################### SHURIK ##############################################
 @shurik.message_handler(commands=['control'])
 def shurikcontrol(m):
+    config.about(m, shurik)
     x='sh_admins'
     adm=admins.find_one({'name':x})
     if m.from_user.id in adm[x]:
@@ -2397,6 +2434,7 @@ def shurikcontrol(m):
 
 @shurik.message_handler(commands=['stopcontrol'])
 def shuriktopcontrol(m):
+    config.about(m, shurik)
     x='sh_admins'
     adm=admins.find_one({'name':x})
     if adm['controller'] != None:
@@ -2431,6 +2469,7 @@ def photocatchshurik(m):
 
 @semen.message_handler(commands=['control'])
 def semencontrol(m):
+    config.about(m, semen)
     x='se_admins'
     adm=admins.find_one({'name':x})
     if m.from_user.id in adm[x]:
@@ -2442,6 +2481,7 @@ def semencontrol(m):
 
 @semen.message_handler(commands=['stopcontrol'])
 def semenstopcontrol(m):
+    config.about(m, semen)
     x='se_admins'
     adm=admins.find_one({'name':x})
     if adm['controller'] != None:
@@ -2476,6 +2516,7 @@ def photocatchsemen(m):
 
 @pioneer.message_handler(commands=['control'])
 def pioneercontrol(m):
+    config.about(m, pioneer)
     x='pi_admins'
     adm=admins.find_one({'name':x})
     if m.from_user.id in adm[x]:
@@ -2487,6 +2528,7 @@ def pioneercontrol(m):
 
 @pioneer.message_handler(commands=['stopcontrol'])
 def pioneerstopcontrol(m):
+    config.about(m, pioneer)
     x='pi_admins'
     adm=admins.find_one({'name':x})
     if adm['controller'] != None:
@@ -2521,6 +2563,7 @@ def photocatchpioneer(m):
 
 @yuriy.message_handler(commands=['control'])
 def yuriyercontrol(m):
+    config.about(m, yuriy)
     x='yu_admins'
     adm=admins.find_one({'name':x})
     if m.from_user.id in adm[x]:
@@ -2532,6 +2575,7 @@ def yuriyercontrol(m):
 
 @yuriy.message_handler(commands=['stopcontrol'])
 def pioneerstopcontrol(m):
+    config.about(m, yuriy)
     x='yu_admins'
     adm=admins.find_one({'name':x})
     if adm['controller'] != None:
@@ -2564,6 +2608,7 @@ def photocatchyuriy(m):
 
 @alexandr.message_handler(commands=['control'])
 def alexandrercontrol(m):
+    config.about(m, alexandr)
     x='ale_admins'
     adm=admins.find_one({'name':x})
     if m.from_user.id in adm[x]:
@@ -2575,6 +2620,7 @@ def alexandrercontrol(m):
 
 @alexandr.message_handler(commands=['stopcontrol'])
 def alexandrstopcontrol(m):
+    config.about(m, alexandr)
     x='ale_admins'
     adm=admins.find_one({'name':x})
     if adm['controller'] != None:
@@ -2611,6 +2657,7 @@ def photocatchalex(m):
 
 @vladislav.message_handler(commands=['control'])
 def vladislavrercontrol(m):
+    config.about(m, vladislav)
     x='vl_admins'
     adm=admins.find_one({'name':x})
     if m.from_user.id in adm[x]:
@@ -2622,6 +2669,7 @@ def vladislavrercontrol(m):
 
 @vladislav.message_handler(commands=['stopcontrol'])
 def alexandrstopcontrol(m):
+    config.about(m, vladislav)
     x='vl_admins'
     adm=admins.find_one({'name':x})
     if adm['controller'] != None:
@@ -2653,6 +2701,7 @@ def photocatchvlad(m):
 ####################################### SAMANTA ##############################################
 @samanta.message_handler(commands=['control'])
 def samantacontrol(m):
+    config.about(m, samanta)
     x='sa_admins'
     adm=admins.find_one({'name':x})
     if m.from_user.id in adm[x]:
@@ -2665,6 +2714,7 @@ def samantacontrol(m):
 
 @samanta.message_handler(commands=['stopcontrol'])
 def samantastopcontrol(m):
+    config.about(m, samanta)
     x='sa_admins'
     adm=admins.find_one({'name':x})
     if adm['controller'] != None:
@@ -2697,6 +2747,7 @@ def photocatchsam(m):
 ####################################### VASILIYHAIT ##############################################
 @vasiliyhait.message_handler(commands=['control'])
 def samantacontrol(m):
+    config.about(m, vasiliyhait)
     x='va_admins'
     adm=admins.find_one({'name':x})
     if m.from_user.id in adm[x]:
@@ -2709,6 +2760,7 @@ def samantacontrol(m):
 
 @vasiliyhait.message_handler(commands=['stopcontrol'])
 def samantastopcontrol(m):
+    config.about(m, vasiliyhait)
     x='va_admins'
     adm=admins.find_one({'name':x})
     if adm['controller'] != None:
@@ -2743,6 +2795,7 @@ def photocatchsam(m):
 ####################################### VIOLA ##############################################
 @viola.message_handler(commands=['control'])
 def samantacontrol(m):
+    config.about(m, viola)
     x='vi_admins'
     adm=admins.find_one({'name':x})
     if m.from_user.id in adm[x]:
@@ -2756,6 +2809,7 @@ def samantacontrol(m):
 
 @viola.message_handler(commands=['stopcontrol'])
 def samantastopcontrol(m):
+    config.about(m, viola)
     x='vi_admins'
     adm=admins.find_one({'name':x})
     if adm['controller'] != None:
@@ -2788,6 +2842,7 @@ def photocatchsam(m):
 ####################################### Sayori ##############################################
 @sayori.message_handler(commands=['control'])
 def samantaacontrol(m):
+    config.about(m, sayori)
     x='sayori_admins'
     adm=admins.find_one({'name':x})
     if m.from_user.id in adm[x]:
@@ -2801,6 +2856,7 @@ def samantaacontrol(m):
 
 @sayori.message_handler(commands=['stopcontrol'])
 def samantastopcontrol(m):
+    config.about(m, sayori)
     x='sayori_admins'
     adm=admins.find_one({'name':x})
     if adm['controller'] != None:
@@ -2833,6 +2889,7 @@ def photocatchsam(m):
 ####################################### Yuri ##############################################
 @yuri.message_handler(commands=['control'])
 def samantaacontrol(m):
+    config.about(m, yuri)
     x='yuri_admins'
     adm=admins.find_one({'name':x})
     if m.from_user.id in adm[x]:
@@ -2846,6 +2903,7 @@ def samantaacontrol(m):
 
 @yuri.message_handler(commands=['stopcontrol'])
 def samantastopcontrol(m):
+    config.about(m, yuri)
     x='yuri_admins'
     adm=admins.find_one({'name':x})
     if adm['controller'] != None:
@@ -2877,6 +2935,7 @@ def photocatchsam(m):
 ####################################### Monika ##############################################
 @monika.message_handler(commands=['control'])
 def samantaacontrol(m):
+    config.about(m, monika)
     x='monika_admins'
     adm=admins.find_one({'name':x})
     if m.from_user.id in adm[x]:
@@ -2890,6 +2949,7 @@ def samantaacontrol(m):
 
 @monika.message_handler(commands=['stopcontrol'])
 def samantastopcontrol(m):
+    config.about(m, monika)
     x='monika_admins'
     adm=admins.find_one({'name':x})
     if adm['controller'] != None:
@@ -2921,6 +2981,7 @@ def photocatchsam(m):
 ####################################### Natsuki ##############################################
 @natsuki.message_handler(commands=['control'])
 def samantaacontrol(m):
+    config.about(m, natsuki)
     x='natsuki_admins'
     adm=admins.find_one({'name':x})
     if m.from_user.id in adm[x]:
@@ -2934,6 +2995,7 @@ def samantaacontrol(m):
 
 @natsuki.message_handler(commands=['stopcontrol'])
 def samantastopcontrol(m):
+    config.about(m, natsuki)
     x='natsuki_admins'
     adm=admins.find_one({'name':x})
     if adm['controller'] != None:
@@ -2965,6 +3027,7 @@ def photocatchsam(m):
 ####################################### YULIYA ##############################################
 @yuliya.message_handler(commands=['control'])
 def samantacontrolyu(m):
+    config.about(m, yuliya)
     yuliya.send_message(441399484, '1')
     x='yul_admins'
     adm=admins.find_one({'name':x})
@@ -2979,6 +3042,7 @@ def samantacontrolyu(m):
 
 @yuliya.message_handler(commands=['stopcontrol'])
 def samantastopcontrol(m):
+    config.about(m, yuliya)
     x='yul_admins'
     adm=admins.find_one({'name':x})
     if adm['controller'] != None:
@@ -3011,6 +3075,7 @@ def photocatchsam(m):
 ####################################### EVILLENA ##############################################
 @evillena.message_handler(commands=['control'])
 def samantacontrol(m):
+    config.about(m, evillena)
     x='evl_admins'
     adm=admins.find_one({'name':x})
     if m.from_user.id in adm[x]:
@@ -3024,6 +3089,7 @@ def samantacontrol(m):
 
 @evillena.message_handler(commands=['stopcontrol'])
 def samantastopcontrol(m):
+    config.about(m, evillena)
     x='evl_admins'
     adm=admins.find_one({'name':x})
     if adm['controller'] != None:
@@ -3056,6 +3122,7 @@ def photocatchsam(m):
 ####################################### MONSTER ##############################################
 @monster.message_handler(commands=['control'])
 def samantacontrol(m):
+    config.about(m, monster)
     x='mns_admins'
     adm=admins.find_one({'name':x})
     if m.from_user.id in adm[x]:
@@ -3069,6 +3136,7 @@ def samantacontrol(m):
 
 @monster.message_handler(commands=['stopcontrol'])
 def samantastopcontrol(m):
+    config.about(m, monster)
     x='mns_admins'
     adm=admins.find_one({'name':x})
     if adm['controller'] != None:
