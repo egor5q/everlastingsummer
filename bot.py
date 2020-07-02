@@ -47,6 +47,7 @@ sayori = telebot.TeleBot(os.environ['sayori'])
 yuri = telebot.TeleBot(os.environ['yuri'])
 monika = telebot.TeleBot(os.environ['monika'])
 natsuki = telebot.TeleBot(os.environ['natsuki'])
+liza = telebot.TeleBot(os.environ['liza'])
 
 
 cday=1
@@ -291,6 +292,9 @@ if admins.find_one({'name':'vi_admins'})==None:
     
 if admins.find_one({'name':'yul_admins'})==None:
     admins.insert_one(createadmin('yul_admins', 441399484))
+    
+if admins.find_one({'name':'li_admins'})==None:
+    admins.insert_one(createadmin('li_admins', 441399484))
    
 
 
@@ -494,6 +498,8 @@ def statfind(pioner):
         stats='natsuki_admins'
     if pioner==yuri:
         stats='yuri_admins'
+    if pioner == liza:
+        stats = 'li_admins'
     return stats
 
 def stickhandler(m, pioner):
@@ -3165,6 +3171,51 @@ def photocatchsam(m):
     pichandler(m, monster)    
     
 
+####################################### LIZA ##############################################
+@liza.message_handler(commands=['control'])
+def samantacontrol(m):
+    config.about(m, liza)
+    x='li_admins'
+    adm=admins.find_one({'name':x})
+    if m.from_user.id in adm[x]:
+            if adm['controller'] == None:
+                admins.update_one({'name':x},{'$set':{'controller': {'id': m.from_user.id,
+                                         'name': m.from_user.first_name}}})
+                liza.send_message(m.from_user.id,
+                              'Привет! Теперь ты мной управляешь!')
+            else:
+                liza.send_message(m.from_user.id, 'Мной уже управляют!')
+
+@liza.message_handler(commands=['stopcontrol'])
+def samantastopcontrol(m):
+    config.about(m, liza)
+    x='li_admins'
+    adm=admins.find_one({'name':x})
+    if adm['controller'] != None:
+        if adm['controller']['id'] == m.from_user.id:
+            admins.update_one({'name':x},{'$set':{'controller':None}})
+            liza.send_message(m.from_user.id, 'Ты больше не управляешь мной!')
+
+@liza.message_handler()
+def samantamessages(m):
+    if ban.find_one({'id': m.from_user.id}) == None:
+        msghandler(m, liza)
+
+
+@liza.message_handler(content_types=['sticker'])
+def stickercatchsamantau(m):
+    stickhandler(m, liza)
+
+@liza.message_handler(content_types=['audio'])
+@liza.message_handler(content_types=['voice'])
+
+def stickercatchsamantau(m):
+    audiohandler(m, liza)
+
+@viola.message_handler(content_types=['photo'])
+def photocatchsam(m):
+    pichandler(m, liza)    
+    
 
 def helpend(id, pioner):
     x = users.find_one({'id': id})
