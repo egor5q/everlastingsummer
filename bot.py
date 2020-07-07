@@ -139,16 +139,25 @@ def comboss(m):
         return
     counts.update(createcombo(word.lower(), m.chat.id))
     
+def factorial(x):
+    f = 1
+    while x > 1:
+        f *= n
+        x -= 1
+    return f
+    
 def createcombo(word, id):
 
     return {id:{
         'id':id,
         'already':[],
-        'word':word
+        'word':word,
+        'limit':factorial(len(word))
     }
            }
 
 def cycle():
+    dellist = []
     for ids in counts:
         letters = []
         c = counts[ids]
@@ -158,12 +167,18 @@ def cycle():
         neww = ''
         while len(curlet) > 0:
             neww += random.choice(curlet)
-        while neww in c['already']:
-            curlet = letters.copy()
-            neww = ''
-            while len(curlet) > 0:
-                neww += random.choice(curlet)
-        monika.send_message(c['id'], neww.title())
+        if len(c['already']) != c['limit']:
+            while neww in c['already']:
+                curlet = letters.copy()
+                neww = ''
+                while len(curlet) > 0:
+                    neww += random.choice(curlet)
+            monika.send_message(c['id'], neww.title())
+        else:
+            monika.send_message(c['id'], 'Всё!')
+            dellist.append(c['id'])
+    for ids in dellist:
+        del counts[ids]
     threading.Timer(2, cycle).start()
     
 cycle()
