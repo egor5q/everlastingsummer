@@ -177,13 +177,20 @@ def cycle():
                     x = random.choice(curlet)
                     neww += x
                     curlet.remove(x)
-            c['already'].append(neww)
-            monika.send_message(c['id'], neww.title())
+            try:
+                monika.send_message(c['id'], neww.title())
+                c['already'].append(neww)
+            except:
+                time.sleep(5)
         else:
-            monika.send_message(c['id'], 'Всё!')
-            dellist.append(c['id'])
+            try:
+                monika.send_message(c['id'], 'Всё!')
+                dellist.append(c['id'])
+            except:
+                time.sleep(5)
     for ids in dellist:
         del counts[ids]
+        
     threading.Timer(2, cycle).start()
     
 cycle()
