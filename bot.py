@@ -133,7 +133,7 @@ def comboss(m):
         monika.send_message(m.chat.id, 'В этом чате уже идёт пересчёт комбинаций!')
         return
     try:
-        word = m.text.split()[1]
+        word = m.text.split('/combinations ')[1]
     except:
         monika.send_message(m.chat.id, 'Ошибка!')
         return
