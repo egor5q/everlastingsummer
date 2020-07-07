@@ -157,41 +157,44 @@ def createcombo(word, id):
            }
 
 def cycle():
-    dellist = []
-    for ids in counts:
-        letters = []
-        c = counts[ids]
-        for idss in c['word']:
-            letters.append(idss)
-        curlet = letters.copy()
-        neww = ''
-        while len(curlet) > 0:
-            x = random.choice(curlet)
-            neww += x
-            curlet.remove(x)
-        if len(c['already']) != c['limit']:
-            while neww in c['already']:
-                curlet = letters.copy()
-                neww = ''
-                while len(curlet) > 0:
-                    x = random.choice(curlet)
-                    neww += x
-                    curlet.remove(x)
-            try:
-                monika.send_message(c['id'], neww.title())
-                c['already'].append(neww)
-            except:
-                time.sleep(5)
-        else:
-            try:
-                monika.send_message(c['id'], 'Всё!')
-                dellist.append(c['id'])
-            except:
-                time.sleep(5)
-    for ids in dellist:
-        del counts[ids]
-        
     threading.Timer(2, cycle).start()
+    try:
+        dellist = []
+        for ids in counts:
+            letters = []
+            c = counts[ids]
+            for idss in c['word']:
+                letters.append(idss)
+            curlet = letters.copy()
+            neww = ''
+            while len(curlet) > 0:
+                x = random.choice(curlet)
+                neww += x
+                curlet.remove(x)
+            if len(c['already']) != c['limit']:
+                while neww in c['already']:
+                    curlet = letters.copy()
+                    neww = ''
+                    while len(curlet) > 0:
+                        x = random.choice(curlet)
+                        neww += x
+                        curlet.remove(x)
+                try:
+                    monika.send_message(c['id'], neww.title())
+                    c['already'].append(neww)
+                except:
+                    time.sleep(5)
+            else:
+                try:
+                    monika.send_message(c['id'], 'Всё!')
+                    dellist.append(c['id'])
+                except:
+                    time.sleep(5)
+        for ids in dellist:
+            del counts[ids]
+    except:
+        world.send_message(441399484, traceback.format_exc())
+        
     
 cycle()
     
