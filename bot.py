@@ -142,7 +142,7 @@ def comboss(m):
 def factorial(x):
     f = 1
     while x > 1:
-        f *= n
+        f *= x
         x -= 1
     return f
     
