@@ -134,6 +134,9 @@ def comboss(m):
         return
     try:
         word = m.text.split()[1]
+    except:
+        monika.send_message(m.chat.id, 'Ошибка!')
+        return
     counts.update(createcombo(word.lower(), m.chat.id))
     
 def createcombo(word, id):
