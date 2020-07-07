@@ -55,6 +55,8 @@ times=['Время до линейки', 'Линейка', 'Завтрак', 'В
 
 rp_players=[441399484, 652585389, 737959649, 638721729, 438090820]
 
+counts = {}
+
 bot.send_message(441399484, str(os.environ))
 print(os.environ)
 
@@ -115,7 +117,54 @@ def neiro(m, pioner):
         txt = random.choice(not_understand)
         #pioner.send_message(m.chat.id, txt, reply_to_message_id = m.message_id)
     
+    
+@monika.message_handler(commands=['stopcombo'])
+def comboss(m): 
+    try:
+        del counts[m.chat.id]
+        monika.send_message(m.chat.id, 'Рассчёт окончен!')
+    except:
+        monika.send_message(m.chat.id, 'Пересчёт не запущен!')
+        
+    
+@monika.message_handler(commands=['combinations'])
+def comboss(m):
+    if m.chat.id in counts:
+        monika.send_message(m.chat.id, 'В этом чате уже идёт пересчёт комбинаций!')
+        return
+    try:
+        word = m.text.split()[1]
+    counts.update(createcombo(word.lower(), m.chat.id))
+    
+def createcombo(word, id):
 
+    return {id:{
+        'id':id,
+        'already':[],
+        'word':word
+    }
+           }
+
+def cycle():
+    for ids in counts:
+        letters = []
+        c = counts[ids]
+        for idss in c['word']:
+            letters.append(idss)
+        curlet = letters.copy()
+        neww = ''
+        while len(curlet) > 0:
+            neww += random.choice(curlet)
+        while neww in c['already']:
+            curlet = letters.copy()
+            neww = ''
+            while len(curlet) > 0:
+                neww += random.choice(curlet)
+        monika.send_message(c['id'], neww.title())
+    threading.Timer(2, cycle).start()
+    
+cycle()
+    
 @bot.message_handler(commands=['id'])
 def iddd(m):
  config.about(m, bot)
