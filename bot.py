@@ -177,6 +177,7 @@ def cycle():
                     x = random.choice(curlet)
                     neww += x
                     curlet.remove(x)
+            c['already'].append(neww)
             monika.send_message(c['id'], neww.title())
         else:
             monika.send_message(c['id'], 'Всё!')
