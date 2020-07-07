@@ -166,13 +166,17 @@ def cycle():
         curlet = letters.copy()
         neww = ''
         while len(curlet) > 0:
-            neww += random.choice(curlet)
+            x = random.choice(curlet)
+            neww += x
+            curlet.remove(x)
         if len(c['already']) != c['limit']:
             while neww in c['already']:
                 curlet = letters.copy()
                 neww = ''
                 while len(curlet) > 0:
-                    neww += random.choice(curlet)
+                    x = random.choice(curlet)
+                    neww += x
+                    curlet.remove(x)
             monika.send_message(c['id'], neww.title())
         else:
             monika.send_message(c['id'], 'Всё!')
