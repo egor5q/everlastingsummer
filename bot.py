@@ -196,7 +196,7 @@ def cycle():
         world.send_message(441399484, traceback.format_exc())
         
     
-cycle()
+#cycle()
     
 @bot.message_handler(commands=['id'])
 def iddd(m):
