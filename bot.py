@@ -157,7 +157,13 @@ def createcombo(word, id):
            }
 
 def cycle():
-    threading.Timer(2, cycle).start()
+    nxt = False
+    while not nxt:
+        try:
+            threading.Timer(2.5, cycle).start()
+            nxt = True
+        except:
+            pass
     try:
         dellist = []
         for ids in counts:
@@ -183,7 +189,7 @@ def cycle():
                     monika.send_message(c['id'], neww.title())
                     c['already'].append(neww)
                 except:
-                    time.sleep(5)
+                    time.sleep(10)
             else:
                 try:
                     monika.send_message(c['id'], 'Всё!')
@@ -193,10 +199,13 @@ def cycle():
         for ids in dellist:
             del counts[ids]
     except:
-        world.send_message(441399484, traceback.format_exc())
+        try:
+            world.send_message(441399484, traceback.format_exc())
+        except:
+            pass
         
     
-#cycle()
+cycle()
     
 @bot.message_handler(commands=['id'])
 def iddd(m):
