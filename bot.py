@@ -2353,6 +2353,10 @@ def stickercatchalisa(m):
 def photocatchuliana(m):
     pichandler(m, uliana)
     
+@uliana.message_handler(content_types = ['document'])
+def docsss(m):
+    dochandler(m, uliana)
+    
 
 ####################################### SLAVYA ##############################################
 @slavya.message_handler(commands=['control'])
@@ -2424,6 +2428,10 @@ def stickercatchslavya(m):
 def photocatchslavya(m):
     pichandler(m, slavya)
     
+@slavya.message_handler(content_types = ['document'])
+def docsss(m):
+    dochandler(m, slavya)
+    
 ####################################### MIKU ##############################################
 @miku.message_handler(commands=['control'])
 def mikucontrol(m):
@@ -2467,6 +2475,10 @@ def stickercatchmiku(m):
 
 def stickercatchmiku(m):
     audiohandler(m, miku)
+    
+@miku.message_handler(content_types = ['document'])
+def docsss(m):
+    dochandler(m, miku)
 
 ####################################### ZHENYA ##############################################
 @zhenya.message_handler(commands=['control'])
@@ -2510,6 +2522,10 @@ def photocatchzhenya(m):
 
 def photocatchzhenya(m):
     audiohandler(m, zhenya)
+    
+@zhenya.message_handler(content_types = ['document'])
+def docsss(m):
+    dochandler(m, zhenya)
     
 
 ####################################### TOLIK ##############################################
@@ -2556,6 +2572,10 @@ def stickercatchtolik(m):
 def photocatchtolik(m):
     pichandler(m, tolik)
     
+@tolik.message_handler(content_types = ['document'])
+def docsss(m):
+    dochandler(m, tolik)
+    
 
 ####################################### SHURIK ##############################################
 @shurik.message_handler(commands=['control'])
@@ -2600,6 +2620,10 @@ def stickercatchzshurik(m):
 @shurik.message_handler(content_types=['photo'])
 def photocatchshurik(m):
     pichandler(m, shurik)
+    
+@shurik.message_handler(content_types = ['document'])
+def docsss(m):
+    dochandler(m, shurik)
     
 
 ###################################### SEMEN ###############################################
@@ -2648,6 +2672,10 @@ def stickercatchsemen(m):
 @semen.message_handler(content_types=['photo'])
 def photocatchsemen(m):
     pichandler(m, semen)
+    
+@semen.message_handler(content_types = ['document'])
+def docsss(m):
+    dochandler(m, semen)
 
 ###################################### PIONEER ###############################################
 
@@ -2694,6 +2722,10 @@ def stickercatchpioneer(m):
 @pioneer.message_handler(content_types=['photo'])
 def photocatchpioneer(m):
     pichandler(m, pioneer)
+    
+@pioneer.message_handler(content_types = ['document'])
+def docsss(m):
+    dochandler(m, pioneer)
 
 
 ###################################### YURIY ###############################################
@@ -2740,6 +2772,10 @@ def stickercatchpioneer(m):
 @yuriy.message_handler(content_types=['photo'])
 def photocatchyuriy(m):
     pichandler(m, yuriy)
+    
+@yuriy.message_handler(content_types = ['document'])
+def docsss(m):
+    dochandler(m, yuriy)
     
 ###################################### ALEXANDR ###############################################
 
@@ -2788,6 +2824,10 @@ def stickercatchpialexr(m):
 def photocatchalex(m):
     pichandler(m, alexandr)
     
+@alexandr.message_handler(content_types = ['document'])
+def docsss(m):
+    dochandler(m, alexandr)
+    
     
     
 ###################################### VLADISLAV ###############################################
@@ -2835,6 +2875,10 @@ def stickercatchpioneer(m):
 def photocatchvlad(m):
     pichandler(m, vladislav)
     
+@vladislav.message_handler(content_types = ['document'])
+def docsss(m):
+    dochandler(m, vladislav)
+    
 
 ####################################### SAMANTA ##############################################
 @samanta.message_handler(commands=['control'])
@@ -2878,7 +2922,11 @@ def stickercatchsamantau(m):
 
 @samanta.message_handler(content_types=['photo'])
 def photocatchsam(m):
-    pichandler(m, samanta)   
+    pichandler(m, samanta)  
+    
+@samanta.message_handler(content_types = ['document'])
+def docsss(m):
+    dochandler(m, samanta)
 
 
 
@@ -2926,7 +2974,9 @@ def stickercatchsamantau(m):
 def photocatchsam(m):
     pichandler(m, vasiliyhait)    
     
-    
+@vasiliyhait.message_handler(content_types = ['document'])
+def docsss(m):
+    dochandler(m, vasiliyhait)
 
 
 
@@ -2975,6 +3025,10 @@ def stickercatchsamantau(m):
 def photocatchsam(m):
     pichandler(m, viola)    
     
+@viola.message_handler(content_types = ['document'])
+def docsss(m):
+    dochandler(m, viola)
+    
     
     
 ####################################### Sayori ##############################################
@@ -3022,7 +3076,9 @@ def stickercatchsamantau(m):
 def photocatchsam(m):
     pichandler(m, sayori)    
     
-    
+@sayori.message_handler(content_types = ['document'])
+def docsss(m):
+    dochandler(m, sayori)
     
 ####################################### Yuri ##############################################
 @yuri.message_handler(commands=['control'])
@@ -3067,7 +3123,11 @@ def stickercatchsamantau(m):
 
 @yuri.message_handler(content_types=['photo'])
 def photocatchsam(m):
-    pichandler(m, yuri)    
+    pichandler(m, yuri)
+    
+@yuri.message_handler(content_types = ['document'])
+def docsss(m):
+    dochandler(m, yuri)
     
     
 ####################################### Monika ##############################################
@@ -3113,7 +3173,11 @@ def stickercatchsamantau(m):
 
 @monika.message_handler(content_types=['photo'])
 def photocatchsam(m):
-    pichandler(m, monika)    
+    pichandler(m, monika)   
+    
+@monika.message_handler(content_types = ['document'])
+def docsss(m):
+    dochandler(m, monika)
     
     
 ####################################### Natsuki ##############################################
@@ -3160,6 +3224,10 @@ def stickercatchsamantau(m):
 @natsuki.message_handler(content_types=['photo'])
 def photocatchsam(m):
     pichandler(m, natsuki)    
+    
+@natsuki.message_handler(content_types = ['document'])
+def docsss(m):
+    dochandler(m, natsuki)
     
     
 ####################################### YULIYA ##############################################
@@ -3208,6 +3276,10 @@ def stickercatchsamantau(m):
 def photocatchsam(m):
     pichandler(m, yuliya)    
     
+@yuliya.message_handler(content_types = ['document'])
+def docsss(m):
+    dochandler(m, yuliya)
+    
     
     
 ####################################### EVILLENA ##############################################
@@ -3255,6 +3327,9 @@ def stickercatchsamantau(m):
 def photocatchsam(m):
     pichandler(m, evillena)    
     
+@evillena.message_handler(content_types = ['document'])
+def docsss(m):
+    dochandler(m, evillena)
     
     
 ####################################### MONSTER ##############################################
@@ -3302,6 +3377,10 @@ def stickercatchsamantau(m):
 def photocatchsam(m):
     pichandler(m, monster)    
     
+@monster.message_handler(content_types = ['document'])
+def docsss(m):
+    dochandler(m, monster)
+    
 
 ####################################### LIZA ##############################################
 @liza.message_handler(commands=['control'])
@@ -3344,10 +3423,13 @@ def stickercatchsamantau(m):
 def stickercatchsamantau(m):
     audiohandler(m, liza)
 
-@viola.message_handler(content_types=['photo'])
+@liza.message_handler(content_types=['photo'])
 def photocatchsam(m):
     pichandler(m, liza)    
     
+@liza.message_handler(content_types = ['document'])
+def docsss(m):
+    dochandler(m, liza)
 
 def helpend(id, pioner):
     x = users.find_one({'id': id})
