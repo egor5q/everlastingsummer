@@ -624,7 +624,37 @@ def stickhandler(m, pioner):
                             pass
                     pioner.send_sticker(m.chat.id, m.sticker.file_id, reply_to_message_id=m.reply_to_message.message_id)
     
+def dochandler(m, pioner):
+    config.about(m, pioner)
+    if ban.find_one({'id': m.from_user.id}) == None:
+        stats=statfind(pioner)
 
+        adm=admins.find_one({'name':stats})
+        if adm == None:
+            bot.send_message(441399484, stats)
+            return
+        if adm['controller'] != None:
+            controller = adm['controller']
+            if m.from_user.id == controller['id']:
+                if m.reply_to_message == None:
+                    try:
+                        bot.delete_message(m.chat.id, m.message_id)
+                    except:
+                        try:
+                            monika.delete_message(m.chat.id, m.message_id)
+                        except:
+                            pass
+                    pioner.send_document(m.chat.id, m.document.file_id)
+                else:
+                    try:
+                        bot.delete_message(m.chat.id, m.message_id)
+                    except:
+                        try:
+                            monika.delete_message(m.chat.id, m.message_id)
+                        except:
+                            pass
+                    pioner.send_document(m.chat.id, m.document.file_id, reply_to_message_id=m.reply_to_message.message_id)
+    
     
 def pichandler(m, pioner):
     config.about(m, pioner)
@@ -2004,6 +2034,9 @@ def stickercatchelectronic(m):
 def stickercatchelectronic(m):
     audiohandler(m, electronic)
 
+@electronic.message_handler(content_types = ['document'])
+def docsss(m):
+    dochandler(m, electronic)
 
 @electronic.message_handler(content_types=['photo'])
 def photocatchel(m):
@@ -2132,6 +2165,10 @@ def photocatchlena(m):
 def photocatchlena(m):
     audiohandler(m, lena)
     
+@lena.message_handler(content_types = ['document'])
+def docsss(m):
+    dochandler(m, lena)
+    
 
 ####################################### ALICE ##############################################
 @alisa.message_handler(commands=['control'])
@@ -2241,6 +2278,10 @@ def photocatchalisa(m):
 def photocatchalisa(m):
     audiohandler(m, alisa)
     
+    
+@alisa.message_handler(content_types = ['document'])
+def docsss(m):
+    dochandler(m, alisa)
 
 ####################################### ULIANA ##############################################
 @uliana.message_handler(commands=['control'])
