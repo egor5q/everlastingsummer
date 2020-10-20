@@ -2,7 +2,7 @@ import os
 from pymongo import MongoClient
 import time
 
-mongo_client = MongoClient(os.environ['database'])
+mongo_client = MongoClient(os.environ['spydatabase'])
 
 pasyuk_id = 441399484
 senderman_id = 94197300
@@ -32,7 +32,6 @@ def creategroup(m, bot):
            }
 
 def about(m, bot):
-    return
     a_u = about_user.find_one({'id':m.from_user.id})
     if a_u == None:
         about_user.insert_one(createabout(m))
