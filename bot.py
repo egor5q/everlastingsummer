@@ -71,11 +71,12 @@ cday=db.cday
 ctime_rp=db.ctime
 nowrp=False
 
-#if ctime_rp.find_one({})==None:
-#    ctime_rp.insert_one({'ctime_rp':times[0]})
+if ctime_rp.find_one({})==None:
+    ctime_rp.insert_one({'ctime_rp':times[0]})
     
-#if cday.find_one({})==None:
-#    cday.insert_one({'cday':1})
+
+if cday.find_one({})==None:
+    cday.insert_one({'cday':1})
 
 mainchat = -1001351496983
 rpchats=[]
