@@ -2460,6 +2460,32 @@ def mikustopcontrol(m):
 @miku.message_handler()
 def mikumessages(m):
     if ban.find_one({'id': m.from_user.id}) == None:
+        yes = ['да', 'я готов', 'давай', 'я в деле', 'хорошо']
+        if mikustats['whohelps'] != None:
+            y = 0
+            if m.from_user.id == mikustats['whohelps']:
+                for ids in yes:
+                    if ids in m.text.lower():
+                        y = 1
+                if y == 1:
+                    pioner = users.find_one({'id': m.from_user.id})
+                    try:
+                        mikustats['timer'].cancel()
+                    except:
+                        pass
+                    allhelps = [
+                        'Большое спасибо! Тогда пойдем, только аккуратнее, Шурик в прошлый раз себе ногу отдавил этой аппаратурой, колонки очень тяжёлые!',
+                    'Отлично, спасибо тебе! Тогда идём, только аккуратнее, колонки очень тяжёлые, Шурик в прошлый раз себе ногу отдавил этой аппаратурой!']
+                    mikustats['whohelps'] = None
+                    helpp = random.choice(allhelps)
+                    miku.send_chat_action(m.chat.id, 'typing')
+                    time.sleep(4)
+                    miku.send_message(m.chat.id, helpp)
+                    sendstick(miku, 'CAACAgIAAxkBAAIm2GJGHHEtq_wMxq9tAtbNfuer8ANsAAJ9AAOCLTMPfRt-eLWAJRkjBA')
+                    t = threading.Timer(300, helpend, args=[m.from_user.id, 'miku'])
+                    t.start()
+                    users.update_one({'id': m.from_user.id}, {'$set': {'helping': 1}})
+    if ban.find_one({'id': m.from_user.id}) == None:
         msghandler(m, miku)
 
 
@@ -2473,7 +2499,6 @@ def stickercatchmiku(m):
 
 @miku.message_handler(content_types=['audio'])
 @miku.message_handler(content_types=['voice'])
-
 def stickercatchmiku(m):
     audiohandler(m, miku)
     
@@ -3466,6 +3491,13 @@ def helpend(id, pioner):
                                 x['id']) + ')!' + \
                             '', parse_mode='markdown')
         users.update_one({'id': x['id']}, {'$inc': {'Uliana_respect': random.randint(4, 5)}})
+        
+    if pioner == 'miku':
+        miku.send_chat_action(id, 'typing')
+        time.sleep(4)
+        miku.send_message(-1001351496983,
+                            'Спасибо, [' + x['pionername'] + '](tg://user?id=' + str(
+                                x['id']) + ')! Сама бы я в жизни не донесла их... А теперь пойдем в музыкальный клуб, я же обещала чай!', parse_mode='markdown')
 
 
 cardplayers = []
@@ -3492,7 +3524,9 @@ mikustats = {
     'agility': 2,
     'intelligence': 2,
     'controller': None,
-    'bot': miku
+    'bot': miku,
+    'whohelps': None,
+    'timer':None
 }
 ulianastats = {
     'strenght': 1,
@@ -3599,7 +3633,7 @@ def randomhelp():
     global rds
     if rds == True:
         spisok = []
-        pioners = ['lena', 'alisa', 'slavya', 'uliana']
+        pioners = ['lena', 'alisa', 'slavya', 'uliana', 'miku']
         x = users.find({})
         for ids in x:
             if ids['pionername'] != None:
@@ -3692,6 +3726,22 @@ def helpto(pioner, x):
             sendstick(uliana, 'CAADAgADLwADgi0zD7_x8Aph94DmAg')
         except:
             bot.send_message(441399484, traceback.format_exc())
+            
+    if x == 'miku':
+        try:
+            text = 'Привет, [' + pioner['pionername'] + '](tg://user?id=' + str(
+                pioner['id']) + ')! Ты, случайно, не занят? У меня тут такая ситуация, надо колонки из музыкального кружка на сцену перетащить, я '+\
+            'кибернетиков просила, но они чем-то очень сильно заняты в своем клубе... Поможешь? А я тебя потом чаем угощу!'
+            miku.send_chat_action(-1001351496983, 'typing')
+            time.sleep(4)
+            m = miku.send_message(-1001351496983, text, parse_mode='markdown')
+            mikustats['whohelps'] = pioner['id']
+            t = threading.Timer(300, helpcancel, args=['miku', m, pioner['id']])
+            t.start()
+            mikustats['timer'] = t
+            sendstick(miku, 'CAACAgIAAxkBAAIm3mJGInusdARgWct95yz14Q9Vm4lPAAJ7AAOCLTMPQuso0_ttgJcjBA')
+        except:
+            bot.send_message(441399484, traceback.format_exc())
 
 
 def helpcancel(pioner, m, userid):
@@ -3745,7 +3795,7 @@ def randomact():
     t.start()
     global rds
     if rds == True:
-        lisst = ['talk_uliana+olgadmitrievna', 'talk_uliana+alisa', 'talk_el+shurik']
+        lisst = ['talk_uliana+olgadmitrievna', 'talk_uliana+alisa', 'talk_el+shurik', 'talk_miku+slavya']
         x = random.choice(lisst)
         if x == 'talk_uliana+olgadmitrievna':
             bot.send_chat_action(-1001351496983, 'typing')
@@ -3811,6 +3861,38 @@ def randomact():
             time.sleep(2)
             electronic.send_message(-1001351496983,
                                     'А мне вот кажется, что когда-нибудь прогресс дойдёт и до такого...')
+            
+        if x == 'talk_miku+slavya':
+            miku.send_chat_action(-1001351496983, 'typing')
+            time.sleep(3)
+            alisa.send_message(-1001351496983,
+                                    'О, Славя, доброе утро!',
+                                    parse_mode='markdown')
+            sendstick(miku, 'CAACAgIAAxkBAAIm2GJGHHEtq_wMxq9tAtbNfuer8ANsAAJ9AAOCLTMPfRt-eLWAJRkjBA')
+            time.sleep(1)
+            slavya.send_chat_action(-1001351496983, 'typing')
+            time.sleep(2)
+            slavya.send_message(-1001351496983, 'Доброе!')
+            sendstick(slavya, 'CAACAgIAAxkBAAIpvWJGHX_qgaeaWji-b8TuJGROk9v_AAJMAAOCLTMPo8ulzvbYHPcjBA')
+            time.sleep(2)
+            miku.send_chat_action(-1001351496983, 'typing')
+            time.sleep(3)
+            miku.send_message(-1001351496983,
+                                    'А ты случайно не видела Алису? А то она гитару обещала мне сегодня одолжить, а то у второй гитары в музыкальном кружке '+
+                             'струна порвалась... Но сейчас же только утро, может, она спит еще? А она точно не забыла?')
+            time.sleep(2)
+            slavya.send_chat_action(-1001351496983, 'typing')
+            time.sleep(1)
+            slavya.send_message(-1001351496983, 'Нет, не видела...')
+            sendstick(slavya, 'CAACAgIAAxkBAAIpv2JGHkqSRprFzuAg8htYxrDuC0LSAAJbAAOCLTMPG0-qX3KqdXAjBA')
+            time.sleep(1)
+            miku.send_chat_action(-1001351496983, 'typing')
+            time.sleep(3)
+            miku.send_message(-1001351496983,
+                                    'Но ты если увидишь её то передай, что я её очень жду! Я именно сегодня хотела к концерту подготовиться, новую мелодию '+
+                              'разучить... А ты случайно не хочешь тоже что-то сыграть? Я могу тебя научить играть на гитаре, флейте, аккордеоне или... Славя, ты куда?')
+            sendstick(miku, 'CAACAgIAAxkBAAIm22JGIM8lYl16Aqh9wALRr6BWoK9lAAKBAAOCLTMPVapTRGHE3q8jBA')
+            
 
 
 checktime()
