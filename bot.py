@@ -3873,7 +3873,7 @@ def randomact():
         if x == 'talk_miku+slavya':
             miku.send_chat_action(-1001351496983, 'typing')
             time.sleep(3)
-            alisa.send_message(-1001351496983,
+            miku.send_message(-1001351496983,
                                     'О, Славя, доброе утро!',
                                     parse_mode='markdown')
             sendstick(miku, 'CAACAgIAAxkBAAIm2GJGHHEtq_wMxq9tAtbNfuer8ANsAAJ9AAOCLTMPfRt-eLWAJRkjBA')
