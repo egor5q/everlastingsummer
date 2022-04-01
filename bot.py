@@ -3788,6 +3788,14 @@ def helpcancel(pioner, m, userid):
                                 reply_to_message_id=m.message_id)
         if user['Uliana_respect'] > 0:
             users.update_one({'id': user['id']}, {'$inc': {'Uliana_respect': -1}})
+            
+    if pioner == 'miku':
+        mikustats['whohelps'] = None
+        miku.send_chat_action(-1001351496983, 'typing')
+        time.sleep(4)
+        miku.send_message(-1001351496983, 'Видимо, у тебя дела... Но если вдруг освободишься - обязательно скажи мне!',
+                                reply_to_message_id=m.message_id)
+
 
 
 def randomact():
