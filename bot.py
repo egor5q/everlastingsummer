@@ -49,7 +49,7 @@ monika = telebot.TeleBot(os.environ['monika'])
 natsuki = telebot.TeleBot(os.environ['natsuki'])
 liza = telebot.TeleBot(os.environ['liza'])
 
-
+bot.send_message(441399484, 'Work')
 cday=1
 times=['Время до линейки', 'Линейка', 'Завтрак', 'Время после завтрака', 'Обед', 'Время после обеда', 'Ужин', 'Время после ужина (вечер)', 'Ночь']
 
